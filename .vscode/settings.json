@@ -1,6 +1,6 @@
 {
   "files.exclude": {
-    "**/.git": false,
+    "**/.git": true,
     "**/.svn": true,
     "**/.hg": true,
     "**/CVS": true,
@@ -13,7 +13,9 @@
     "**/.history": true,
     "**/android": true,
     "**/ios": true,
-    "**/.husky": true
+    "**/.husky": true,
+    "**/scripts": true,
+    "scripts": true
   },
   "explorerExclude.backup": {}
 }

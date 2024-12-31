@@ -7,11 +7,23 @@ The idea is to store project json resource files by language, and provide a vers
 so clients could retrieve documents for the desired project and language plus using semver semantic
 to provide version compatibility (useful on mobile where app version is hard to ensure).
 
+This gives the client apps a retro compatibility with the texts that are using in different versions,
+allowing developers change those strings in different app versions with the flexibility to change the
+text ids, remove or arr new text strings over time.
+
+## Architecture
+
+Fully functional, no unwanted interfaces when there is no strategy pattern.
+
 ## PostgreSQL
 
 ```bash
 docker run -d --name ec-postgres -p 5432:5432 -e POSTGRES_HOST_AUTH_METHOD=trust postgres:13
 ```
+
+To generate the database structure run the script DDL.sql.
+
+To setup the database just set the environment variable POSTGRES_URL.
 
 ## Go 1.22+
 
@@ -27,3 +39,5 @@ git clone https://github.com/nmarsollier/resourcesgo $GOPATH/src/github.com/nmar
 go install
 resourcesgo
 ```
+
+To see swagger docs navigate to [Swagger](http://localhost:3000/docs/index.html)

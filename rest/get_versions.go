@@ -11,14 +11,13 @@ import (
 //	@Tags			Resources
 //	@Accept			json
 //	@Produce		json
-//	@Param			project			path		string			true	"Project ID"
-//	@Param			language		path		string			true	"language tag"
-//	@Param			Authorization	header		string			true	"Bearer {token}"
-//	@Success		200				{Array}		string			"Versions"
-//	@Failure		400				{object}	errs.Validation	"Bad Request"
-//	@Failure		404				{object}	errs.Custom		"Not Found"
-//	@Failure		500				{object}	errs.Custom		"Internal Server Error"
-//	@Router			/versions/:project/:language [get]
+//	@Param			project		path		string			true	"Project ID"
+//	@Param			language	path		string			true	"language tag"
+//	@Success		200			{Array}		string			"Versions"
+//	@Failure		400			{object}	errs.Validation	"Bad Request"
+//	@Failure		404			{object}	errs.Custom		"Not Found"
+//	@Failure		500			{object}	errs.Custom		"Internal Server Error"
+//	@Router			/versions/{project}/{language} [get]
 //
 // Gets the last resource.
 func initGetVersions(engine *gin.Engine) {

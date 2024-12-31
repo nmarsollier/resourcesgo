@@ -11,15 +11,14 @@ import (
 //	@Tags			Resources
 //	@Accept			json
 //	@Produce		json
-//	@Param			project			path		string				true	"Project ID"
-//	@Param			language		path		string				true	"language tag"
-//	@Param			semver			path		string				true	"Sem version, you can use wildcards + or *"
-//	@Param			Authorization	header		string				true	"Bearer {token}"
-//	@Success		200				{object}	resources.Resource	"Resource"
-//	@Failure		400				{object}	errs.Validation		"Bad Request"
-//	@Failure		404				{object}	errs.Custom			"Not Found"
-//	@Failure		500				{object}	errs.Custom			"Internal Server Error"
-//	@Router			/resources/:project/:language/:semver [get]
+//	@Param			project		path		string			true	"Project ID"
+//	@Param			language	path		string			true	"language tag"
+//	@Param			semver		path		string			true	"Sem version, you can use wildcards + or *"
+//	@Success		200			{object}	Resource		"Resource"
+//	@Failure		400			{object}	errs.Validation	"Bad Request"
+//	@Failure		404			{object}	errs.Custom		"Not Found"
+//	@Failure		500			{object}	errs.Custom		"Internal Server Error"
+//	@Router			/resources/{project}/{language}/{semver} [get]
 //
 // Gets the last resource.
 func initGetResources(engine *gin.Engine) {
@@ -41,11 +40,19 @@ func getResource(c *gin.Context) {
 		return
 	}
 
-	c.JSON(200, gin.H{
-		"id":       resource.ID,
-		"project":  resource.Project,
-		"language": resource.Language,
-		"semver":   resource.SemVer,
-		"values":   resource.Values,
+	c.JSON(200, &Resource{
+		ID:       resource.ID,
+		Project:  resource.Project,
+		Language: resource.Language,
+		SemVer:   resource.SemVer,
+		Values:   resource.Values,
 	})
+}
+
+type Resource struct {
+	ID       string            `json:"id"`
+	Project  string            `json:"project"`
+	Language string            `json:"language"`
+	SemVer   string            `json:"version"`
+	Values   map[string]string `json:"values"`
 }

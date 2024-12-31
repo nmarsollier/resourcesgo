@@ -8,7 +8,7 @@ import (
 
 //	@Summary		Create a project
 //	@Description	Create a new project tag.
-//	@Tags			Resources
+//	@Tags			Project
 //	@Accept			json
 //	@Produce		json
 //	@Param			body	body		CreateProjectRequest	true	"Project to add"

@@ -25,7 +25,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Resources"
+                    "Project"
                 ],
                 "summary": "Create a project",
                 "parameters": [
@@ -44,6 +44,56 @@ const docTemplate = `{
                         "description": "Project ID",
                         "schema": {
                             "$ref": "#/definitions/rest.IDResult"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/errs.Validation"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/errs.Custom"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/errs.Custom"
+                        }
+                    }
+                }
+            }
+        },
+        "/projects/{project}": {
+            "get": {
+                "description": "Gets projects details.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Project"
+                ],
+                "summary": "Gets a project detail",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Project ID",
+                        "name": "project",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Project",
+                        "schema": {
+                            "$ref": "#/definitions/rest.Project"
                         }
                     },
                     "400": {
@@ -119,7 +169,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/resources/:project/:language/:semver": {
+        "/resources/{project}/{language}/{semver}": {
             "get": {
                 "description": "Gets the latest resource given a semver.",
                 "consumes": [
@@ -153,20 +203,13 @@ const docTemplate = `{
                         "name": "semver",
                         "in": "path",
                         "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "Bearer {token}",
-                        "name": "Authorization",
-                        "in": "header",
-                        "required": true
                     }
                 ],
                 "responses": {
                     "200": {
                         "description": "Resource",
                         "schema": {
-                            "$ref": "#/definitions/resources.Resource"
+                            "$ref": "#/definitions/rest.Resource"
                         }
                     },
                     "400": {
@@ -222,13 +265,6 @@ const docTemplate = `{
                         "name": "semver",
                         "in": "path",
                         "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "Bearer {token}",
-                        "name": "Authorization",
-                        "in": "header",
-                        "required": true
                     }
                 ],
                 "responses": {
@@ -256,7 +292,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/versions/:project/:language": {
+        "/versions/{project}/{language}": {
             "get": {
                 "description": "Gets available versions for a resource.",
                 "consumes": [
@@ -282,13 +318,6 @@ const docTemplate = `{
                         "description": "language tag",
                         "name": "language",
                         "in": "path",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "Bearer {token}",
-                        "name": "Authorization",
-                        "in": "header",
                         "required": true
                     }
                 ],
@@ -378,46 +407,6 @@ const docTemplate = `{
                 }
             }
         },
-        "resources.Resource": {
-            "type": "object",
-            "required": [
-                "language",
-                "project",
-                "semVer"
-            ],
-            "properties": {
-                "created": {
-                    "type": "string"
-                },
-                "enabled": {
-                    "type": "boolean"
-                },
-                "id": {
-                    "type": "string"
-                },
-                "language": {
-                    "type": "string",
-                    "maxLength": 20,
-                    "minLength": 1
-                },
-                "project": {
-                    "type": "string",
-                    "maxLength": 20,
-                    "minLength": 1
-                },
-                "semVer": {
-                    "type": "string",
-                    "maxLength": 50,
-                    "minLength": 5
-                },
-                "values": {
-                    "type": "object",
-                    "additionalProperties": {
-                        "type": "string"
-                    }
-                }
-            }
-        },
         "rest.CreateProjectRequest": {
             "type": "object",
             "required": [
@@ -437,6 +426,40 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "id": {
+                    "type": "string"
+                }
+            }
+        },
+        "rest.Project": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "rest.Resource": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "language": {
+                    "type": "string"
+                },
+                "project": {
+                    "type": "string"
+                },
+                "values": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "version": {
                     "type": "string"
                 }
             }

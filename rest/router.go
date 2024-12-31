@@ -10,6 +10,7 @@ import (
 // Start this server
 func Start() {
 	engine := server.Router()
+	initGetProject(engine)
 	initGetResources(engine)
 	initGetVersions(engine)
 	initPostResources(engine)

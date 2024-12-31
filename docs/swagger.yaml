@@ -36,35 +36,6 @@ definitions:
     - values
     - version
     type: object
-  resources.Resource:
-    properties:
-      created:
-        type: string
-      enabled:
-        type: boolean
-      id:
-        type: string
-      language:
-        maxLength: 20
-        minLength: 1
-        type: string
-      project:
-        maxLength: 20
-        minLength: 1
-        type: string
-      semVer:
-        maxLength: 50
-        minLength: 5
-        type: string
-      values:
-        additionalProperties:
-          type: string
-        type: object
-    required:
-    - language
-    - project
-    - semVer
-    type: object
   rest.CreateProjectRequest:
     properties:
       id:
@@ -78,6 +49,28 @@ definitions:
   rest.IDResult:
     properties:
       id:
+        type: string
+    type: object
+  rest.Project:
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+    type: object
+  rest.Resource:
+    properties:
+      id:
+        type: string
+      language:
+        type: string
+      project:
+        type: string
+      values:
+        additionalProperties:
+          type: string
+        type: object
+      version:
         type: string
     type: object
 info:
@@ -116,7 +109,40 @@ paths:
             $ref: '#/definitions/errs.Custom'
       summary: Create a project
       tags:
-      - Resources
+      - Project
+  /projects/{project}:
+    get:
+      consumes:
+      - application/json
+      description: Gets projects details.
+      parameters:
+      - description: Project ID
+        in: path
+        name: project
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Project
+          schema:
+            $ref: '#/definitions/rest.Project'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errs.Validation'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/errs.Custom'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/errs.Custom'
+      summary: Gets a project detail
+      tags:
+      - Project
   /resources:
     post:
       consumes:
@@ -151,7 +177,7 @@ paths:
       summary: Create a resource
       tags:
       - Resources
-  /resources/:project/:language/:semver:
+  /resources/{project}/{language}/{semver}:
     delete:
       consumes:
       - application/json
@@ -170,11 +196,6 @@ paths:
       - description: Sem version, you can not use wildcards
         in: path
         name: semver
-        required: true
-        type: string
-      - description: Bearer {token}
-        in: header
-        name: Authorization
         required: true
         type: string
       produces:
@@ -217,18 +238,13 @@ paths:
         name: semver
         required: true
         type: string
-      - description: Bearer {token}
-        in: header
-        name: Authorization
-        required: true
-        type: string
       produces:
       - application/json
       responses:
         "200":
           description: Resource
           schema:
-            $ref: '#/definitions/resources.Resource'
+            $ref: '#/definitions/rest.Resource'
         "400":
           description: Bad Request
           schema:
@@ -244,7 +260,7 @@ paths:
       summary: Gets a resource
       tags:
       - Resources
-  /versions/:project/:language:
+  /versions/{project}/{language}:
     get:
       consumes:
       - application/json
@@ -258,11 +274,6 @@ paths:
       - description: language tag
         in: path
         name: language
-        required: true
-        type: string
-      - description: Bearer {token}
-        in: header
-        name: Authorization
         required: true
         type: string
       produces:

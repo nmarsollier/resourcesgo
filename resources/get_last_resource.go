@@ -4,27 +4,30 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+
+	"github.com/nmarsollier/resourcesgo/tools/errs"
+	"github.com/nmarsollier/resourcesgo/tools/logx"
 )
 
-func GetLastResource(project string, language string, semver string) (*Resource, error) {
-	version, err := getLastVersion(project, language, semver)
+func GetLastResource(logenv logx.Fields, project string, language string, semver string) (*Resource, error) {
+	version, err := getLastVersion(logenv, project, language, semver)
 	if err != nil {
 		return nil, err
 	}
 
-	return findBy(project, language, version)
+	return findBy(logenv, project, language, version)
 }
 
-func getLastVersion(project string, language string, semver string) (string, error) {
-	versions, err := findVersions(project, language)
+func getLastVersion(logenv logx.Fields, project string, language string, semver string) (string, error) {
+	versions, err := FindVersions(logenv, project, language)
 	if err != nil {
 		return "", err
 	}
 
 	var valids []string
 	for i := 0; i < len(versions); i++ {
-		if isValid(versions[i], semver) {
-			valids = append(valids, versions[i])
+		if isValid(*versions[i], semver) {
+			valids = append(valids, *versions[i])
 		}
 	}
 
@@ -34,12 +37,13 @@ func getLastVersion(project string, language string, semver string) (string, err
 		return valids[0], nil
 	}
 
-	return "", err
+	return "", errs.NotFound
 }
 
 func isValid(version string, semVer string) bool {
-	if strings.HasSuffix(semVer, "+") {
+	if strings.HasSuffix(semVer, "+") || strings.HasSuffix(semVer, "*") {
 		newSemVer := strings.ReplaceAll(semVer, "+", "")
+		newSemVer = strings.ReplaceAll(newSemVer, "*", "")
 		return strings.HasPrefix(version, newSemVer)
 	}
 

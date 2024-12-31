@@ -4,19 +4,18 @@ import (
 	"time"
 
 	"github.com/go-playground/validator/v10"
-	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 type Project struct {
-	ID      primitive.ObjectID `bson:"_id"`
-	Name    string             `bson:"name" validate:"required,min=1,max=20"`
-	Created time.Time          `bson:"created"`
-	Enabled bool               `bson:"enabled"`
+	ID      string    `db:"id" json:"id"`
+	Name    string    `db:"name" json:"name" validate:"required,min=1,max=20"`
+	Created time.Time `db:"created" json:"created"`
+	Enabled bool      `db:"enabled" json:"enabled"`
 }
 
-func newProject(name string) *Project {
+func newProject(id string, name string) *Project {
 	return &Project{
-		ID:      primitive.NewObjectID(),
+		ID:      id,
 		Enabled: true,
 		Created: time.Now(),
 		Name:    name,

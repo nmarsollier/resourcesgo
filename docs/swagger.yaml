@@ -1,0 +1,257 @@
+definitions:
+  errs.Custom:
+    properties:
+      error:
+        type: string
+    type: object
+  errs.Field:
+    properties:
+      message:
+        type: string
+      path:
+        type: string
+    type: object
+  errs.Validation:
+    properties:
+      messages:
+        items:
+          $ref: '#/definitions/errs.Field'
+        type: array
+    type: object
+  resources.CreateResourceRequest:
+    properties:
+      language:
+        type: string
+      project:
+        type: string
+      values:
+        additionalProperties:
+          type: string
+        type: object
+      version:
+        type: string
+    required:
+    - language
+    - project
+    - values
+    - version
+    type: object
+  rest.CreateProjectRequest:
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+    required:
+    - id
+    - name
+    type: object
+  rest.IDResult:
+    properties:
+      id:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /projects:
+    post:
+      consumes:
+      - application/json
+      description: Create a new project tag.
+      parameters:
+      - description: Project to add
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/rest.CreateProjectRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Project ID
+          schema:
+            $ref: '#/definitions/rest.IDResult'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errs.Validation'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/errs.Custom'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/errs.Custom'
+      summary: Create a project
+      tags:
+      - Resources
+  /resources:
+    post:
+      consumes:
+      - application/json
+      description: Create a new resource.
+      parameters:
+      - description: Project to add
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/resources.CreateResourceRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Project ID
+          schema:
+            $ref: '#/definitions/rest.IDResult'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errs.Validation'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/errs.Custom'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/errs.Custom'
+      summary: Create a resource
+      tags:
+      - Resources
+  /resources/:project/:language/:semver:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a resource.
+      parameters:
+      - description: Project ID
+        in: path
+        name: project
+        required: true
+        type: string
+      - description: language tag
+        in: path
+        name: language
+        required: true
+        type: string
+      - description: Sem version, you can not use wildcards
+        in: path
+        name: semver
+        required: true
+        type: string
+      - description: Bearer {token}
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: No Content
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errs.Validation'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/errs.Custom'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/errs.Custom'
+      summary: Marks a resource as deleted.
+      tags:
+      - Resources
+    get:
+      consumes:
+      - application/json
+      description: Gets the latest resource given a semver.
+      parameters:
+      - description: Project ID
+        in: path
+        name: project
+        required: true
+        type: string
+      - description: language tag
+        in: path
+        name: language
+        required: true
+        type: string
+      - description: Sem version, you can use wildcards + or *
+        in: path
+        name: semver
+        required: true
+        type: string
+      - description: Bearer {token}
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errs.Validation'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/errs.Custom'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/errs.Custom'
+      summary: Gets a resource
+      tags:
+      - Resources
+  /versions/:project/:language:
+    get:
+      consumes:
+      - application/json
+      description: Gets available versions for a resource.
+      parameters:
+      - description: Project ID
+        in: path
+        name: project
+        required: true
+        type: string
+      - description: language tag
+        in: path
+        name: language
+        required: true
+        type: string
+      - description: Bearer {token}
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Versions
+          schema:
+            type: Array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errs.Validation'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/errs.Custom'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/errs.Custom'
+      summary: Gets versions
+      tags:
+      - Resources
+swagger: "2.0"

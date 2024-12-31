@@ -4,17 +4,17 @@ import (
 	"time"
 
 	"github.com/go-playground/validator/v10"
-	"go.mongodb.org/mongo-driver/bson/primitive"
+	"github.com/google/uuid"
 )
 
 type Resource struct {
-	ID       primitive.ObjectID `bson:"_id"`
-	Project  string             `bson:"project" validate:"required,min=1,max=20"`
-	Language string             `bson:"language" validate:"required,min=1,max=20"`
-	SemVer   string             `bson:"semVer" validate:"required,min=5,max=50"`
-	Values   map[string]string  `bson:"values"`
-	Created  time.Time          `bson:"created"`
-	Enabled  bool               `bson:"enabled"`
+	ID       string            `db:"id" json:"id"`
+	Project  string            `db:"project" json:"project" validate:"required,min=1,max=20"`
+	Language string            `db:"language" json:"language" validate:"required,min=1,max=20"`
+	SemVer   string            `db:"sem_ver" json:"semVer" validate:"required,min=5,max=50"`
+	Values   map[string]string `db:"values" json:"values"`
+	Created  time.Time         `db:"created" json:"created"`
+	Enabled  bool              `db:"enabled" json:"enabled"`
 }
 
 func newResource(
@@ -24,7 +24,7 @@ func newResource(
 	values map[string]string,
 ) *Resource {
 	return &Resource{
-		ID:       primitive.NewObjectID(),
+		ID:       uuid.New().String(),
 		Project:  project,
 		Language: language,
 		SemVer:   semVer,

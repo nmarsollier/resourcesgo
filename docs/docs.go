@@ -163,6 +163,12 @@ const docTemplate = `{
                     }
                 ],
                 "responses": {
+                    "200": {
+                        "description": "Resource",
+                        "schema": {
+                            "$ref": "#/definitions/resources.Resource"
+                        }
+                    },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
@@ -369,6 +375,46 @@ const docTemplate = `{
                 },
                 "version": {
                     "type": "string"
+                }
+            }
+        },
+        "resources.Resource": {
+            "type": "object",
+            "required": [
+                "language",
+                "project",
+                "semVer"
+            ],
+            "properties": {
+                "created": {
+                    "type": "string"
+                },
+                "enabled": {
+                    "type": "boolean"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "language": {
+                    "type": "string",
+                    "maxLength": 20,
+                    "minLength": 1
+                },
+                "project": {
+                    "type": "string",
+                    "maxLength": 20,
+                    "minLength": 1
+                },
+                "semVer": {
+                    "type": "string",
+                    "maxLength": 50,
+                    "minLength": 5
+                },
+                "values": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
                 }
             }
         },

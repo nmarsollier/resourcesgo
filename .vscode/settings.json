@@ -1,0 +1,19 @@
+{
+  "files.exclude": {
+    "**/.git": false,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true,
+    "**/Thumbs.db": true,
+    "**/node_modules": true,
+    "**/.expo": true,
+    "**/.vscode": true,
+    "**/.github": true,
+    "**/.history": true,
+    "**/android": true,
+    "**/ios": true,
+    "**/.husky": true
+  },
+  "explorerExclude.backup": {}
+}

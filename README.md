@@ -1,24 +1,21 @@
 # SemVer Resource Server
 
-A microservice for i18n json resources, providing a [semver](https://devhints.io/semver) strategy to 
+A microservice for i18n json resources, providing a [semver](https://devhints.io/semver) strategy to
 store and retrieve them.
 
 The idea is to store project json resource files by language, and provide a version for them,
 so clients could retrieve documents for the desired project and language plus using semver semantic
 to provide version compatibility (useful on mobile where app version is hard to ensure).
 
-We need a mongoose database :
-
-## MongoDB
+## PostgreSQL
 
 ```bash
-docker run -d --name ec-mongo -p 27017:27017 mongo:4.0.18-xenial
+docker run -d --name ec-postgres -p 5432:5432 -e POSTGRES_HOST_AUTH_METHOD=trust postgres:13
 ```
 
-## Go
+## Go 1.22+
 
 Go [golang.org](https://golang.org/doc/install)
-
 
 ```bash
 git clone https://github.com/nmarsollier/resourcesgo $GOPATH/src/github.com/nmarsollier/resourcesgo
@@ -27,8 +24,6 @@ git clone https://github.com/nmarsollier/resourcesgo $GOPATH/src/github.com/nmar
 ## Run
 
 ```bash
-go mod download
 go install
 resourcesgo
 ```
-

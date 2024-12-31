@@ -36,6 +36,35 @@ definitions:
     - values
     - version
     type: object
+  resources.Resource:
+    properties:
+      created:
+        type: string
+      enabled:
+        type: boolean
+      id:
+        type: string
+      language:
+        maxLength: 20
+        minLength: 1
+        type: string
+      project:
+        maxLength: 20
+        minLength: 1
+        type: string
+      semVer:
+        maxLength: 50
+        minLength: 5
+        type: string
+      values:
+        additionalProperties:
+          type: string
+        type: object
+    required:
+    - language
+    - project
+    - semVer
+    type: object
   rest.CreateProjectRequest:
     properties:
       id:
@@ -196,6 +225,10 @@ paths:
       produces:
       - application/json
       responses:
+        "200":
+          description: Resource
+          schema:
+            $ref: '#/definitions/resources.Resource'
         "400":
           description: Bad Request
           schema:

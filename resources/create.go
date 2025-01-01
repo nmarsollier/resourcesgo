@@ -7,15 +7,17 @@ import (
 	"github.com/nmarsollier/resourcesgo/tools/logx"
 )
 
+var dbExec = db.Exec
+
 func Create(
-	logenv logx.Fields,
+	fields logx.Fields,
 	resource *Resource,
 ) (string, error) {
 	if err := validator.New().Struct(resource); err != nil {
 		return "", err
 	}
 
-	resource, err := insert(logenv, resource)
+	resource, err := insert(fields, resource)
 
 	if err != nil {
 		switch db.ErrorCode(err) {
@@ -31,10 +33,10 @@ func Create(
 }
 
 func insert(
-	logenv logx.Fields,
+	fields logx.Fields,
 	resource *Resource,
 ) (*Resource, error) {
-	err := db.Exec(logenv,
+	err := dbExec(fields,
 		`
 		INSERT INTO resources (id, project, language, sem_ver, values, created, enabled)
 		VALUES ($1, $2, $3, $4, $5, $6, $7);

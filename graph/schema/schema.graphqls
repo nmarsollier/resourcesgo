@@ -1,5 +1,6 @@
 type Mutation {
   newProject(id: String!, name: String!): String!
+  newLanguage(id: String!, name: String!): String!
   newResource(request: NewResourceInput!): String!
   deleteResource(
     projectId: String!
@@ -10,6 +11,7 @@ type Mutation {
 
 type Query {
   getProject(id: String!): Project
+  getLanguage(id: String!): Language
   getResource(
     projectId: String!
     languageId: String!
@@ -44,6 +46,11 @@ type KeyValue {
 }
 
 type Project @key(fields: "id") {
+  id: String!
+  name: String!
+}
+
+type Language @key(fields: "id") {
   id: String!
   name: String!
 }

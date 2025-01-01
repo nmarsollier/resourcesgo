@@ -1,4 +1,4 @@
-package projects
+package languages
 
 import (
 	"github.com/nmarsollier/resourcesgo/tools/db"
@@ -9,16 +9,20 @@ import (
 var dbExec = db.Exec
 
 func Create(fields logx.Fields, id string, name string) (string, error) {
-	project := newProject(id, name)
+	language := newLanguage(id, name)
 
-	if err := project.ValidateSchema(); err != nil {
+	if err := language.ValidateSchema(); err != nil {
 		return "", err
 	}
 
 	err := dbExec(
 		fields,
-		"INSERT INTO projects (id, name, created, enabled) VALUES ($1, $2, $3, $4)",
-		project.ID, project.Name, project.Created, project.Enabled)
+		"INSERT INTO languages (id, name, created, enabled) VALUES ($1, $2, $3, $4)",
+		language.ID,
+		language.Name,
+		language.Created,
+		language.Enabled,
+	)
 
 	if err != nil {
 		switch db.ErrorCode(err) {
@@ -29,5 +33,5 @@ func Create(fields logx.Fields, id string, name string) (string, error) {
 		return "", err
 	}
 
-	return project.ID, nil
+	return language.ID, nil
 }

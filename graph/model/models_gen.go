@@ -12,6 +12,13 @@ type KeyValueInput struct {
 	Value string `json:"value"`
 }
 
+type Language struct {
+	ID   string `json:"id"`
+	Name string `json:"name"`
+}
+
+func (Language) IsEntity() {}
+
 type Mutation struct {
 }
 

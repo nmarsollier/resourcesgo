@@ -6,18 +6,18 @@ import (
 	"github.com/nmarsollier/resourcesgo/tools/logx"
 )
 
-func Exec(logenv logx.Fields, query string, args ...any) (err error) {
-	conn, err := getDBConn(logenv)
+func Exec(fields logx.Fields, query string, args ...any) (err error) {
+	conn, err := getDBConn(fields)
 
 	if err != nil {
-		logx.Error(logenv, err)
+		logx.Error(fields, err)
 		return
 	}
 
 	_, err = conn.Exec(context.Background(), query, args...)
 	if err != nil {
 		checkConnectionError(err)
-		logx.Error(logenv, err)
+		logx.Error(fields, err)
 	}
 
 	return

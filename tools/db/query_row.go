@@ -6,10 +6,10 @@ import (
 	"github.com/nmarsollier/resourcesgo/tools/logx"
 )
 
-func QueryRow[T any](logenv logx.Fields, query string, args ...interface{}) (*T, error) {
-	conn, err := getDBConn(logenv)
+func QueryRow[T any](fields logx.Fields, query string, args ...interface{}) (*T, error) {
+	conn, err := getDBConn(fields)
 	if err != nil {
-		logx.Error(logenv, err)
+		logx.Error(fields, err)
 		return nil, err
 	}
 
@@ -18,7 +18,7 @@ func QueryRow[T any](logenv logx.Fields, query string, args ...interface{}) (*T,
 	result := new(T)
 	if err := row.Scan(fieldAddrs(result)...); err != nil {
 		checkConnectionError(err)
-		logx.Error(logenv, err)
+		logx.Error(fields, err)
 		return nil, err
 	}
 

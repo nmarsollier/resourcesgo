@@ -11,10 +11,12 @@ import (
 func Start() {
 	engine := server.Router()
 	initGetProject(engine)
+	initGetLanguage(engine)
 	initGetResources(engine)
 	initGetVersions(engine)
 	initPostResources(engine)
 	initDeleteResource(engine)
 	initPostProjects(engine)
+	initPostLanguage(engine)
 	engine.Run(fmt.Sprintf(":%d", env.Get().Port))
 }

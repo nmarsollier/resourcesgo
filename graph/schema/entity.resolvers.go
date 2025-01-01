@@ -9,9 +9,23 @@ import (
 
 	"github.com/nmarsollier/resourcesgo/graph/model"
 	"github.com/nmarsollier/resourcesgo/graph/tools"
+	"github.com/nmarsollier/resourcesgo/languages"
 	"github.com/nmarsollier/resourcesgo/projects"
 	"github.com/nmarsollier/resourcesgo/resources"
 )
+
+// FindLanguageByID is the resolver for the findLanguageByID field.
+func (r *entityResolver) FindLanguageByID(ctx context.Context, id string) (*model.Language, error) {
+	prj, err := languages.FindByID(tools.LoggerFields(ctx), id)
+	if err != nil {
+		return nil, err
+	}
+
+	return &model.Language{
+		ID:   prj.ID,
+		Name: prj.Name,
+	}, nil
+}
 
 // FindProjectByID is the resolver for the findProjectByID field.
 func (r *entityResolver) FindProjectByID(ctx context.Context, id string) (*model.Project, error) {

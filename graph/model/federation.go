@@ -153,6 +153,25 @@ func (ec *executionContext) resolveEntity(
 	}()
 
 	switch typeName {
+	case "Language":
+		resolverName, err := entityResolverNameForLanguage(ctx, rep)
+		if err != nil {
+			return nil, fmt.Errorf(`finding resolver for Entity "Language": %w`, err)
+		}
+		switch resolverName {
+
+		case "findLanguageByID":
+			id0, err := ec.unmarshalNString2string(ctx, rep["id"])
+			if err != nil {
+				return nil, fmt.Errorf(`unmarshalling param 0 for findLanguageByID(): %w`, err)
+			}
+			entity, err := ec.resolvers.Entity().FindLanguageByID(ctx, id0)
+			if err != nil {
+				return nil, fmt.Errorf(`resolving Entity "Language": %w`, err)
+			}
+
+			return entity, nil
+		}
 	case "Project":
 		resolverName, err := entityResolverNameForProject(ctx, rep)
 		if err != nil {
@@ -215,6 +234,33 @@ func (ec *executionContext) resolveManyEntities(
 	default:
 		return errors.New("unknown type: " + typeName)
 	}
+}
+
+func entityResolverNameForLanguage(ctx context.Context, rep EntityRepresentation) (string, error) {
+	for {
+		var (
+			m   EntityRepresentation
+			val interface{}
+			ok  bool
+		)
+		_ = val
+		// if all of the KeyFields values for this resolver are null,
+		// we shouldn't use use it
+		allNull := true
+		m = rep
+		val, ok = m["id"]
+		if !ok {
+			break
+		}
+		if allNull {
+			allNull = val == nil
+		}
+		if allNull {
+			break
+		}
+		return "findLanguageByID", nil
+	}
+	return "", fmt.Errorf("%w for Language", ErrTypeNotFound)
 }
 
 func entityResolverNameForProject(ctx context.Context, rep EntityRepresentation) (string, error) {

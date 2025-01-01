@@ -16,24 +16,24 @@ var instance *pgxpool.Pool
 const ERR_EXIST = 23505
 const ERR_FOREIGN_KEY = 23503
 
-func getDBConn(logenv logx.Fields) (*pgxpool.Pool, error) {
+func getDBConn(fields logx.Fields) (*pgxpool.Pool, error) {
 	if instance != nil {
 		return instance, nil
 	}
 
 	config, err := pgxpool.ParseConfig(env.Get().PostgresURL)
 	if err != nil {
-		logx.Error(logenv, err)
+		logx.Error(fields, err)
 		return nil, err
 	}
 
 	instance, err = pgxpool.NewWithConfig(context.Background(), config)
 	if err != nil {
-		logx.Error(logenv, err)
+		logx.Error(fields, err)
 		return nil, err
 	}
 
-	logx.Info(logenv, "Postgres Connected")
+	logx.Info(fields, "Postgres Connected")
 
 	return instance, nil
 }

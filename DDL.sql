@@ -5,6 +5,13 @@ CREATE TABLE projects (
     enabled boolean NOT NULL
 );
 
+CREATE TABLE languages (
+    id character varying NOT NULL,
+    name character varying(20) NOT NULL,
+    created timestamp without time zone NOT NULL,
+    enabled boolean NOT NULL
+);
+
 
 CREATE TABLE resources (
     id character varying NOT NULL,
@@ -20,6 +27,8 @@ CREATE TABLE resources (
 ALTER TABLE ONLY projects
     ADD CONSTRAINT projects_pkey PRIMARY KEY (id);
 
+ALTER TABLE ONLY languages
+    ADD CONSTRAINT languages_pkey PRIMARY KEY (id);
 
 ALTER TABLE ONLY resources
     ADD CONSTRAINT resources_pkey PRIMARY KEY (id);
@@ -28,7 +37,8 @@ ALTER TABLE ONLY resources
 ALTER TABLE ONLY resources
     ADD CONSTRAINT unique_project_language_semver UNIQUE (project, language, sem_ver);
 
+ALTER TABLE ONLY resources
+    ADD CONSTRAINT fk_project FOREIGN KEY (project) REFERENCES projects(id);
 
 ALTER TABLE ONLY resources
-    ADD CONSTRAINT fk_project FOREIGN KEY (project) REFERENCES public.projects(id);
-
+    ADD CONSTRAINT fk_language FOREIGN KEY (language) REFERENCES languages(id);

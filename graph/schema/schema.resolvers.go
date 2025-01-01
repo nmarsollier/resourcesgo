@@ -9,6 +9,7 @@ import (
 
 	"github.com/nmarsollier/resourcesgo/graph/model"
 	"github.com/nmarsollier/resourcesgo/graph/tools"
+	"github.com/nmarsollier/resourcesgo/languages"
 	"github.com/nmarsollier/resourcesgo/projects"
 	"github.com/nmarsollier/resourcesgo/resources"
 )
@@ -16,6 +17,11 @@ import (
 // NewProject is the resolver for the newProject field.
 func (r *mutationResolver) NewProject(ctx context.Context, id string, name string) (string, error) {
 	return projects.Create(tools.LoggerFields(ctx), id, name)
+}
+
+// NewLanguage is the resolver for the newLanguage field.
+func (r *mutationResolver) NewLanguage(ctx context.Context, id string, name string) (string, error) {
+	return languages.Create(tools.LoggerFields(ctx), id, name)
 }
 
 // NewResource is the resolver for the newResource field.
@@ -42,6 +48,19 @@ func (r *queryResolver) GetProject(ctx context.Context, id string) (*model.Proje
 	}
 
 	return &model.Project{
+		ID:   prj.ID,
+		Name: prj.Name,
+	}, nil
+}
+
+// GetLanguage is the resolver for the getLanguage field.
+func (r *queryResolver) GetLanguage(ctx context.Context, id string) (*model.Language, error) {
+	prj, err := languages.FindByID(tools.LoggerFields(ctx), id)
+	if err != nil {
+		return nil, err
+	}
+
+	return &model.Language{
 		ID:   prj.ID,
 		Name: prj.Name,
 	}, nil

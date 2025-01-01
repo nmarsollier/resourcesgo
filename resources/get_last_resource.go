@@ -9,17 +9,17 @@ import (
 	"github.com/nmarsollier/resourcesgo/tools/logx"
 )
 
-func GetLastResource(logenv logx.Fields, project string, language string, semver string) (*Resource, error) {
-	version, err := getLastVersion(logenv, project, language, semver)
+func GetLastResource(fields logx.Fields, project string, language string, semver string) (*Resource, error) {
+	version, err := getLastVersion(fields, project, language, semver)
 	if err != nil {
 		return nil, err
 	}
 
-	return findBy(logenv, project, language, version)
+	return findBy(fields, project, language, version)
 }
 
-func getLastVersion(logenv logx.Fields, project string, language string, semver string) (string, error) {
-	versions, err := FindVersions(logenv, project, language)
+func getLastVersion(fields logx.Fields, project string, language string, semver string) (string, error) {
+	versions, err := FindVersions(fields, project, language)
 	if err != nil {
 		return "", err
 	}

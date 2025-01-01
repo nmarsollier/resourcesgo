@@ -5,9 +5,9 @@ import (
 	"github.com/nmarsollier/resourcesgo/tools/logx"
 )
 
-func FindByID(logenv logx.Fields, id string) (project *Resource, err error) {
-	project, err = db.QueryRow[Resource](
-		logenv,
+func FindByID(fields logx.Fields, id string) (*Resource, error) {
+	return db.QueryRow[Resource](
+		fields,
 		`
 		SELECT id, project, language, sem_ver, values, created, enabled 
 		FROM resources 
@@ -15,6 +15,4 @@ func FindByID(logenv logx.Fields, id string) (project *Resource, err error) {
 		`,
 		id,
 	)
-
-	return
 }

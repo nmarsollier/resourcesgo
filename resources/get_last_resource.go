@@ -26,8 +26,8 @@ func getLastVersion(logenv logx.Fields, project string, language string, semver 
 
 	var valids []string
 	for i := 0; i < len(versions); i++ {
-		if isValid(*versions[i], semver) {
-			valids = append(valids, *versions[i])
+		if isValid(versions[i], semver) {
+			valids = append(valids, versions[i])
 		}
 	}
 

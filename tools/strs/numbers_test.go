@@ -6,6 +6,26 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+func TestAtoiZero(t *testing.T) {
+	tests := []struct {
+		input    string
+		expected int
+	}{
+		{"123", 123},
+		{"0", 0},
+		{"-123", -123},
+		{"abc", 0},
+		{"", 0},
+	}
+
+	for _, test := range tests {
+		result := AtoiZero(test.input)
+		if result != test.expected {
+			t.Errorf("AtoiZero(%q) = %d; want %d", test.input, result, test.expected)
+		}
+	}
+}
+
 func TestAtoiDefault(t *testing.T) {
 	tests := []struct {
 		input    string

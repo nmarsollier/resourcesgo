@@ -6,11 +6,11 @@ import (
 	"github.com/nmarsollier/resourcesgo/tools/logx"
 )
 
-func Create(logenv logx.Fields, id string, name string) (*Project, error) {
+func Create(logenv logx.Fields, id string, name string) (string, error) {
 	project := newProject(id, name)
 
 	if err := project.ValidateSchema(); err != nil {
-		return nil, err
+		return "", err
 	}
 
 	err := db.Exec(
@@ -21,11 +21,11 @@ func Create(logenv logx.Fields, id string, name string) (*Project, error) {
 	if err != nil {
 		switch db.ErrorCode(err) {
 		case db.ERR_EXIST:
-			return nil, errs.AlreadyExist
+			return "", errs.AlreadyExist
 		}
 
-		return nil, err
+		return "", err
 	}
 
-	return project, nil
+	return project.ID, nil
 }

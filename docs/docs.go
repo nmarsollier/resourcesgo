@@ -67,7 +67,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/projects/{project}": {
+        "/projects/{projectId}": {
             "get": {
                 "description": "Gets projects details.",
                 "consumes": [
@@ -84,7 +84,7 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "description": "Project ID",
-                        "name": "project",
+                        "name": "projectId",
                         "in": "path",
                         "required": true
                     }
@@ -137,7 +137,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/resources.CreateResourceRequest"
+                            "$ref": "#/definitions/rest.CreateResourceRequest"
                         }
                     }
                 ],
@@ -169,7 +169,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/resources/{project}/{language}/{semver}": {
+        "/resources/{projectId}/{languageId}/{semver}": {
             "get": {
                 "description": "Gets the latest resource given a semver.",
                 "consumes": [
@@ -186,14 +186,14 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "description": "Project ID",
-                        "name": "project",
+                        "name": "projectId",
                         "in": "path",
                         "required": true
                     },
                     {
                         "type": "string",
                         "description": "language tag",
-                        "name": "language",
+                        "name": "languageId",
                         "in": "path",
                         "required": true
                     },
@@ -248,14 +248,14 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "description": "Project ID",
-                        "name": "project",
+                        "name": "projectId",
                         "in": "path",
                         "required": true
                     },
                     {
                         "type": "string",
                         "description": "language tag",
-                        "name": "language",
+                        "name": "languageId",
                         "in": "path",
                         "required": true
                     },
@@ -292,7 +292,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/versions/{project}/{language}": {
+        "/versions/{projectId}/{languageId}": {
             "get": {
                 "description": "Gets available versions for a resource.",
                 "consumes": [
@@ -309,14 +309,14 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "description": "Project ID",
-                        "name": "project",
+                        "name": "projectId",
                         "in": "path",
                         "required": true
                     },
                     {
                         "type": "string",
                         "description": "language tag",
-                        "name": "language",
+                        "name": "languageId",
                         "in": "path",
                         "required": true
                     }
@@ -381,32 +381,6 @@ const docTemplate = `{
                 }
             }
         },
-        "resources.CreateResourceRequest": {
-            "type": "object",
-            "required": [
-                "language",
-                "project",
-                "values",
-                "version"
-            ],
-            "properties": {
-                "language": {
-                    "type": "string"
-                },
-                "project": {
-                    "type": "string"
-                },
-                "values": {
-                    "type": "object",
-                    "additionalProperties": {
-                        "type": "string"
-                    }
-                },
-                "version": {
-                    "type": "string"
-                }
-            }
-        },
         "rest.CreateProjectRequest": {
             "type": "object",
             "required": [
@@ -419,6 +393,32 @@ const docTemplate = `{
                 },
                 "name": {
                     "type": "string"
+                }
+            }
+        },
+        "rest.CreateResourceRequest": {
+            "type": "object",
+            "required": [
+                "languageId",
+                "projectId",
+                "semver",
+                "values"
+            ],
+            "properties": {
+                "languageId": {
+                    "type": "string"
+                },
+                "projectId": {
+                    "type": "string"
+                },
+                "semver": {
+                    "type": "string"
+                },
+                "values": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
                 }
             }
         },
@@ -447,10 +447,13 @@ const docTemplate = `{
                 "id": {
                     "type": "string"
                 },
-                "language": {
+                "languageId": {
                     "type": "string"
                 },
-                "project": {
+                "projectId": {
+                    "type": "string"
+                },
+                "semver": {
                     "type": "string"
                 },
                 "values": {
@@ -458,9 +461,6 @@ const docTemplate = `{
                     "additionalProperties": {
                         "type": "string"
                     }
-                },
-                "version": {
-                    "type": "string"
                 }
             }
         }

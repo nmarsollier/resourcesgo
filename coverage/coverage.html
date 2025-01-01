@@ -1,0 +1,1862 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>docs: Go Coverage Report</title>
+		<style>
+			body {
+				background: black;
+				color: rgb(80, 80, 80);
+			}
+			body, pre, #legend span {
+				font-family: Menlo, monospace;
+				font-weight: bold;
+			}
+			#topbar {
+				background: black;
+				position: fixed;
+				top: 0; left: 0; right: 0;
+				height: 42px;
+				border-bottom: 1px solid rgb(80, 80, 80);
+			}
+			#content {
+				margin-top: 50px;
+			}
+			#nav, #legend {
+				float: left;
+				margin-left: 10px;
+			}
+			#legend {
+				margin-top: 12px;
+			}
+			#nav {
+				margin-top: 10px;
+			}
+			#legend span {
+				margin: 0 5px;
+			}
+			.cov0 { color: rgb(192, 0, 0) }
+.cov1 { color: rgb(128, 128, 128) }
+.cov2 { color: rgb(116, 140, 131) }
+.cov3 { color: rgb(104, 152, 134) }
+.cov4 { color: rgb(92, 164, 137) }
+.cov5 { color: rgb(80, 176, 140) }
+.cov6 { color: rgb(68, 188, 143) }
+.cov7 { color: rgb(56, 200, 146) }
+.cov8 { color: rgb(44, 212, 149) }
+.cov9 { color: rgb(32, 224, 152) }
+.cov10 { color: rgb(20, 236, 155) }
+
+		</style>
+	</head>
+	<body>
+		<div id="topbar">
+			<div id="nav">
+				<select id="files">
+				
+				<option value="file0">github.com/nmarsollier/resourcesgo/docs/docs.go (0.0%)</option>
+				
+				<option value="file1">github.com/nmarsollier/resourcesgo/main.go (0.0%)</option>
+				
+				<option value="file2">github.com/nmarsollier/resourcesgo/projects/create.go (0.0%)</option>
+				
+				<option value="file3">github.com/nmarsollier/resourcesgo/projects/find_by_id.go (0.0%)</option>
+				
+				<option value="file4">github.com/nmarsollier/resourcesgo/projects/schema.go (0.0%)</option>
+				
+				<option value="file5">github.com/nmarsollier/resourcesgo/resources/create.go (0.0%)</option>
+				
+				<option value="file6">github.com/nmarsollier/resourcesgo/resources/delete.go (0.0%)</option>
+				
+				<option value="file7">github.com/nmarsollier/resourcesgo/resources/find_by.go (0.0%)</option>
+				
+				<option value="file8">github.com/nmarsollier/resourcesgo/resources/find_versions.go (0.0%)</option>
+				
+				<option value="file9">github.com/nmarsollier/resourcesgo/resources/get_last_resource.go (0.0%)</option>
+				
+				<option value="file10">github.com/nmarsollier/resourcesgo/resources/schema.go (0.0%)</option>
+				
+				<option value="file11">github.com/nmarsollier/resourcesgo/rest/delete_resource.go (0.0%)</option>
+				
+				<option value="file12">github.com/nmarsollier/resourcesgo/rest/get_project.go (0.0%)</option>
+				
+				<option value="file13">github.com/nmarsollier/resourcesgo/rest/get_resource.go (0.0%)</option>
+				
+				<option value="file14">github.com/nmarsollier/resourcesgo/rest/get_versions.go (0.0%)</option>
+				
+				<option value="file15">github.com/nmarsollier/resourcesgo/rest/post_project.go (0.0%)</option>
+				
+				<option value="file16">github.com/nmarsollier/resourcesgo/rest/post_resources.go (0.0%)</option>
+				
+				<option value="file17">github.com/nmarsollier/resourcesgo/rest/router.go (0.0%)</option>
+				
+				<option value="file18">github.com/nmarsollier/resourcesgo/rest/server/engine.go (0.0%)</option>
+				
+				<option value="file19">github.com/nmarsollier/resourcesgo/rest/server/error_handler.go (0.0%)</option>
+				
+				<option value="file20">github.com/nmarsollier/resourcesgo/rest/server/logger_middleware.go (0.0%)</option>
+				
+				<option value="file21">github.com/nmarsollier/resourcesgo/tools/db/conn.go (0.0%)</option>
+				
+				<option value="file22">github.com/nmarsollier/resourcesgo/tools/db/exec.go (0.0%)</option>
+				
+				<option value="file23">github.com/nmarsollier/resourcesgo/tools/db/query.go (0.0%)</option>
+				
+				<option value="file24">github.com/nmarsollier/resourcesgo/tools/db/query_row.go (0.0%)</option>
+				
+				<option value="file25">github.com/nmarsollier/resourcesgo/tools/db/tools.go (0.0%)</option>
+				
+				<option value="file26">github.com/nmarsollier/resourcesgo/tools/env/env.go (0.0%)</option>
+				
+				<option value="file27">github.com/nmarsollier/resourcesgo/tools/errs/custom.go (0.0%)</option>
+				
+				<option value="file28">github.com/nmarsollier/resourcesgo/tools/errs/validation.go (0.0%)</option>
+				
+				<option value="file29">github.com/nmarsollier/resourcesgo/tools/logx/fields.go (0.0%)</option>
+				
+				<option value="file30">github.com/nmarsollier/resourcesgo/tools/logx/logger.go (100.0%)</option>
+				
+				<option value="file31">github.com/nmarsollier/resourcesgo/tools/strs/json.go (100.0%)</option>
+				
+				<option value="file32">github.com/nmarsollier/resourcesgo/tools/strs/numbers.go (100.0%)</option>
+				
+				</select>
+			</div>
+			<div id="legend">
+				<span>not tracked</span>
+			
+				<span class="cov0">not covered</span>
+				<span class="cov8">covered</span>
+			
+			</div>
+		</div>
+		<div id="content">
+		
+		<pre class="file" id="file0" style="display: none">// Package docs Code generated by swaggo/swag. DO NOT EDIT
+package docs
+
+import "github.com/swaggo/swag"
+
+const docTemplate = `{
+    "schemes": {{ marshal .Schemes }},
+    "swagger": "2.0",
+    "info": {
+        "description": "{{escape .Description}}",
+        "title": "{{.Title}}",
+        "contact": {},
+        "version": "{{.Version}}"
+    },
+    "host": "{{.Host}}",
+    "basePath": "{{.BasePath}}",
+    "paths": {
+        "/projects": {
+            "post": {
+                "description": "Create a new project tag.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Project"
+                ],
+                "summary": "Create a project",
+                "parameters": [
+                    {
+                        "description": "Project to add",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/rest.CreateProjectRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Project ID",
+                        "schema": {
+                            "$ref": "#/definitions/rest.IDResult"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/errs.Validation"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/errs.Custom"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/errs.Custom"
+                        }
+                    }
+                }
+            }
+        },
+        "/projects/{project}": {
+            "get": {
+                "description": "Gets projects details.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Project"
+                ],
+                "summary": "Gets a project detail",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Project ID",
+                        "name": "project",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Project",
+                        "schema": {
+                            "$ref": "#/definitions/rest.Project"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/errs.Validation"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/errs.Custom"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/errs.Custom"
+                        }
+                    }
+                }
+            }
+        },
+        "/resources": {
+            "post": {
+                "description": "Create a new resource.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Resources"
+                ],
+                "summary": "Create a resource",
+                "parameters": [
+                    {
+                        "description": "Project to add",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/resources.CreateResourceRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Project ID",
+                        "schema": {
+                            "$ref": "#/definitions/rest.IDResult"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/errs.Validation"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/errs.Custom"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/errs.Custom"
+                        }
+                    }
+                }
+            }
+        },
+        "/resources/{project}/{language}/{semver}": {
+            "get": {
+                "description": "Gets the latest resource given a semver.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Resources"
+                ],
+                "summary": "Gets a resource",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Project ID",
+                        "name": "project",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "language tag",
+                        "name": "language",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Sem version, you can use wildcards + or *",
+                        "name": "semver",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Resource",
+                        "schema": {
+                            "$ref": "#/definitions/rest.Resource"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/errs.Validation"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/errs.Custom"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/errs.Custom"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete a resource.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Resources"
+                ],
+                "summary": "Marks a resource as deleted.",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Project ID",
+                        "name": "project",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "language tag",
+                        "name": "language",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Sem version, you can not use wildcards",
+                        "name": "semver",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "No Content"
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/errs.Validation"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/errs.Custom"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/errs.Custom"
+                        }
+                    }
+                }
+            }
+        },
+        "/versions/{project}/{language}": {
+            "get": {
+                "description": "Gets available versions for a resource.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Resources"
+                ],
+                "summary": "Gets versions",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Project ID",
+                        "name": "project",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "language tag",
+                        "name": "language",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Versions",
+                        "schema": {
+                            "type": "Array"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/errs.Validation"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/errs.Custom"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/errs.Custom"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "errs.Custom": {
+            "type": "object",
+            "properties": {
+                "error": {
+                    "type": "string"
+                }
+            }
+        },
+        "errs.Field": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string"
+                },
+                "path": {
+                    "type": "string"
+                }
+            }
+        },
+        "errs.Validation": {
+            "type": "object",
+            "properties": {
+                "messages": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/errs.Field"
+                    }
+                }
+            }
+        },
+        "resources.CreateResourceRequest": {
+            "type": "object",
+            "required": [
+                "language",
+                "project",
+                "values",
+                "version"
+            ],
+            "properties": {
+                "language": {
+                    "type": "string"
+                },
+                "project": {
+                    "type": "string"
+                },
+                "values": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "version": {
+                    "type": "string"
+                }
+            }
+        },
+        "rest.CreateProjectRequest": {
+            "type": "object",
+            "required": [
+                "id",
+                "name"
+            ],
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "rest.IDResult": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                }
+            }
+        },
+        "rest.Project": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "rest.Resource": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "language": {
+                    "type": "string"
+                },
+                "project": {
+                    "type": "string"
+                },
+                "values": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "version": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}`
+
+// SwaggerInfo holds exported Swagger Info so clients can modify it
+var SwaggerInfo = &amp;swag.Spec{
+        Version:          "",
+        Host:             "",
+        BasePath:         "",
+        Schemes:          []string{},
+        Title:            "",
+        Description:      "",
+        InfoInstanceName: "swagger",
+        SwaggerTemplate:  docTemplate,
+        LeftDelim:        "{{",
+        RightDelim:       "}}",
+}
+
+func init() <span class="cov0" title="0">{
+        swag.Register(SwaggerInfo.InstanceName(), SwaggerInfo)
+}</span>
+</pre>
+		
+		<pre class="file" id="file1" style="display: none">package main
+
+import (
+        routes "github.com/nmarsollier/resourcesgo/rest"
+)
+
+func main() <span class="cov0" title="0">{
+        routes.Start()
+}</span>
+</pre>
+		
+		<pre class="file" id="file2" style="display: none">package projects
+
+import (
+        "github.com/nmarsollier/resourcesgo/tools/db"
+        "github.com/nmarsollier/resourcesgo/tools/errs"
+        "github.com/nmarsollier/resourcesgo/tools/logx"
+)
+
+func Create(logenv logx.Fields, id string, name string) (*Project, error) <span class="cov0" title="0">{
+        project := newProject(id, name)
+
+        if err := project.ValidateSchema(); err != nil </span><span class="cov0" title="0">{
+                return nil, err
+        }</span>
+
+        <span class="cov0" title="0">err := db.Exec(
+                logenv,
+                "INSERT INTO projects (id, name, created, enabled) VALUES ($1, $2, $3, $4)",
+                project.ID, project.Name, project.Created, project.Enabled)
+
+        if err != nil </span><span class="cov0" title="0">{
+                switch db.ErrorCode(err) </span>{
+                case db.ERR_EXIST:<span class="cov0" title="0">
+                        return nil, errs.AlreadyExist</span>
+                }
+
+                <span class="cov0" title="0">return nil, err</span>
+        }
+
+        <span class="cov0" title="0">return project, nil</span>
+}
+</pre>
+		
+		<pre class="file" id="file3" style="display: none">package projects
+
+import (
+        "github.com/nmarsollier/resourcesgo/tools/db"
+        "github.com/nmarsollier/resourcesgo/tools/logx"
+)
+
+func FindByID(logenv logx.Fields, id string) (project *Project, err error) <span class="cov0" title="0">{
+        project, err = db.QueryRow[Project](
+                logenv,
+                `
+      SELECT id, name, created, enabled
+      FROM projects
+      WHERE id = $1
+    `,
+                id,
+        )
+
+        return
+}</span>
+</pre>
+		
+		<pre class="file" id="file4" style="display: none">package projects
+
+import (
+        "time"
+
+        "github.com/go-playground/validator/v10"
+)
+
+type Project struct {
+        ID      string    `db:"id" json:"id"`
+        Name    string    `db:"name" json:"name" validate:"required,min=1,max=20"`
+        Created time.Time `db:"created" json:"created"`
+        Enabled bool      `db:"enabled" json:"enabled"`
+}
+
+func newProject(id string, name string) *Project <span class="cov0" title="0">{
+        return &amp;Project{
+                ID:      id,
+                Enabled: true,
+                Created: time.Now(),
+                Name:    name,
+        }
+}</span>
+
+func (e *Project) ValidateSchema() error <span class="cov0" title="0">{
+        return validator.New().Struct(e)
+}</span>
+</pre>
+		
+		<pre class="file" id="file5" style="display: none">package resources
+
+import (
+        "github.com/go-playground/validator/v10"
+        "github.com/nmarsollier/resourcesgo/tools/db"
+        "github.com/nmarsollier/resourcesgo/tools/errs"
+        "github.com/nmarsollier/resourcesgo/tools/logx"
+)
+
+type CreateResourceRequest struct {
+        ProjectId string            `json:"project" binding:"required"`
+        Language  string            `json:"language" binding:"required"`
+        SemVer    string            `json:"version" binding:"required"`
+        Values    map[string]string `json:"values" binding:"required"`
+}
+
+func Create(logenv logx.Fields, request *CreateResourceRequest) (*Resource, error) <span class="cov0" title="0">{
+        if err := validator.New().Struct(request); err != nil </span><span class="cov0" title="0">{
+                return nil, err
+        }</span>
+
+        <span class="cov0" title="0">resource, err := insert(logenv, request.ProjectId, request.Language, request.SemVer, request.Values)
+        if err != nil </span><span class="cov0" title="0">{
+                switch db.ErrorCode(err) </span>{
+                case db.ERR_FOREIGN_KEY:<span class="cov0" title="0">
+                        return nil, errs.ErrProjectNotExist</span>
+                case db.ERR_EXIST:<span class="cov0" title="0">
+                        return nil, errs.AlreadyExist</span>
+                }
+                <span class="cov0" title="0">return nil, err</span>
+        }
+
+        <span class="cov0" title="0">return resource, nil</span>
+}
+
+func insert(
+        logenv logx.Fields,
+        project string,
+        language string,
+        semVer string,
+        values map[string]string,
+) (*Resource, error) <span class="cov0" title="0">{
+        resource := newResource(project, language, semVer, values)
+
+        err := db.Exec(logenv,
+                `
+                INSERT INTO resources (id, project, language, sem_ver, values, created, enabled)
+                VALUES ($1, $2, $3, $4, $5, $6, $7);
+                `,
+                resource.ID, resource.Project, resource.Language, resource.SemVer, resource.Values, resource.Created, resource.Enabled)
+
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, err
+        }</span>
+        <span class="cov0" title="0">return resource, nil</span>
+}
+</pre>
+		
+		<pre class="file" id="file6" style="display: none">package resources
+
+import (
+        "github.com/nmarsollier/resourcesgo/tools/db"
+        "github.com/nmarsollier/resourcesgo/tools/logx"
+)
+
+func Delete(logenv logx.Fields, proejct string, language string, semver string) <span class="cov0" title="0">{
+        if resource, err := findBy(logenv, proejct, language, semver); err == nil </span><span class="cov0" title="0">{
+                db.Exec(
+                        logenv,
+                        "UPDATE resources SET enabled=false WHERE id=$1",
+                        resource.ID,
+                )
+        }</span>
+}
+</pre>
+		
+		<pre class="file" id="file7" style="display: none">package resources
+
+import (
+        "github.com/nmarsollier/resourcesgo/tools/db"
+        "github.com/nmarsollier/resourcesgo/tools/logx"
+)
+
+func findBy(logenv logx.Fields, project string, language string, semVer string) (*Resource, error) <span class="cov0" title="0">{
+        return db.QueryRow[Resource](
+                logenv,
+                `
+                SELECT id, project, language, sem_ver, values, created, enabled 
+                FROM resources 
+                WHERE project = $1 AND language = $2 AND sem_ver = $3
+                `,
+                project, language, semVer,
+        )
+}</span>
+</pre>
+		
+		<pre class="file" id="file8" style="display: none">package resources
+
+import (
+        "github.com/nmarsollier/resourcesgo/tools/db"
+        "github.com/nmarsollier/resourcesgo/tools/logx"
+)
+
+func FindVersions(logenv logx.Fields, project string, language string) ([]*string, error) <span class="cov0" title="0">{
+        return db.Query[string](
+                logenv,
+                "SELECT sem_ver FROM resources WHERE project = $1 AND language = $2 AND enabled = true",
+                project, language,
+        )
+}</span>
+</pre>
+		
+		<pre class="file" id="file9" style="display: none">package resources
+
+import (
+        "sort"
+        "strconv"
+        "strings"
+
+        "github.com/nmarsollier/resourcesgo/tools/errs"
+        "github.com/nmarsollier/resourcesgo/tools/logx"
+)
+
+func GetLastResource(logenv logx.Fields, project string, language string, semver string) (*Resource, error) <span class="cov0" title="0">{
+        version, err := getLastVersion(logenv, project, language, semver)
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, err
+        }</span>
+
+        <span class="cov0" title="0">return findBy(logenv, project, language, version)</span>
+}
+
+func getLastVersion(logenv logx.Fields, project string, language string, semver string) (string, error) <span class="cov0" title="0">{
+        versions, err := FindVersions(logenv, project, language)
+        if err != nil </span><span class="cov0" title="0">{
+                return "", err
+        }</span>
+
+        <span class="cov0" title="0">var valids []string
+        for i := 0; i &lt; len(versions); i++ </span><span class="cov0" title="0">{
+                if isValid(*versions[i], semver) </span><span class="cov0" title="0">{
+                        valids = append(valids, *versions[i])
+                }</span>
+        }
+
+        <span class="cov0" title="0">sort.Sort(sort.Reverse(sort.StringSlice(valids)))
+
+        if len(valids) &gt; 0 </span><span class="cov0" title="0">{
+                return valids[0], nil
+        }</span>
+
+        <span class="cov0" title="0">return "", errs.NotFound</span>
+}
+
+func isValid(version string, semVer string) bool <span class="cov0" title="0">{
+        if strings.HasSuffix(semVer, "+") || strings.HasSuffix(semVer, "*") </span><span class="cov0" title="0">{
+                newSemVer := strings.ReplaceAll(semVer, "+", "")
+                newSemVer = strings.ReplaceAll(newSemVer, "*", "")
+                return strings.HasPrefix(version, newSemVer)
+        }</span>
+
+        <span class="cov0" title="0">versionArray := strings.Split(version, ".")
+        semVerArray := strings.Split(semVer, ".")
+
+        if len(versionArray) != 3 || len(semVerArray) != 3 </span><span class="cov0" title="0">{
+                return false
+        }</span>
+
+        <span class="cov0" title="0">v1, err := strconv.Atoi(versionArray[0])
+        if err != nil </span><span class="cov0" title="0">{
+                return false
+        }</span>
+        <span class="cov0" title="0">s1, err := strconv.Atoi(semVerArray[0])
+        if err != nil </span><span class="cov0" title="0">{
+                return false
+        }</span>
+        <span class="cov0" title="0">if v1 &gt; s1 </span><span class="cov0" title="0">{
+                return false
+        }</span>
+
+        <span class="cov0" title="0">v2, err := strconv.Atoi(versionArray[1])
+        if err != nil </span><span class="cov0" title="0">{
+                return false
+        }</span>
+        <span class="cov0" title="0">s2, err := strconv.Atoi(semVerArray[1])
+        if err != nil </span><span class="cov0" title="0">{
+                return false
+        }</span>
+        <span class="cov0" title="0">if v2 &gt; s2 </span><span class="cov0" title="0">{
+                return false
+        }</span>
+
+        <span class="cov0" title="0">v3, err := strconv.Atoi(versionArray[2])
+        if err != nil </span><span class="cov0" title="0">{
+                return false
+        }</span>
+        <span class="cov0" title="0">s3, err := strconv.Atoi(semVerArray[2])
+        if err != nil </span><span class="cov0" title="0">{
+                return false
+        }</span>
+        <span class="cov0" title="0">if v3 &gt; s3 </span><span class="cov0" title="0">{
+                return false
+        }</span>
+
+        <span class="cov0" title="0">return true</span>
+}
+</pre>
+		
+		<pre class="file" id="file10" style="display: none">package resources
+
+import (
+        "time"
+
+        "github.com/go-playground/validator/v10"
+        "github.com/google/uuid"
+)
+
+type Resource struct {
+        ID       string            `db:"id" json:"id"`
+        Project  string            `db:"project" json:"project" validate:"required,min=1,max=20"`
+        Language string            `db:"language" json:"language" validate:"required,min=1,max=20"`
+        SemVer   string            `db:"sem_ver" json:"semVer" validate:"required,min=5,max=50"`
+        Values   map[string]string `db:"values" json:"values"`
+        Created  time.Time         `db:"created" json:"created"`
+        Enabled  bool              `db:"enabled" json:"enabled"`
+}
+
+func newResource(
+        project string,
+        language string,
+        semVer string,
+        values map[string]string,
+) *Resource <span class="cov0" title="0">{
+        return &amp;Resource{
+                ID:       uuid.New().String(),
+                Project:  project,
+                Language: language,
+                SemVer:   semVer,
+                Values:   values,
+                Enabled:  true,
+                Created:  time.Now(),
+        }
+}</span>
+
+func (e *Resource) ValidateSchema() error <span class="cov0" title="0">{
+        return validator.New().Struct(e)
+}</span>
+</pre>
+		
+		<pre class="file" id="file11" style="display: none">package rest
+
+import (
+        "github.com/gin-gonic/gin"
+        "github.com/nmarsollier/resourcesgo/resources"
+        "github.com/nmarsollier/resourcesgo/rest/server"
+)
+
+//        @Summary                Marks a resource as deleted.
+//        @Description        Delete a resource.
+//        @Tags                        Resources
+//        @Accept                        json
+//        @Produce                json
+//        @Param                        project                path        string        true        "Project ID"
+//        @Param                        language        path        string        true        "language tag"
+//        @Param                        semver                path        string        true        "Sem version, you can not use wildcards"
+//        @Success                200                        "No Content"
+//        @Failure                400                        {object}        errs.Validation        "Bad Request"
+//        @Failure                404                        {object}        errs.Custom                "Not Found"
+//        @Failure                500                        {object}        errs.Custom                "Internal Server Error"
+//        @Router                        /resources/{project}/{language}/{semver} [delete]
+//
+// Marks a resource as deleted.
+func initDeleteResource(engine *gin.Engine) <span class="cov0" title="0">{
+        engine.DELETE(
+                "/resources/:project/:language/:semver",
+                deleteResource,
+        )
+}</span>
+
+func deleteResource(c *gin.Context) <span class="cov0" title="0">{
+        project := c.Param("project")
+        language := c.Param("language")
+        semver := c.Param("semver")
+
+        resources.Delete(server.GinLogFields(c), project, language, semver)
+}</span>
+</pre>
+		
+		<pre class="file" id="file12" style="display: none">package rest
+
+import (
+        "github.com/gin-gonic/gin"
+        "github.com/nmarsollier/resourcesgo/projects"
+        "github.com/nmarsollier/resourcesgo/rest/server"
+)
+
+//        @Summary                Gets a project detail
+//        @Description        Gets projects details.
+//        @Tags                        Project
+//        @Accept                        json
+//        @Produce                json
+//        @Param                        project        path                string                        true        "Project ID"
+//        @Success                200                {object}        Project                        "Project"
+//        @Failure                400                {object}        errs.Validation        "Bad Request"
+//        @Failure                404                {object}        errs.Custom                "Not Found"
+//        @Failure                500                {object}        errs.Custom                "Internal Server Error"
+//        @Router                        /projects/{project} [get]
+//
+// Gets a project details.
+func initGetProject(engine *gin.Engine) <span class="cov0" title="0">{
+        engine.GET(
+                "/projects/:project",
+                getProject,
+        )
+}</span>
+
+func getProject(c *gin.Context) <span class="cov0" title="0">{
+        project := c.Param("project")
+
+        proj, err := projects.FindByID(server.GinLogFields(c), project)
+
+        if err != nil </span><span class="cov0" title="0">{
+                server.AbortWithError(c, err)
+                return
+        }</span>
+
+        <span class="cov0" title="0">c.JSON(200, &amp;Project{
+                ID:   proj.ID,
+                Name: proj.Name,
+        })</span>
+}
+
+type Project struct {
+        ID   string `json:"id"`
+        Name string `json:"name"`
+}
+</pre>
+		
+		<pre class="file" id="file13" style="display: none">package rest
+
+import (
+        "github.com/gin-gonic/gin"
+        "github.com/nmarsollier/resourcesgo/resources"
+        "github.com/nmarsollier/resourcesgo/rest/server"
+)
+
+//        @Summary                Gets a resource
+//        @Description        Gets the latest resource given a semver.
+//        @Tags                        Resources
+//        @Accept                        json
+//        @Produce                json
+//        @Param                        project                path                string                        true        "Project ID"
+//        @Param                        language        path                string                        true        "language tag"
+//        @Param                        semver                path                string                        true        "Sem version, you can use wildcards + or *"
+//        @Success                200                        {object}        Resource                "Resource"
+//        @Failure                400                        {object}        errs.Validation        "Bad Request"
+//        @Failure                404                        {object}        errs.Custom                "Not Found"
+//        @Failure                500                        {object}        errs.Custom                "Internal Server Error"
+//        @Router                        /resources/{project}/{language}/{semver} [get]
+//
+// Gets the last resource.
+func initGetResources(engine *gin.Engine) <span class="cov0" title="0">{
+        engine.GET(
+                "/resources/:project/:language/:semver",
+                getResource,
+        )
+}</span>
+
+func getResource(c *gin.Context) <span class="cov0" title="0">{
+        project := c.Param("project")
+        language := c.Param("language")
+        semver := c.Param("semver")
+
+        resource, err := resources.GetLastResource(server.GinLogFields(c), project, language, semver)
+
+        if err != nil </span><span class="cov0" title="0">{
+                server.AbortWithError(c, err)
+                return
+        }</span>
+
+        <span class="cov0" title="0">c.JSON(200, &amp;Resource{
+                ID:       resource.ID,
+                Project:  resource.Project,
+                Language: resource.Language,
+                SemVer:   resource.SemVer,
+                Values:   resource.Values,
+        })</span>
+}
+
+type Resource struct {
+        ID       string            `json:"id"`
+        Project  string            `json:"project"`
+        Language string            `json:"language"`
+        SemVer   string            `json:"version"`
+        Values   map[string]string `json:"values"`
+}
+</pre>
+		
+		<pre class="file" id="file14" style="display: none">package rest
+
+import (
+        "github.com/gin-gonic/gin"
+        "github.com/nmarsollier/resourcesgo/resources"
+        "github.com/nmarsollier/resourcesgo/rest/server"
+)
+
+//        @Summary                Gets versions
+//        @Description        Gets available versions for a resource.
+//        @Tags                        Resources
+//        @Accept                        json
+//        @Produce                json
+//        @Param                        project                path                string                        true        "Project ID"
+//        @Param                        language        path                string                        true        "language tag"
+//        @Success                200                        {Array}                string                        "Versions"
+//        @Failure                400                        {object}        errs.Validation        "Bad Request"
+//        @Failure                404                        {object}        errs.Custom                "Not Found"
+//        @Failure                500                        {object}        errs.Custom                "Internal Server Error"
+//        @Router                        /versions/{project}/{language} [get]
+//
+// Gets the last resource.
+func initGetVersions(engine *gin.Engine) <span class="cov0" title="0">{
+        engine.GET(
+                "/versions/:project/:language",
+                getVersions,
+        )
+}</span>
+
+func getVersions(c *gin.Context) <span class="cov0" title="0">{
+        project := c.Param("project")
+        language := c.Param("language")
+
+        resource, err := resources.FindVersions(server.GinLogFields(c), project, language)
+
+        if err != nil </span><span class="cov0" title="0">{
+                server.AbortWithError(c, err)
+                return
+        }</span>
+
+        <span class="cov0" title="0">c.JSON(200, resource)</span>
+}
+</pre>
+		
+		<pre class="file" id="file15" style="display: none">package rest
+
+import (
+        "github.com/gin-gonic/gin"
+        "github.com/nmarsollier/resourcesgo/projects"
+        "github.com/nmarsollier/resourcesgo/rest/server"
+)
+
+//        @Summary                Create a project
+//        @Description        Create a new project tag.
+//        @Tags                        Project
+//        @Accept                        json
+//        @Produce                json
+//        @Param                        body        body                CreateProjectRequest        true        "Project to add"
+//        @Success                200                {object}        IDResult                                "Project ID"
+//        @Failure                400                {object}        errs.Validation                        "Bad Request"
+//        @Failure                404                {object}        errs.Custom                                "Not Found"
+//        @Failure                500                {object}        errs.Custom                                "Internal Server Error"
+//        @Router                        /projects [post]
+//
+// Create a new project tab
+func initPostProjects(engine *gin.Engine) <span class="cov0" title="0">{
+        engine.POST(
+                "/projects",
+                saveProject,
+        )
+}</span>
+
+func saveProject(c *gin.Context) <span class="cov0" title="0">{
+        body := CreateProjectRequest{}
+
+        if err := c.ShouldBindJSON(&amp;body); err != nil </span><span class="cov0" title="0">{
+                server.AbortWithError(c, err)
+                return
+        }</span>
+
+        <span class="cov0" title="0">resource, err := projects.Create(server.GinLogFields(c), body.Id, body.Name)
+        if err != nil </span><span class="cov0" title="0">{
+                server.AbortWithError(c, err)
+                return
+        }</span>
+
+        <span class="cov0" title="0">c.JSON(200, &amp;IDResult{resource.ID})</span>
+}
+
+type CreateProjectRequest struct {
+        Id   string `json:"id" binding:"required"`
+        Name string `json:"name" binding:"required"`
+}
+
+type IDResult struct {
+        ID string `json:"id"`
+}
+</pre>
+		
+		<pre class="file" id="file16" style="display: none">package rest
+
+import (
+        "github.com/gin-gonic/gin"
+        "github.com/nmarsollier/resourcesgo/resources"
+        "github.com/nmarsollier/resourcesgo/rest/server"
+)
+
+//        @Summary                Create a resource
+//        @Description        Create a new resource.
+//        @Tags                        Resources
+//        @Accept                        json
+//        @Produce                json
+//        @Param                        body        body                resources.CreateResourceRequest        true        "Project to add"
+//        @Success                200                {object}        IDResult                                                "Project ID"
+//        @Failure                400                {object}        errs.Validation                                        "Bad Request"
+//        @Failure                404                {object}        errs.Custom                                                "Not Found"
+//        @Failure                500                {object}        errs.Custom                                                "Internal Server Error"
+//        @Router                        /resources [post]
+//
+// Create a new resource version
+func initPostResources(engine *gin.Engine) <span class="cov0" title="0">{
+        engine.POST(
+                "/resources",
+                validateCreateBody,
+                saveResource,
+        )
+}</span>
+
+func saveResource(c *gin.Context) <span class="cov0" title="0">{
+        body := c.MustGet("data").(resources.CreateResourceRequest)
+
+        resource, err := resources.Create(server.GinLogFields(c), &amp;body)
+        if err != nil </span><span class="cov0" title="0">{
+                server.AbortWithError(c, err)
+                return
+        }</span>
+
+        <span class="cov0" title="0">c.JSON(200, &amp;IDResult{resource.ID})</span>
+}
+
+func validateCreateBody(c *gin.Context) <span class="cov0" title="0">{
+        body := resources.CreateResourceRequest{}
+        if err := c.ShouldBindJSON(&amp;body); err != nil </span><span class="cov0" title="0">{
+                server.AbortWithError(c, err)
+                return
+        }</span>
+
+        <span class="cov0" title="0">c.Set("data", body)
+        c.Next()</span>
+}
+</pre>
+		
+		<pre class="file" id="file17" style="display: none">package rest
+
+import (
+        "fmt"
+
+        "github.com/nmarsollier/resourcesgo/rest/server"
+        "github.com/nmarsollier/resourcesgo/tools/env"
+)
+
+// Start this server
+func Start() <span class="cov0" title="0">{
+        engine := server.Router()
+        initGetProject(engine)
+        initGetResources(engine)
+        initGetVersions(engine)
+        initPostResources(engine)
+        initDeleteResource(engine)
+        initPostProjects(engine)
+        engine.Run(fmt.Sprintf(":%d", env.Get().Port))
+}</span>
+</pre>
+		
+		<pre class="file" id="file18" style="display: none">package server
+
+import (
+        "time"
+
+        "github.com/gin-contrib/gzip"
+        "github.com/gin-gonic/gin"
+        cors "github.com/itsjamie/gin-cors"
+        _ "github.com/nmarsollier/resourcesgo/docs"
+        swaggerFiles "github.com/swaggo/files"
+        ginSwagger "github.com/swaggo/gin-swagger"
+)
+
+var engine *gin.Engine = nil
+
+func Router() *gin.Engine <span class="cov0" title="0">{
+        if engine != nil </span><span class="cov0" title="0">{
+                return engine
+        }</span>
+
+        <span class="cov0" title="0">engine = gin.Default()
+
+        engine.Use(gzip.Gzip(gzip.DefaultCompression))
+
+        engine.Use(cors.Middleware(cors.Config{
+                Origins:         "*",
+                Methods:         "GET, PUT, POST, DELETE",
+                RequestHeaders:  "Origin, Authorization, Content-Type",
+                ExposedHeaders:  "",
+                MaxAge:          50 * time.Second,
+                Credentials:     false,
+                ValidateHeaders: false,
+        }))
+        engine.Use(GinLoggerMiddleware())
+        engine.Use(ErrorHandler)
+
+        engine.GET("/docs/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+
+        return engine</span>
+}
+</pre>
+		
+		<pre class="file" id="file19" style="display: none">package server
+
+import (
+        "strings"
+
+        "github.com/gin-gonic/gin"
+        "github.com/go-playground/validator"
+        "github.com/nmarsollier/resourcesgo/tools/errs"
+)
+
+func ErrorHandler(c *gin.Context) <span class="cov0" title="0">{
+        c.Next()
+
+        handleErrorIfNeeded(c)
+}</span>
+
+func AbortWithError(c *gin.Context, err error) <span class="cov0" title="0">{
+        c.Error(err)
+        c.Abort()
+}</span>
+
+func handleErrorIfNeeded(c *gin.Context) <span class="cov0" title="0">{
+        err := c.Errors.Last()
+        if err == nil </span><span class="cov0" title="0">{
+                return
+        }</span>
+
+        <span class="cov0" title="0">switch value := err.Err.(type) </span>{
+        case *errs.Custom:<span class="cov0" title="0">
+                handleCustom(c, value)</span>
+        case *errs.Validation:<span class="cov0" title="0">
+                c.JSON(400, err)</span>
+        case validator.ValidationErrors:<span class="cov0" title="0">
+                handleValidationError(c, value)</span>
+        case error:<span class="cov0" title="0">
+                c.JSON(500, gin.H{
+                        "error": value.Error(),
+                })</span>
+        default:<span class="cov0" title="0">
+                handleCustom(c, errs.Internal)</span>
+        }
+}
+
+func handleValidationError(c *gin.Context, validationErrors validator.ValidationErrors) <span class="cov0" title="0">{
+        err := errs.NewValidation()
+
+        for _, e := range validationErrors </span><span class="cov0" title="0">{
+                err.Add(strings.ToLower(e.Field()), e.Tag())
+        }</span>
+
+        <span class="cov0" title="0">c.JSON(400, err)</span>
+}
+
+func handleCustom(c *gin.Context, err *errs.Custom) <span class="cov0" title="0">{
+        c.JSON(err.Status(), err)
+}</span>
+</pre>
+		
+		<pre class="file" id="file20" style="display: none">package server
+
+import (
+        "strconv"
+
+        "github.com/gin-gonic/gin"
+        "github.com/google/uuid"
+        "github.com/nmarsollier/resourcesgo/tools/logx"
+)
+
+func GinLoggerMiddleware() gin.HandlerFunc <span class="cov0" title="0">{
+        return func(c *gin.Context) </span><span class="cov0" title="0">{
+                fields := logx.NewFields().
+                        Add(logx.CONTROLLER, "Rest").
+                        Add(logx.HTTP_METHOD, c.Request.Method).
+                        Add(logx.HTTP_PATH, c.Request.URL.Path).
+                        Add(logx.CORRELATION_ID, getCorrelationId(c))
+
+                c.Set("logfields", fields)
+
+                c.Next()
+
+                if c.Request.Method != "OPTIONS" </span><span class="cov0" title="0">{
+                        fields.Add(logx.HTTP_STATUS, strconv.Itoa(c.Writer.Status()))
+                        logx.Info(fields, "Completed")
+                }</span>
+        }
+}
+
+func GinLogFields(c *gin.Context) logx.Fields <span class="cov0" title="0">{
+        value, exists := c.Get("logfields")
+
+        if !exists </span><span class="cov0" title="0">{
+                return logx.NewFields()
+        }</span>
+
+        <span class="cov0" title="0">return value.(logx.Fields)</span>
+}
+
+func getCorrelationId(c *gin.Context) string <span class="cov0" title="0">{
+        value := c.GetHeader(logx.CORRELATION_ID)
+
+        if len(value) == 0 </span><span class="cov0" title="0">{
+                value = uuid.New().String()
+        }</span>
+
+        <span class="cov0" title="0">return value</span>
+}
+</pre>
+		
+		<pre class="file" id="file21" style="display: none">package db
+
+import (
+        "context"
+        "errors"
+
+        "github.com/jackc/pgx/v5/pgconn"
+        "github.com/jackc/pgx/v5/pgxpool"
+        "github.com/nmarsollier/resourcesgo/tools/env"
+        "github.com/nmarsollier/resourcesgo/tools/logx"
+        "github.com/nmarsollier/resourcesgo/tools/strs"
+)
+
+var (
+        instance *pgxpool.Pool
+)
+
+const ERR_EXIST = 23505
+const ERR_FOREIGN_KEY = 23503
+
+func getDBConn(logenv logx.Fields) (*pgxpool.Pool, error) <span class="cov0" title="0">{
+        if instance != nil </span><span class="cov0" title="0">{
+                return instance, nil
+        }</span>
+
+        <span class="cov0" title="0">config, err := pgxpool.ParseConfig(env.Get().PostgresURL)
+        if err != nil </span><span class="cov0" title="0">{
+                logx.Error(logenv, err)
+                return nil, err
+        }</span>
+
+        <span class="cov0" title="0">instance, err = pgxpool.NewWithConfig(context.Background(), config)
+        if err != nil </span><span class="cov0" title="0">{
+                logx.Error(logenv, err)
+                return nil, err
+        }</span>
+
+        <span class="cov0" title="0">logx.Info(logenv, "Postgres Connected")
+
+        return instance, nil</span>
+}
+
+func checkConnectionError(err error) <span class="cov0" title="0">{
+        var pgErr *pgconn.PgError
+        if errors.As(err, &amp;pgErr) </span><span class="cov0" title="0">{
+                switch pgErr.Code </span>{
+                case "08000", "08003", "08006", "08001", "08004", "08007", "08P01":<span class="cov0" title="0">
+                        instance = nil</span>
+                }
+        }
+
+        <span class="cov0" title="0">if errors.Is(err, context.DeadlineExceeded) || errors.Is(err, context.Canceled) </span><span class="cov0" title="0">{
+                instance = nil
+        }</span>
+}
+
+func ErrorCode(err error) int <span class="cov0" title="0">{
+        var pgErr *pgconn.PgError
+        if errors.As(err, &amp;pgErr) </span><span class="cov0" title="0">{
+                return strs.AtoiZero(pgErr.Code)
+        }</span>
+        <span class="cov0" title="0">return 0</span>
+}
+</pre>
+		
+		<pre class="file" id="file22" style="display: none">package db
+
+import (
+        "context"
+
+        "github.com/nmarsollier/resourcesgo/tools/logx"
+)
+
+func Exec(logenv logx.Fields, query string, args ...any) (err error) <span class="cov0" title="0">{
+        conn, err := getDBConn(logenv)
+
+        if err != nil </span><span class="cov0" title="0">{
+                logx.Error(logenv, err)
+                return
+        }</span>
+
+        <span class="cov0" title="0">_, err = conn.Exec(context.Background(), query, args...)
+        if err != nil </span><span class="cov0" title="0">{
+                checkConnectionError(err)
+                logx.Error(logenv, err)
+        }</span>
+
+        <span class="cov0" title="0">return</span>
+}
+</pre>
+		
+		<pre class="file" id="file23" style="display: none">package db
+
+import (
+        "context"
+
+        "github.com/nmarsollier/resourcesgo/tools/logx"
+)
+
+func Query[T any](logenv logx.Fields, query string, args ...interface{}) (results []*T, err error) <span class="cov0" title="0">{
+        conn, err := getDBConn(logenv)
+        if err != nil </span><span class="cov0" title="0">{
+                logx.Error(logenv, err)
+                return
+        }</span>
+
+        <span class="cov0" title="0">rows, err := conn.Query(context.Background(), query, args...)
+        if err != nil </span><span class="cov0" title="0">{
+                logx.Error(logenv, err)
+                return
+        }</span>
+        <span class="cov0" title="0">defer rows.Close()
+
+        for rows.Next() </span><span class="cov0" title="0">{
+                result := new(T)
+
+                if err = rows.Scan(fieldAddrs(result)...); err != nil </span><span class="cov0" title="0">{
+                        checkConnectionError(err)
+                        logx.Error(logenv, err)
+                        return
+                }</span>
+
+                <span class="cov0" title="0">results = append(results, result)</span>
+        }
+
+        <span class="cov0" title="0">if err = rows.Err(); err != nil </span><span class="cov0" title="0">{
+                logx.Error(logenv, err)
+                return
+        }</span>
+
+        <span class="cov0" title="0">return</span>
+}
+</pre>
+		
+		<pre class="file" id="file24" style="display: none">package db
+
+import (
+        "context"
+
+        "github.com/nmarsollier/resourcesgo/tools/logx"
+)
+
+func QueryRow[T any](logenv logx.Fields, query string, args ...interface{}) (*T, error) <span class="cov0" title="0">{
+        conn, err := getDBConn(logenv)
+        if err != nil </span><span class="cov0" title="0">{
+                logx.Error(logenv, err)
+                return nil, err
+        }</span>
+
+        <span class="cov0" title="0">row := conn.QueryRow(context.Background(), query, args...)
+
+        result := new(T)
+        if err := row.Scan(fieldAddrs(result)...); err != nil </span><span class="cov0" title="0">{
+                checkConnectionError(err)
+                logx.Error(logenv, err)
+                return nil, err
+        }</span>
+
+        <span class="cov0" title="0">return result, nil</span>
+}
+</pre>
+		
+		<pre class="file" id="file25" style="display: none">package db
+
+import "reflect"
+
+func fieldAddrs[T any](result *T) (addrs []interface{}) <span class="cov0" title="0">{
+        if reflect.TypeOf(*result).Kind() == reflect.Struct </span><span class="cov0" title="0">{
+                destVal := reflect.ValueOf(result).Elem()
+                addrs = make([]interface{}, destVal.NumField())
+                for i := 0; i &lt; destVal.NumField(); i++ </span><span class="cov0" title="0">{
+                        addrs[i] = destVal.Field(i).Addr().Interface()
+                }</span>
+                <span class="cov0" title="0">return</span>
+        } else<span class="cov0" title="0"> {
+                return []interface{}{result}
+        }</span>
+}
+</pre>
+		
+		<pre class="file" id="file26" style="display: none">package env
+
+import (
+        "cmp"
+        "os"
+
+        "github.com/nmarsollier/resourcesgo/tools/strs"
+)
+
+// Configuration properties
+type Configuration struct {
+        ServerName  string `json:"serverName"`
+        Port        int    `json:"port"`
+        PostgresURL string `json:"postgresUrl"`
+}
+
+var config *Configuration
+
+// Get Obtiene las variables de entorno del sistema
+func Get() *Configuration <span class="cov0" title="0">{
+        if config == nil </span><span class="cov0" title="0">{
+                config = load()
+        }</span>
+
+        <span class="cov0" title="0">return config</span>
+}
+
+// Load file properties
+func load() *Configuration <span class="cov0" title="0">{
+        return &amp;Configuration{
+                ServerName:  cmp.Or(os.Getenv("SERVER_NAME"), "resourcesgo"),
+                Port:        cmp.Or(strs.AtoiZero(os.Getenv("PORT")), 3000),
+                PostgresURL: cmp.Or(os.Getenv("POSTGRES_URL"), "postgres://postgres@localhost:5432/postgres"),
+        }
+}</span>
+</pre>
+		
+		<pre class="file" id="file27" style="display: none">package errs
+
+import (
+        "github.com/nmarsollier/resourcesgo/tools/strs"
+)
+
+type Custom struct {
+        status  int
+        Message string `json:"error"`
+}
+
+func NewCustom(status int, message string) *Custom <span class="cov0" title="0">{
+        return &amp;Custom{
+                status:  status,
+                Message: message,
+        }
+}</span>
+
+func (e *Custom) Error() string <span class="cov0" title="0">{
+        return strs.ToJson(e.Message)
+}</span>
+
+func (e *Custom) Status() int <span class="cov0" title="0">{
+        return e.status
+}</span>
+</pre>
+		
+		<pre class="file" id="file28" style="display: none">package errs
+
+import "github.com/nmarsollier/resourcesgo/tools/strs"
+
+type Validation struct {
+        Messages []Field `json:"messages"`
+}
+
+type Field struct {
+        Path    string `json:"path"`
+        Message string `json:"message"`
+}
+
+func NewValidationField(field string, err string) *Validation <span class="cov0" title="0">{
+        return &amp;Validation{
+                Messages: []Field{
+                        {
+                                Path:    field,
+                                Message: err,
+                        },
+                },
+        }
+}</span>
+
+func NewValidation() *Validation <span class="cov0" title="0">{
+        return &amp;Validation{
+                Messages: []Field{},
+        }
+}</span>
+
+func (e *Validation) Error() string <span class="cov0" title="0">{
+        return strs.ToJson(e)
+}</span>
+
+func (e *Validation) Add(path string, message string) *Validation <span class="cov0" title="0">{
+        err := Field{
+                Path:    path,
+                Message: message,
+        }
+        e.Messages = append(e.Messages, err)
+        return e
+}</span>
+
+func (e *Validation) Size() int <span class="cov0" title="0">{
+        return len(e.Messages)
+}</span>
+</pre>
+		
+		<pre class="file" id="file29" style="display: none">package logx
+
+import (
+        "github.com/google/uuid"
+        "github.com/nmarsollier/resourcesgo/tools/env"
+)
+
+const CORRELATION_ID = "correlation_id"
+const CONTROLLER = "controller"
+const RABBIT_ACTION = "rabbit_action"
+const HTTP_METHOD = "http_method"
+const HTTP_PATH = "http_path"
+const HTTP_STATUS = "http_status"
+const SERVER = "server"
+const THREAD = "thread"
+
+type Fields map[string]string
+
+func NewFields() Fields <span class="cov0" title="0">{
+        return make(Fields, 4).
+                Add(SERVER, env.Get().ServerName).
+                Add(THREAD, uuid.New().String())
+}</span>
+
+func (f Fields) Add(key string, value string) Fields <span class="cov0" title="0">{
+        f[key] = value
+        return f
+}</span>
+</pre>
+		
+		<pre class="file" id="file30" style="display: none">package logx
+
+import (
+        "fmt"
+        "log"
+        "os"
+)
+
+// Logger factory
+var newLogger = func() *log.Logger <span class="cov8" title="1">{
+        return log.New(os.Stdout, "", log.Ldate|log.Ltime|log.Lshortfile)
+}</span>
+
+func ErrorStr(fields Fields, err string) <span class="cov8" title="1">{
+        logWithFields("ERROR", fields, err)
+}</span>
+
+func Error(fields Fields, err error) <span class="cov8" title="1">{
+        logWithFields("ERROR", fields, err.Error())
+}</span>
+
+func Info(fields Fields, msg string) <span class="cov8" title="1">{
+        logWithFields("INFO", fields, msg)
+}</span>
+
+func Warn(fields Fields, msg string) <span class="cov8" title="1">{
+        logWithFields("WARN", fields, msg)
+}</span>
+
+func logWithFields(level string, fields Fields, msg string) <span class="cov8" title="1">{
+        logger := newLogger()
+        data := ""
+        for k, v := range fields </span><span class="cov8" title="1">{
+                data += fmt.Sprintf("%s=%v;", k, v)
+        }</span>
+        <span class="cov8" title="1">logger.Println(level, data, msg)</span>
+}
+</pre>
+		
+		<pre class="file" id="file31" style="display: none">package strs
+
+import "encoding/json"
+
+func ToJson(obj interface{}) string <span class="cov8" title="1">{
+        jsonData, _ := json.Marshal(obj)
+        return string(jsonData)
+}</span>
+</pre>
+		
+		<pre class="file" id="file32" style="display: none">package strs
+
+import "strconv"
+
+func AtoiZero(s string) int <span class="cov8" title="1">{
+        i, err := strconv.Atoi(s)
+        if err != nil </span><span class="cov8" title="1">{
+                return 0
+        }</span>
+        <span class="cov8" title="1">return i</span>
+}
+
+func AtoiDefault(s string, def int) int <span class="cov8" title="1">{
+        i, err := strconv.Atoi(s)
+        if err != nil </span><span class="cov8" title="1">{
+                return def
+        }</span>
+        <span class="cov8" title="1">return i</span>
+}
+</pre>
+		
+		</div>
+	</body>
+	<script>
+	(function() {
+		var files = document.getElementById('files');
+		var visible;
+		files.addEventListener('change', onChange, false);
+		function select(part) {
+			if (visible)
+				visible.style.display = 'none';
+			visible = document.getElementById(part);
+			if (!visible)
+				return;
+			files.value = part;
+			visible.style.display = 'block';
+			location.hash = part;
+		}
+		function onChange() {
+			select(files.value);
+			window.scrollTo(0, 0);
+		}
+		if (location.hash != "") {
+			select(location.hash.substr(1));
+		}
+		if (!visible) {
+			select("file0");
+		}
+	})();
+	</script>
+</html>

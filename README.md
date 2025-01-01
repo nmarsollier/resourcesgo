@@ -41,3 +41,19 @@ resourcesgo
 ```
 
 To see swagger docs navigate to [Swagger](http://localhost:3000/docs/index.html)
+
+## Required libraries
+
+```bash
+go install github.com/swaggo/gin-swagger/swaggerFiles
+go install github.com/swaggo/gin-swagger
+go install github.com/swaggo/swag/cmd/swag
+go install github.com/99designs/gqlgen@v0.17.56
+```
+
+## Environment vars
+
+SERVER_NAME : Server Name for logs (resourcesgo)
+POSTGRES_URL : Postgresql database (postgres://postgres@localhost:5432/postgres)
+PORT : Server port (3000)
+GQL_PORT : GraphQL Port (4000)

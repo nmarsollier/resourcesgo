@@ -11,9 +11,7 @@ import (
 	"github.com/nmarsollier/resourcesgo/tools/strs"
 )
 
-var (
-	instance *pgxpool.Pool
-)
+var instance *pgxpool.Pool
 
 const ERR_EXIST = 23505
 const ERR_FOREIGN_KEY = 23503

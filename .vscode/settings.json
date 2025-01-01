@@ -14,7 +14,6 @@
     "**/android": true,
     "**/ios": true,
     "**/.husky": true,
-    "**/scripts": true,
     "scripts": true
   },
   "explorerExclude.backup": {}

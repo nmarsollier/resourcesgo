@@ -1,0 +1,49 @@
+type Mutation {
+  newProject(id: String!, name: String!): String!
+  newResource(request: NewResourceInput!): String!
+  deleteResource(
+    projectId: String!
+    languageId: String!
+    semver: String!
+  ): String!
+}
+
+type Query {
+  getProject(id: String!): Project
+  getResource(
+    projectId: String!
+    languageId: String!
+    semver: String!
+  ): Resource
+  getVersions(projectId: String!, languageId: String!): [String!]!
+}
+
+input KeyValueInput {
+  key: String!
+  value: String!
+}
+
+input NewResourceInput {
+  projectId: String!
+  languageId: String!
+  semver: String!
+  values: [KeyValueInput!]!
+}
+
+type Resource @key(fields: "id") {
+  id: String!
+  projectId: String!
+  languageId: String!
+  semver: String!
+  values: [KeyValue!]!
+}
+
+type KeyValue {
+  key: String!
+  value: String!
+}
+
+type Project @key(fields: "id") {
+  id: String!
+  name: String!
+}

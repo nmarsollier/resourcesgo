@@ -20,10 +20,7 @@ import (
 //
 // Create a new project tab
 func initPostProjects(engine *gin.Engine) {
-	engine.POST(
-		"/projects",
-		saveProject,
-	)
+	engine.POST("/projects", saveProject)
 }
 
 func saveProject(c *gin.Context) {
@@ -34,20 +31,16 @@ func saveProject(c *gin.Context) {
 		return
 	}
 
-	resource, err := projects.Create(server.GinLogFields(c), body.Id, body.Name)
+	id, err := projects.Create(server.GinLogFields(c), body.ID, body.Name)
 	if err != nil {
 		server.AbortWithError(c, err)
 		return
 	}
 
-	c.JSON(200, &IDResult{resource.ID})
+	c.JSON(200, &IDResult{id})
 }
 
 type CreateProjectRequest struct {
-	Id   string `json:"id" binding:"required"`
+	ID   string `json:"id" binding:"required"`
 	Name string `json:"name" binding:"required"`
-}
-
-type IDResult struct {
-	ID string `json:"id"`
 }

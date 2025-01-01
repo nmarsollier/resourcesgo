@@ -11,23 +11,20 @@ import (
 //	@Tags			Project
 //	@Accept			json
 //	@Produce		json
-//	@Param			project	path		string			true	"Project ID"
-//	@Success		200		{object}	Project			"Project"
-//	@Failure		400		{object}	errs.Validation	"Bad Request"
-//	@Failure		404		{object}	errs.Custom		"Not Found"
-//	@Failure		500		{object}	errs.Custom		"Internal Server Error"
-//	@Router			/projects/{project} [get]
+//	@Param			projectId	path		string			true	"Project ID"
+//	@Success		200			{object}	Project			"Project"
+//	@Failure		400			{object}	errs.Validation	"Bad Request"
+//	@Failure		404			{object}	errs.Custom		"Not Found"
+//	@Failure		500			{object}	errs.Custom		"Internal Server Error"
+//	@Router			/projects/{projectId} [get]
 //
 // Gets a project details.
 func initGetProject(engine *gin.Engine) {
-	engine.GET(
-		"/projects/:project",
-		getProject,
-	)
+	engine.GET("/projects/:projectId", getProject)
 }
 
 func getProject(c *gin.Context) {
-	project := c.Param("project")
+	project := c.Param("projectId")
 
 	proj, err := projects.FindByID(server.GinLogFields(c), project)
 

@@ -18,24 +18,6 @@ definitions:
           $ref: '#/definitions/errs.Field'
         type: array
     type: object
-  resources.CreateResourceRequest:
-    properties:
-      language:
-        type: string
-      project:
-        type: string
-      values:
-        additionalProperties:
-          type: string
-        type: object
-      version:
-        type: string
-    required:
-    - language
-    - project
-    - values
-    - version
-    type: object
   rest.CreateProjectRequest:
     properties:
       id:
@@ -45,6 +27,24 @@ definitions:
     required:
     - id
     - name
+    type: object
+  rest.CreateResourceRequest:
+    properties:
+      languageId:
+        type: string
+      projectId:
+        type: string
+      semver:
+        type: string
+      values:
+        additionalProperties:
+          type: string
+        type: object
+    required:
+    - languageId
+    - projectId
+    - semver
+    - values
     type: object
   rest.IDResult:
     properties:
@@ -62,16 +62,16 @@ definitions:
     properties:
       id:
         type: string
-      language:
+      languageId:
         type: string
-      project:
+      projectId:
+        type: string
+      semver:
         type: string
       values:
         additionalProperties:
           type: string
         type: object
-      version:
-        type: string
     type: object
 info:
   contact: {}
@@ -110,7 +110,7 @@ paths:
       summary: Create a project
       tags:
       - Project
-  /projects/{project}:
+  /projects/{projectId}:
     get:
       consumes:
       - application/json
@@ -118,7 +118,7 @@ paths:
       parameters:
       - description: Project ID
         in: path
-        name: project
+        name: projectId
         required: true
         type: string
       produces:
@@ -154,7 +154,7 @@ paths:
         name: body
         required: true
         schema:
-          $ref: '#/definitions/resources.CreateResourceRequest'
+          $ref: '#/definitions/rest.CreateResourceRequest'
       produces:
       - application/json
       responses:
@@ -177,7 +177,7 @@ paths:
       summary: Create a resource
       tags:
       - Resources
-  /resources/{project}/{language}/{semver}:
+  /resources/{projectId}/{languageId}/{semver}:
     delete:
       consumes:
       - application/json
@@ -185,12 +185,12 @@ paths:
       parameters:
       - description: Project ID
         in: path
-        name: project
+        name: projectId
         required: true
         type: string
       - description: language tag
         in: path
-        name: language
+        name: languageId
         required: true
         type: string
       - description: Sem version, you can not use wildcards
@@ -225,12 +225,12 @@ paths:
       parameters:
       - description: Project ID
         in: path
-        name: project
+        name: projectId
         required: true
         type: string
       - description: language tag
         in: path
-        name: language
+        name: languageId
         required: true
         type: string
       - description: Sem version, you can use wildcards + or *
@@ -260,7 +260,7 @@ paths:
       summary: Gets a resource
       tags:
       - Resources
-  /versions/{project}/{language}:
+  /versions/{projectId}/{languageId}:
     get:
       consumes:
       - application/json
@@ -268,12 +268,12 @@ paths:
       parameters:
       - description: Project ID
         in: path
-        name: project
+        name: projectId
         required: true
         type: string
       - description: language tag
         in: path
-        name: language
+        name: languageId
         required: true
         type: string
       produces:

@@ -4,32 +4,11 @@ import (
 	"fmt"
 	"log"
 	"os"
-
-	"github.com/google/uuid"
-	"github.com/nmarsollier/resourcesgo/tools/env"
-	"github.com/nmarsollier/resourcesgo/tools/strs"
 )
 
-const CORRELATION_ID = "correlation_id"
-const CONTROLLER = "controller"
-const RABBIT_ACTION = "rabbit_action"
-const HTTP_METHOD = "http_method"
-const HTTP_PATH = "http_path"
-const HTTP_STATUS = "http_status"
-const SERVER = "server"
-const THREAD = "thread"
-
-type Fields map[string]string
-
-func NewFields() Fields {
-	return make(Fields, 4).
-		Add(SERVER, env.Get().ServerName).
-		Add(THREAD, uuid.New().String())
-}
-
-func (f Fields) Add(key string, value string) Fields {
-	f[key] = value
-	return f
+// Logger factory
+var newLogger = func() *log.Logger {
+	return log.New(os.Stdout, "", log.Ldate|log.Ltime|log.Lshortfile)
 }
 
 func ErrorStr(fields Fields, err string) {
@@ -37,7 +16,7 @@ func ErrorStr(fields Fields, err string) {
 }
 
 func Error(fields Fields, err error) {
-	logWithFields("ERROR", fields, strs.ToJson(err))
+	logWithFields("ERROR", fields, err.Error())
 }
 
 func Info(fields Fields, msg string) {
@@ -49,10 +28,10 @@ func Warn(fields Fields, msg string) {
 }
 
 func logWithFields(level string, fields Fields, msg string) {
-	logger := log.New(os.Stdout, fmt.Sprintf("%s: ", level), log.Ldate|log.Ltime|log.Lshortfile)
+	logger := newLogger()
 	data := ""
 	for k, v := range fields {
-		data += fmt.Sprintf("%s=%v ", k, v)
+		data += fmt.Sprintf("%s=%v;", k, v)
 	}
-	logger.Println(data + msg)
+	logger.Println(level, data, msg)
 }

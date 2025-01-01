@@ -12,7 +12,7 @@ import (
 //	@Accept			json
 //	@Produce		json
 //	@Param			languageId	path		string			true	"Language ID"
-//	@Success		200			{object}	Language			"Project"
+//	@Success		200			{object}	Language		"Project"
 //	@Failure		400			{object}	errs.Validation	"Bad Request"
 //	@Failure		404			{object}	errs.Custom		"Not Found"
 //	@Failure		500			{object}	errs.Custom		"Internal Server Error"

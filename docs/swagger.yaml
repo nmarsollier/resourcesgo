@@ -18,6 +18,16 @@ definitions:
           $ref: '#/definitions/errs.Field'
         type: array
     type: object
+  rest.CreateLanguageRequest:
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+    required:
+    - id
+    - name
+    type: object
   rest.CreateProjectRequest:
     properties:
       id:
@@ -51,6 +61,13 @@ definitions:
       id:
         type: string
     type: object
+  rest.Language:
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+    type: object
   rest.Project:
     properties:
       id:
@@ -76,6 +93,73 @@ definitions:
 info:
   contact: {}
 paths:
+  /languages:
+    post:
+      consumes:
+      - application/json
+      description: Create a new language tag.
+      parameters:
+      - description: Language to add
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/rest.CreateLanguageRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Language ID
+          schema:
+            $ref: '#/definitions/rest.IDResult'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errs.Validation'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/errs.Custom'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/errs.Custom'
+      summary: Create a language
+      tags:
+      - Languages
+  /languages/:languageId:
+    get:
+      consumes:
+      - application/json
+      description: Gets language details.
+      parameters:
+      - description: Language ID
+        in: path
+        name: languageId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Project
+          schema:
+            $ref: '#/definitions/rest.Language'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errs.Validation'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/errs.Custom'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/errs.Custom'
+      summary: Gets a language detail
+      tags:
+      - Languages
   /projects:
     post:
       consumes:

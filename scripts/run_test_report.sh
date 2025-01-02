@@ -1,10 +1,4 @@
 #!/bin/bash
-# Ensure gocovmerge is installed
-if ! command -v gocovmerge &> /dev/null; then
-    echo "gocovmerge could not be found, installing..."
-    go install github.com/wadey/gocovmerge@latest
-fi
-
 # Remove any existing coverage files
 rm -rf ./coverage
 
@@ -12,14 +6,9 @@ rm -rf ./coverage
 mkdir -p coverage
 
 # Find all packages and run tests with coverage
-for pkg in $(go list ./...); do
-    go test -coverprofile=coverage/$(echo $pkg | tr / -).out -coverpkg=./... $pkg
-done
+go test -coverprofile=coverage/coverage.out ./...  > /dev/null 2>&1
 
-# Merge all coverage profiles into one
-gocovmerge coverage/*.out > ./coverage/coverage.out
-
-go tool cover -func=./coverage/coverage.out | grep "total:"
+go tool cover -func=./coverage/coverage.out | grep "total:" |  tr -d '[:space:]' | sed 's/(statements)//g' | sed 's/%*$//'
 
 # Generate an HTML report
 go tool cover -html=./coverage/coverage.out -o coverage/coverage.html

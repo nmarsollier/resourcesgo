@@ -15,8 +15,8 @@
     "**/ios": true,
     "**/.husky": true,
     "scripts": false,
-    "**/coverage": true,
-    "coverage": true,
+    "**/coverage": false,
+    "coverage": false,
     "**/docs": true,
     "docs": true
   },

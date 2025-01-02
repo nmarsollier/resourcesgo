@@ -23,8 +23,9 @@ docker run -d --name ec-postgres -p 5432:5432 -e POSTGRES_HOST_AUTH_METHOD=trust
 
 To generate the database structure run the script DDL.sql.
 
-<img src='https://g.gravizo.com/svg?digraph%20DER%20%7B%0A%20%20%20%20rankdir%3DLR%3B%0A%20%20%20%20node%20%5Bshape%3Drecord%5D%3B%0A%20%20%20%20projects%20%5Blabel%3D%22%7B%20projects%20%7C%20%7B%20id%20%2528PK%2529%20%7C%20name%20%7C%20created%20%7C%20enabled%20%7D%7D%22%5D%3B%0A%20%20%20%20languages%20%5Blabel%3D%22%7B%20languages%20%7C%20%7B%20id%20%2528PK%2529%20%7C%20name%20%7C%20created%20%7C%20enabled%20%7D%7D%22%5D%3B%0A%20%20%20%20resources%20%5Blabel%3D%22%7B%20resources%20%7C%20%7B%20id%20%2528PK%2529%20%7C%20project%20%2528FK%2529%20%7C%20language%20%2528FK%2529%20%7C%20sem_ver%20%7C%20values%20%7C%20created%20%7C%20enabled%20%7D%7D%22%5D%3B%0A%20%20%20%20projects%20-%3E%20resources%20%5Blabel%3D%22fk_project%22%5D%3B%0A%20%20%20%20languages%20-%3E%20resources%20%5Blabel%3D%22fk_language%22%5D%3B%0A%20%20%20%20resources%20-%3E%20resources%20%5Blabel%3D%22unique_project_language_semver%22%2C%20style%3Ddotted%5D%3B%0A%7D'>
-
+<img src='https://g.gravizo.com/svg?
+digraph%20DER%20%7B%0A%20%20%20%20rankdir%3DLR%3B%0A%20%20%20%20node%20%5Bshape%3Drecord%5D%3B%0A%0A%20%20%20%20projects%20%5Blabel%3D%22%7B%20projects%20%7C%20%7B%20id%20(PK)%20%7C%20name%20%7C%20created%20%7C%20enabled%20%7D%7D%22%5D%3B%0A%20%20%20%20languages%20%5Blabel%3D%22%7B%20languages%20%7C%20%7B%20id%20(PK)%20%7C%20name%20%7C%20created%20%7C%20enabled%20%7D%7D%22%5D%3B%0A%20%20%20%20resources%20%5Blabel%3D%22%7B%20resources%20%7C%20%7B%20id%20(PK)%20%7C%20project%20(FK)%20%7C%20language%20(FK)%20%7C%20sem_ver%20%7C%20values%20%7C%20created%20%7C%20enabled%20%7D%7D%22%5D%3B%0A%0A%20%20%20%20projects%20-%3E%20resources%20%5Blabel%3D%22fk_project%22%5D%3B%0A%20%20%20%20languages%20-%3E%20resources%20%5Blabel%3D%22fk_language%22%5D%3B%0A%20%20%20%20resources%20-%3E%20resources%20%5Blabel%3D%22unique_project_language_semver%22%2C%20style%3Ddotted%5D%3B%0A%7D
+'>
 
 To setup the database just set the environment variable POSTGRES_URL.
 

@@ -32,6 +32,11 @@ func (f Fields) Add(key string, value string) Fields {
 }
 
 func CtxWithFields(ctx context.Context, fields Fields) context.Context {
+	_, ok := ctx.Value(fieldsKey).(Fields)
+	if ok {
+		return ctx
+	}
+
 	return context.WithValue(ctx, fieldsKey, fields)
 }
 

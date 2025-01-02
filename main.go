@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/nmarsollier/resourcesgo/graph"
-	routes "github.com/nmarsollier/resourcesgo/rest"
+	"github.com/nmarsollier/resourcesgo/internal/graph"
+	routes "github.com/nmarsollier/resourcesgo/internal/rest"
 )
 
 func main() {

@@ -23,6 +23,21 @@ docker run -d --name ec-postgres -p 5432:5432 -e POSTGRES_HOST_AUTH_METHOD=trust
 
 To generate the database structure run the script DDL.sql.
 
+
+![DER](https://g.gravizo.com/svg?
+digraph DER {
+    rankdir=LR;
+    node [shape=record];
+
+    projects [label="{ projects | { id (PK) | name | created | enabled }}"];
+    languages [label="{ languages | { id (PK) | name | created | enabled }}"];
+    resources [label="{ resources | { id (PK) | project (FK) | language (FK) | sem_ver | values | created | enabled }}"];
+
+    projects -> resources [label="fk_project"];
+    languages -> resources [label="fk_language"];
+    resources -> resources [label="unique_project_language_semver", style=dotted];
+})
+
 To setup the database just set the environment variable POSTGRES_URL.
 
 ## Go 1.22+

@@ -11,7 +11,7 @@ import (
 //	@Tags			Resources
 //	@Accept			json
 //	@Produce		json
-//	@Param			body	body		CreateResourceRequest	true	"Project to add"
+//	@Param			body	body		CreateResourceBody	true	"Project to add"
 //	@Success		200		{object}	IDResult				"Project ID"
 //	@Failure		400		{object}	errs.Validation			"Bad Request"
 //	@Failure		404		{object}	errs.Custom				"Not Found"
@@ -24,7 +24,7 @@ func initPostResources(engine *gin.Engine) {
 }
 
 func saveResource(c *gin.Context) {
-	body := CreateResourceRequest{}
+	body := CreateResourceBody{}
 	if err := c.ShouldBindJSON(&body); err != nil {
 		server.AbortWithError(c, err)
 		return
@@ -46,7 +46,7 @@ func saveResource(c *gin.Context) {
 	c.JSON(200, &IDResult{id})
 }
 
-type CreateResourceRequest struct {
+type CreateResourceBody struct {
 	ProjectID  string            `json:"projectId" binding:"required"`
 	LanguageID string            `json:"languageId" binding:"required"`
 	SemVer     string            `json:"semver" binding:"required"`

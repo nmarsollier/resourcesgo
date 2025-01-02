@@ -2,6 +2,8 @@ package errs
 
 import "github.com/nmarsollier/resourcesgo/internal/tools/strs"
 
+// Validation represents a collection of validation error messages.
+// It contains a slice of Field structs, each representing a specific validation error message.
 type Validation struct {
 	Messages []Field `json:"messages"`
 }

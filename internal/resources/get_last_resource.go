@@ -26,7 +26,7 @@ func getLastVersion(ctx context.Context, project string, language string, semver
 
 	var valids []string
 	for i := 0; i < len(versions); i++ {
-		if isValid(versions[i], semver) {
+		if isValidSemver(versions[i], semver) {
 			valids = append(valids, versions[i])
 		}
 	}
@@ -40,7 +40,7 @@ func getLastVersion(ctx context.Context, project string, language string, semver
 	return "", errs.NotFound
 }
 
-func isValid(version string, semVer string) bool {
+func isValidSemver(version string, semVer string) bool {
 	if strings.HasSuffix(semVer, "+") || strings.HasSuffix(semVer, "*") {
 		newSemVer := strings.ReplaceAll(semVer, "+", "")
 		newSemVer = strings.ReplaceAll(newSemVer, "*", "")

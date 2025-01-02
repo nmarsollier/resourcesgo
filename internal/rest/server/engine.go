@@ -21,7 +21,6 @@ func Router() *gin.Engine {
 	engine = gin.Default()
 
 	engine.Use(gzip.Gzip(gzip.DefaultCompression))
-
 	engine.Use(cors.Middleware(cors.Config{
 		Origins:         "*",
 		Methods:         "GET, PUT, POST, DELETE",

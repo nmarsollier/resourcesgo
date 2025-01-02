@@ -17,7 +17,9 @@ type Configuration struct {
 
 var config *Configuration
 
-// Get Obtiene las variables de entorno del sistema
+// Get returns the singleton instance of the Configuration.
+// If the Configuration is not already loaded, it loads the configuration
+// by calling the load function and stores it in the config variable.
 var Get = func() *Configuration {
 	if config == nil {
 		config = load()
@@ -26,7 +28,6 @@ var Get = func() *Configuration {
 	return config
 }
 
-// Load file properties
 func load() *Configuration {
 	return &Configuration{
 		ServerName:  cmp.Or(os.Getenv("SERVER_NAME"), "resourcesgo"),

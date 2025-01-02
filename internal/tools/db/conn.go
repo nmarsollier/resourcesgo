@@ -2,13 +2,10 @@ package db
 
 import (
 	"context"
-	"errors"
 
-	"github.com/jackc/pgx/v5/pgconn"
 	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/nmarsollier/resourcesgo/internal/tools/env"
 	"github.com/nmarsollier/resourcesgo/internal/tools/logx"
-	"github.com/nmarsollier/resourcesgo/internal/tools/strs"
 )
 
 var instance *pgxpool.Pool
@@ -16,6 +13,18 @@ var instance *pgxpool.Pool
 const ERR_EXIST = 23505
 const ERR_FOREIGN_KEY = 23503
 
+// getDBConn establishes a connection to the PostgreSQL database using pgxpool.
+// It returns a connection pool instance or an error if the connection fails.
+// If a connection pool instance already exists, it returns the existing instance.
+//
+// Parameters:
+//
+//	ctx - The context for managing the connection lifecycle.
+//
+// Returns:
+//
+//	*pgxpool.Pool - The connection pool instance.
+//	error - An error if the connection fails.
 func getDBConn(ctx context.Context) (*pgxpool.Pool, error) {
 	if instance != nil {
 		return instance, nil
@@ -36,26 +45,4 @@ func getDBConn(ctx context.Context) (*pgxpool.Pool, error) {
 	logx.Info(ctx, "Postgres Connected")
 
 	return instance, nil
-}
-
-func checkConnectionError(err error) {
-	var pgErr *pgconn.PgError
-	if errors.As(err, &pgErr) {
-		switch pgErr.Code {
-		case "08000", "08003", "08006", "08001", "08004", "08007", "08P01":
-			instance = nil
-		}
-	}
-
-	if errors.Is(err, context.DeadlineExceeded) || errors.Is(err, context.Canceled) {
-		instance = nil
-	}
-}
-
-func ErrorCode(err error) int {
-	var pgErr *pgconn.PgError
-	if errors.As(err, &pgErr) {
-		return strs.AtoiZero(pgErr.Code)
-	}
-	return 0
 }

@@ -8,18 +8,14 @@ import (
 	"github.com/nmarsollier/resourcesgo/internal/tools/errs"
 )
 
-func ErrorHandler(c *gin.Context) {
-	c.Next()
-
-	handleErrorIfNeeded(c)
-}
-
 func AbortWithError(c *gin.Context, err error) {
 	c.Error(err)
 	c.Abort()
 }
 
-func handleErrorIfNeeded(c *gin.Context) {
+func ErrorHandler(c *gin.Context) {
+	c.Next()
+
 	err := c.Errors.Last()
 	if err == nil {
 		return

@@ -6,6 +6,15 @@ import (
 	"github.com/nmarsollier/resourcesgo/internal/tools/logx"
 )
 
+// Exec executes a mutation SQL.
+//
+// Parameters:
+//   - ctx: The context to use for the database operation.
+//   - query: The SQL query to execute.
+//   - args: The arguments for the SQL query.
+//
+// Returns:
+//   - err: An error if the operation fails, otherwise nil.
 func Exec(ctx context.Context, query string, args ...any) (err error) {
 	conn, err := getDBConn(ctx)
 

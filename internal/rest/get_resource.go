@@ -26,11 +26,12 @@ func initGetResources(engine *gin.Engine) {
 }
 
 func getResource(c *gin.Context) {
-	project := c.Param("projectId")
-	language := c.Param("languageId")
-	semver := c.Param("semver")
-
-	resource, err := resources.GetLastResource(server.GinLogCtx(c), project, language, semver)
+	res, err := resources.GetLastResource(
+		server.GinLogCtx(c),
+		c.Param("projectId"),
+		c.Param("languageId"),
+		c.Param("semver"),
+	)
 
 	if err != nil {
 		server.AbortWithError(c, err)
@@ -38,11 +39,11 @@ func getResource(c *gin.Context) {
 	}
 
 	c.JSON(200, &Resource{
-		ID:         resource.ID,
-		ProjectID:  resource.ProjectID,
-		LanguageID: resource.LanguageID,
-		SemVer:     resource.SemVer,
-		Values:     resource.Values,
+		ID:         res.ID,
+		ProjectID:  res.ProjectID,
+		LanguageID: res.LanguageID,
+		SemVer:     res.SemVer,
+		Values:     res.Values,
 	})
 }
 

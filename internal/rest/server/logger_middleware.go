@@ -1,6 +1,7 @@
 package server
 
 import (
+	"cmp"
 	"context"
 	"strconv"
 
@@ -31,21 +32,10 @@ func GinLoggerMiddleware() gin.HandlerFunc {
 }
 
 func GinLogCtx(c *gin.Context) context.Context {
-	value, exists := c.Get(ginLogFieldsKey)
-
-	if !exists {
-		return logx.CtxWithFields(c, logx.NewFields())
-	}
-
-	return logx.CtxWithFields(c, value.(logx.Fields))
+	value := c.MustGet(ginLogFieldsKey).(logx.Fields)
+	return logx.CtxWithFields(c, value)
 }
 
 func getCorrelationId(c *gin.Context) string {
-	value := c.GetHeader(logx.CORRELATION_ID)
-
-	if len(value) == 0 {
-		value = uuid.New().String()
-	}
-
-	return value
+	return cmp.Or(c.GetHeader(logx.CORRELATION_ID), uuid.New().String())
 }

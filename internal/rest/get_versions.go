@@ -25,15 +25,16 @@ func initGetVersions(engine *gin.Engine) {
 }
 
 func getVersions(c *gin.Context) {
-	project := c.Param("projectId")
-	language := c.Param("languageId")
-
-	resource, err := resources.FindVersions(server.GinLogCtx(c), project, language)
+	versions, err := resources.FindVersions(
+		server.GinLogCtx(c),
+		c.Param("projectId"),
+		c.Param("languageId"),
+	)
 
 	if err != nil {
 		server.AbortWithError(c, err)
 		return
 	}
 
-	c.JSON(200, resource)
+	c.JSON(200, versions)
 }

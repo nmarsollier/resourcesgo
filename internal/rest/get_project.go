@@ -24,9 +24,7 @@ func initGetProject(engine *gin.Engine) {
 }
 
 func getProject(c *gin.Context) {
-	project := c.Param("projectId")
-
-	proj, err := projects.FindByID(server.GinLogCtx(c), project)
+	proj, err := projects.FindByID(server.GinLogCtx(c), c.Param("projectId"))
 
 	if err != nil {
 		server.AbortWithError(c, err)

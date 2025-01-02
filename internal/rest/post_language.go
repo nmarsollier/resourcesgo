@@ -11,7 +11,7 @@ import (
 //	@Tags			Languages
 //	@Accept			json
 //	@Produce		json
-//	@Param			body	body		CreateLanguageRequest	true	"Language to add"
+//	@Param			body	body		CreateLanguageBody	true	"Language to add"
 //	@Success		200		{object}	IDResult				"Language ID"
 //	@Failure		400		{object}	errs.Validation			"Bad Request"
 //	@Failure		404		{object}	errs.Custom				"Not Found"
@@ -24,7 +24,7 @@ func initPostLanguage(engine *gin.Engine) {
 }
 
 func saveLanguage(c *gin.Context) {
-	body := CreateLanguageRequest{}
+	body := CreateLanguageBody{}
 
 	if err := c.ShouldBindJSON(&body); err != nil {
 		server.AbortWithError(c, err)
@@ -40,7 +40,7 @@ func saveLanguage(c *gin.Context) {
 	c.JSON(200, &IDResult{id})
 }
 
-type CreateLanguageRequest struct {
+type CreateLanguageBody struct {
 	ID   string `json:"id" binding:"required"`
 	Name string `json:"name" binding:"required"`
 }

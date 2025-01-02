@@ -1,8 +1,6 @@
 package logx
 
 import (
-	"context"
-
 	"github.com/google/uuid"
 	"github.com/nmarsollier/resourcesgo/internal/tools/env"
 )
@@ -16,34 +14,24 @@ const HTTP_STATUS = "http_status"
 const SERVER = "server"
 const THREAD = "thread"
 
-const fieldsKey = "fields"
-
 type Fields map[string]string
 
+// NewFields creates a new Fields map with initial server and thread information.
 func NewFields() Fields {
 	return make(Fields, 4).
 		Add(SERVER, env.Get().ServerName).
 		Add(THREAD, uuid.New().String())
 }
 
+// Add inserts a key-value pair into the Fields map and returns the updated Fields.
+//
+// Parameters:
+//   - key: The key to be added to the Fields map.
+//   - value: The value associated with the key.
+//
+// Returns:
+//   - Fields: The pointer to work as a builder.
 func (f Fields) Add(key string, value string) Fields {
 	f[key] = value
 	return f
-}
-
-func CtxWithFields(ctx context.Context, fields Fields) context.Context {
-	_, ok := ctx.Value(fieldsKey).(Fields)
-	if ok {
-		return ctx
-	}
-
-	return context.WithValue(ctx, fieldsKey, fields)
-}
-
-func CtxFields(ctx context.Context) Fields {
-	fields, ok := ctx.Value(fieldsKey).(Fields)
-	if !ok {
-		return NewFields()
-	}
-	return fields
 }

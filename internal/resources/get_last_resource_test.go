@@ -32,7 +32,7 @@ func TestIsValid(t *testing.T) {
 
 	for _, test := range tests {
 		t.Run(test.version+"-"+test.semVer, func(t *testing.T) {
-			result := isValid(test.version, test.semVer)
+			result := isValidSemver(test.version, test.semVer)
 			assert.Equal(t, test.valid, result)
 		})
 	}

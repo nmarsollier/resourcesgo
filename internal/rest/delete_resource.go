@@ -7,7 +7,7 @@ import (
 )
 
 //	@Summary		Marks a resource as deleted.
-//	@Description	Delete a resource.
+//	@Description	Delete a resource. The id is not deleted, cannot be reused.
 //	@Tags			Resources
 //	@Accept			json
 //	@Produce		json
@@ -29,9 +29,10 @@ func initDeleteResource(engine *gin.Engine) {
 }
 
 func deleteResource(c *gin.Context) {
-	project := c.Param("projectId")
-	language := c.Param("languageId")
-	semver := c.Param("semver")
-
-	resources.Delete(server.GinLogCtx(c), project, language, semver)
+	resources.Delete(
+		server.GinLogCtx(c),
+		c.Param("projectId"),
+		c.Param("languageId"),
+		c.Param("semver"),
+	)
 }

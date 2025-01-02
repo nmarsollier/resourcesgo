@@ -139,7 +139,7 @@
 				
 				<option value="file41">github.com/nmarsollier/resourcesgo/internal/tools/errs/validation.go (100.0%)</option>
 				
-				<option value="file42">github.com/nmarsollier/resourcesgo/internal/tools/logx/fields.go (87.5%)</option>
+				<option value="file42">github.com/nmarsollier/resourcesgo/internal/tools/logx/fields.go (81.8%)</option>
 				
 				<option value="file43">github.com/nmarsollier/resourcesgo/internal/tools/logx/logger.go (100.0%)</option>
 				
@@ -8873,8 +8873,13 @@ func (f Fields) Add(key string, value string) Fields <span class="cov8" title="1
 }</span>
 
 func CtxWithFields(ctx context.Context, fields Fields) context.Context <span class="cov8" title="1">{
-        return context.WithValue(ctx, fieldsKey, fields)
-}</span>
+        _, ok := ctx.Value(fieldsKey).(Fields)
+        if ok </span><span class="cov0" title="0">{
+                return ctx
+        }</span>
+
+        <span class="cov8" title="1">return context.WithValue(ctx, fieldsKey, fields)</span>
+}
 
 func CtxFields(ctx context.Context) Fields <span class="cov8" title="1">{
         fields, ok := ctx.Value(fieldsKey).(Fields)

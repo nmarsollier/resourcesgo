@@ -35,7 +35,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/rest.CreateLanguageRequest"
+                            "$ref": "#/definitions/rest.CreateLanguageBody"
                         }
                     }
                 ],
@@ -137,7 +137,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/rest.CreateProjectRequest"
+                            "$ref": "#/definitions/rest.CreateProjectBody"
                         }
                     }
                 ],
@@ -239,7 +239,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/rest.CreateResourceRequest"
+                            "$ref": "#/definitions/rest.CreateResourceBody"
                         }
                     }
                 ],
@@ -335,7 +335,7 @@ const docTemplate = `{
                 }
             },
             "delete": {
-                "description": "Delete a resource.",
+                "description": "Delete a resource. The id is not deleted, cannot be reused.",
                 "consumes": [
                     "application/json"
                 ],
@@ -483,7 +483,7 @@ const docTemplate = `{
                 }
             }
         },
-        "rest.CreateLanguageRequest": {
+        "rest.CreateLanguageBody": {
             "type": "object",
             "required": [
                 "id",
@@ -498,7 +498,7 @@ const docTemplate = `{
                 }
             }
         },
-        "rest.CreateProjectRequest": {
+        "rest.CreateProjectBody": {
             "type": "object",
             "required": [
                 "id",
@@ -513,7 +513,7 @@ const docTemplate = `{
                 }
             }
         },
-        "rest.CreateResourceRequest": {
+        "rest.CreateResourceBody": {
             "type": "object",
             "required": [
                 "languageId",

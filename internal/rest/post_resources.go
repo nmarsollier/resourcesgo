@@ -12,10 +12,10 @@ import (
 //	@Accept			json
 //	@Produce		json
 //	@Param			body	body		CreateResourceBody	true	"Project to add"
-//	@Success		200		{object}	IDResult				"Project ID"
-//	@Failure		400		{object}	errs.Validation			"Bad Request"
-//	@Failure		404		{object}	errs.Custom				"Not Found"
-//	@Failure		500		{object}	errs.Custom				"Internal Server Error"
+//	@Success		200		{object}	IDResult			"Project ID"
+//	@Failure		400		{object}	errs.Validation		"Bad Request"
+//	@Failure		404		{object}	errs.Custom			"Not Found"
+//	@Failure		500		{object}	errs.Custom			"Internal Server Error"
 //	@Router			/resources [post]
 //
 // Create a new resource version

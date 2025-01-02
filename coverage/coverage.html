@@ -123,7 +123,7 @@
 				
 				<option value="file33">github.com/nmarsollier/resourcesgo/internal/rest/server/logger_middleware.go (0.0%)</option>
 				
-				<option value="file34">github.com/nmarsollier/resourcesgo/internal/tools/db/conn.go (18.2%)</option>
+				<option value="file34">github.com/nmarsollier/resourcesgo/internal/tools/db/conn.go (0.0%)</option>
 				
 				<option value="file35">github.com/nmarsollier/resourcesgo/internal/tools/db/exec.go (0.0%)</option>
 				
@@ -131,7 +131,7 @@
 				
 				<option value="file37">github.com/nmarsollier/resourcesgo/internal/tools/db/query_row.go (0.0%)</option>
 				
-				<option value="file38">github.com/nmarsollier/resourcesgo/internal/tools/db/tools.go (0.0%)</option>
+				<option value="file38">github.com/nmarsollier/resourcesgo/internal/tools/db/tools.go (14.8%)</option>
 				
 				<option value="file39">github.com/nmarsollier/resourcesgo/internal/tools/env/env.go (100.0%)</option>
 				
@@ -139,15 +139,17 @@
 				
 				<option value="file41">github.com/nmarsollier/resourcesgo/internal/tools/errs/validation.go (100.0%)</option>
 				
-				<option value="file42">github.com/nmarsollier/resourcesgo/internal/tools/logx/fields.go (81.8%)</option>
+				<option value="file42">github.com/nmarsollier/resourcesgo/internal/tools/logx/context.go (87.5%)</option>
 				
-				<option value="file43">github.com/nmarsollier/resourcesgo/internal/tools/logx/logger.go (100.0%)</option>
+				<option value="file43">github.com/nmarsollier/resourcesgo/internal/tools/logx/fields.go (100.0%)</option>
 				
-				<option value="file44">github.com/nmarsollier/resourcesgo/internal/tools/strs/json.go (100.0%)</option>
+				<option value="file44">github.com/nmarsollier/resourcesgo/internal/tools/logx/logger.go (100.0%)</option>
 				
-				<option value="file45">github.com/nmarsollier/resourcesgo/internal/tools/strs/numbers.go (100.0%)</option>
+				<option value="file45">github.com/nmarsollier/resourcesgo/internal/tools/strs/json.go (100.0%)</option>
 				
-				<option value="file46">github.com/nmarsollier/resourcesgo/main.go (0.0%)</option>
+				<option value="file46">github.com/nmarsollier/resourcesgo/internal/tools/strs/numbers.go (100.0%)</option>
+				
+				<option value="file47">github.com/nmarsollier/resourcesgo/main.go (0.0%)</option>
 				
 				</select>
 			</div>
@@ -198,7 +200,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/rest.CreateLanguageRequest"
+                            "$ref": "#/definitions/rest.CreateLanguageBody"
                         }
                     }
                 ],
@@ -300,7 +302,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/rest.CreateProjectRequest"
+                            "$ref": "#/definitions/rest.CreateProjectBody"
                         }
                     }
                 ],
@@ -402,7 +404,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/rest.CreateResourceRequest"
+                            "$ref": "#/definitions/rest.CreateResourceBody"
                         }
                     }
                 ],
@@ -498,7 +500,7 @@ const docTemplate = `{
                 }
             },
             "delete": {
-                "description": "Delete a resource.",
+                "description": "Delete a resource. The id is not deleted, cannot be reused.",
                 "consumes": [
                     "application/json"
                 ],
@@ -646,7 +648,7 @@ const docTemplate = `{
                 }
             }
         },
-        "rest.CreateLanguageRequest": {
+        "rest.CreateLanguageBody": {
             "type": "object",
             "required": [
                 "id",
@@ -661,7 +663,7 @@ const docTemplate = `{
                 }
             }
         },
-        "rest.CreateProjectRequest": {
+        "rest.CreateProjectBody": {
             "type": "object",
             "required": [
                 "id",
@@ -676,7 +678,7 @@ const docTemplate = `{
                 }
             }
         },
-        "rest.CreateResourceRequest": {
+        "rest.CreateResourceBody": {
             "type": "object",
             "required": [
                 "languageId",
@@ -7808,7 +7810,6 @@ func FindVersions(ctx context.Context, project string, language string) ([]strin
         }</span>
 
         <span class="cov0" title="0">return versions, nil</span>
-
 }
 </pre>
 		
@@ -7840,7 +7841,7 @@ func getLastVersion(ctx context.Context, project string, language string, semver
 
         <span class="cov0" title="0">var valids []string
         for i := 0; i &lt; len(versions); i++ </span><span class="cov0" title="0">{
-                if isValid(versions[i], semver) </span><span class="cov0" title="0">{
+                if isValidSemver(versions[i], semver) </span><span class="cov0" title="0">{
                         valids = append(valids, versions[i])
                 }</span>
         }
@@ -7854,7 +7855,7 @@ func getLastVersion(ctx context.Context, project string, language string, semver
         <span class="cov0" title="0">return "", errs.NotFound</span>
 }
 
-func isValid(version string, semVer string) bool <span class="cov8" title="1">{
+func isValidSemver(version string, semVer string) bool <span class="cov8" title="1">{
         if strings.HasSuffix(semVer, "+") || strings.HasSuffix(semVer, "*") </span><span class="cov8" title="1">{
                 newSemVer := strings.ReplaceAll(semVer, "+", "")
                 newSemVer = strings.ReplaceAll(newSemVer, "*", "")
@@ -7958,7 +7959,7 @@ import (
 )
 
 //        @Summary                Marks a resource as deleted.
-//        @Description        Delete a resource.
+//        @Description        Delete a resource. The id is not deleted, cannot be reused.
 //        @Tags                        Resources
 //        @Accept                        json
 //        @Produce                json
@@ -7980,11 +7981,12 @@ func initDeleteResource(engine *gin.Engine) <span class="cov0" title="0">{
 }</span>
 
 func deleteResource(c *gin.Context) <span class="cov0" title="0">{
-        project := c.Param("projectId")
-        language := c.Param("languageId")
-        semver := c.Param("semver")
-
-        resources.Delete(server.GinLogCtx(c), project, language, semver)
+        resources.Delete(
+                server.GinLogCtx(c),
+                c.Param("projectId"),
+                c.Param("languageId"),
+                c.Param("semver"),
+        )
 }</span>
 </pre>
 		
@@ -8014,9 +8016,7 @@ func initGetLanguage(engine *gin.Engine) <span class="cov0" title="0">{
 }</span>
 
 func getLanguage(c *gin.Context) <span class="cov0" title="0">{
-        project := c.Param("languageId")
-
-        proj, err := languages.FindByID(server.GinLogCtx(c), project)
+        proj, err := languages.FindByID(server.GinLogCtx(c), c.Param("languageId"))
 
         if err != nil </span><span class="cov0" title="0">{
                 server.AbortWithError(c, err)
@@ -8061,9 +8061,7 @@ func initGetProject(engine *gin.Engine) <span class="cov0" title="0">{
 }</span>
 
 func getProject(c *gin.Context) <span class="cov0" title="0">{
-        project := c.Param("projectId")
-
-        proj, err := projects.FindByID(server.GinLogCtx(c), project)
+        proj, err := projects.FindByID(server.GinLogCtx(c), c.Param("projectId"))
 
         if err != nil </span><span class="cov0" title="0">{
                 server.AbortWithError(c, err)
@@ -8110,11 +8108,12 @@ func initGetResources(engine *gin.Engine) <span class="cov0" title="0">{
 }</span>
 
 func getResource(c *gin.Context) <span class="cov0" title="0">{
-        project := c.Param("projectId")
-        language := c.Param("languageId")
-        semver := c.Param("semver")
-
-        resource, err := resources.GetLastResource(server.GinLogCtx(c), project, language, semver)
+        res, err := resources.GetLastResource(
+                server.GinLogCtx(c),
+                c.Param("projectId"),
+                c.Param("languageId"),
+                c.Param("semver"),
+        )
 
         if err != nil </span><span class="cov0" title="0">{
                 server.AbortWithError(c, err)
@@ -8122,11 +8121,11 @@ func getResource(c *gin.Context) <span class="cov0" title="0">{
         }</span>
 
         <span class="cov0" title="0">c.JSON(200, &amp;Resource{
-                ID:         resource.ID,
-                ProjectID:  resource.ProjectID,
-                LanguageID: resource.LanguageID,
-                SemVer:     resource.SemVer,
-                Values:     resource.Values,
+                ID:         res.ID,
+                ProjectID:  res.ProjectID,
+                LanguageID: res.LanguageID,
+                SemVer:     res.SemVer,
+                Values:     res.Values,
         })</span>
 }
 
@@ -8166,17 +8165,18 @@ func initGetVersions(engine *gin.Engine) <span class="cov0" title="0">{
 }</span>
 
 func getVersions(c *gin.Context) <span class="cov0" title="0">{
-        project := c.Param("projectId")
-        language := c.Param("languageId")
-
-        resource, err := resources.FindVersions(server.GinLogCtx(c), project, language)
+        versions, err := resources.FindVersions(
+                server.GinLogCtx(c),
+                c.Param("projectId"),
+                c.Param("languageId"),
+        )
 
         if err != nil </span><span class="cov0" title="0">{
                 server.AbortWithError(c, err)
                 return
         }</span>
 
-        <span class="cov0" title="0">c.JSON(200, resource)</span>
+        <span class="cov0" title="0">c.JSON(200, versions)</span>
 }
 </pre>
 		
@@ -8193,11 +8193,11 @@ import (
 //        @Tags                        Languages
 //        @Accept                        json
 //        @Produce                json
-//        @Param                        body        body                CreateLanguageRequest        true        "Language to add"
-//        @Success                200                {object}        IDResult                                "Language ID"
-//        @Failure                400                {object}        errs.Validation                        "Bad Request"
-//        @Failure                404                {object}        errs.Custom                                "Not Found"
-//        @Failure                500                {object}        errs.Custom                                "Internal Server Error"
+//        @Param                        body        body                CreateLanguageBody        true        "Language to add"
+//        @Success                200                {object}        IDResult                        "Language ID"
+//        @Failure                400                {object}        errs.Validation                "Bad Request"
+//        @Failure                404                {object}        errs.Custom                        "Not Found"
+//        @Failure                500                {object}        errs.Custom                        "Internal Server Error"
 //        @Router                        /languages [post]
 //
 // Create a new project tab
@@ -8206,7 +8206,7 @@ func initPostLanguage(engine *gin.Engine) <span class="cov0" title="0">{
 }</span>
 
 func saveLanguage(c *gin.Context) <span class="cov0" title="0">{
-        body := CreateLanguageRequest{}
+        body := CreateLanguageBody{}
 
         if err := c.ShouldBindJSON(&amp;body); err != nil </span><span class="cov0" title="0">{
                 server.AbortWithError(c, err)
@@ -8222,7 +8222,7 @@ func saveLanguage(c *gin.Context) <span class="cov0" title="0">{
         <span class="cov0" title="0">c.JSON(200, &amp;IDResult{id})</span>
 }
 
-type CreateLanguageRequest struct {
+type CreateLanguageBody struct {
         ID   string `json:"id" binding:"required"`
         Name string `json:"name" binding:"required"`
 }
@@ -8241,11 +8241,11 @@ import (
 //        @Tags                        Project
 //        @Accept                        json
 //        @Produce                json
-//        @Param                        body        body                CreateProjectRequest        true        "Project to add"
-//        @Success                200                {object}        IDResult                                "Project ID"
-//        @Failure                400                {object}        errs.Validation                        "Bad Request"
-//        @Failure                404                {object}        errs.Custom                                "Not Found"
-//        @Failure                500                {object}        errs.Custom                                "Internal Server Error"
+//        @Param                        body        body                CreateProjectBody        true        "Project to add"
+//        @Success                200                {object}        IDResult                        "Project ID"
+//        @Failure                400                {object}        errs.Validation                "Bad Request"
+//        @Failure                404                {object}        errs.Custom                        "Not Found"
+//        @Failure                500                {object}        errs.Custom                        "Internal Server Error"
 //        @Router                        /projects [post]
 //
 // Create a new project tab
@@ -8254,7 +8254,7 @@ func initPostProjects(engine *gin.Engine) <span class="cov0" title="0">{
 }</span>
 
 func saveProject(c *gin.Context) <span class="cov0" title="0">{
-        body := CreateProjectRequest{}
+        body := CreateProjectBody{}
 
         if err := c.ShouldBindJSON(&amp;body); err != nil </span><span class="cov0" title="0">{
                 server.AbortWithError(c, err)
@@ -8270,7 +8270,7 @@ func saveProject(c *gin.Context) <span class="cov0" title="0">{
         <span class="cov0" title="0">c.JSON(200, &amp;IDResult{id})</span>
 }
 
-type CreateProjectRequest struct {
+type CreateProjectBody struct {
         ID   string `json:"id" binding:"required"`
         Name string `json:"name" binding:"required"`
 }
@@ -8289,11 +8289,11 @@ import (
 //        @Tags                        Resources
 //        @Accept                        json
 //        @Produce                json
-//        @Param                        body        body                CreateResourceRequest        true        "Project to add"
-//        @Success                200                {object}        IDResult                                "Project ID"
-//        @Failure                400                {object}        errs.Validation                        "Bad Request"
-//        @Failure                404                {object}        errs.Custom                                "Not Found"
-//        @Failure                500                {object}        errs.Custom                                "Internal Server Error"
+//        @Param                        body        body                CreateResourceBody        true        "Project to add"
+//        @Success                200                {object}        IDResult                        "Project ID"
+//        @Failure                400                {object}        errs.Validation                "Bad Request"
+//        @Failure                404                {object}        errs.Custom                        "Not Found"
+//        @Failure                500                {object}        errs.Custom                        "Internal Server Error"
 //        @Router                        /resources [post]
 //
 // Create a new resource version
@@ -8302,7 +8302,7 @@ func initPostResources(engine *gin.Engine) <span class="cov0" title="0">{
 }</span>
 
 func saveResource(c *gin.Context) <span class="cov0" title="0">{
-        body := CreateResourceRequest{}
+        body := CreateResourceBody{}
         if err := c.ShouldBindJSON(&amp;body); err != nil </span><span class="cov0" title="0">{
                 server.AbortWithError(c, err)
                 return
@@ -8324,7 +8324,7 @@ func saveResource(c *gin.Context) <span class="cov0" title="0">{
         <span class="cov0" title="0">c.JSON(200, &amp;IDResult{id})</span>
 }
 
-type CreateResourceRequest struct {
+type CreateResourceBody struct {
         ProjectID  string            `json:"projectId" binding:"required"`
         LanguageID string            `json:"languageId" binding:"required"`
         SemVer     string            `json:"semver" binding:"required"`
@@ -8379,7 +8379,6 @@ func Router() *gin.Engine <span class="cov0" title="0">{
         <span class="cov0" title="0">engine = gin.Default()
 
         engine.Use(gzip.Gzip(gzip.DefaultCompression))
-
         engine.Use(cors.Middleware(cors.Config{
                 Origins:         "*",
                 Methods:         "GET, PUT, POST, DELETE",
@@ -8408,18 +8407,14 @@ import (
         "github.com/nmarsollier/resourcesgo/internal/tools/errs"
 )
 
-func ErrorHandler(c *gin.Context) <span class="cov0" title="0">{
-        c.Next()
-
-        handleErrorIfNeeded(c)
-}</span>
-
 func AbortWithError(c *gin.Context, err error) <span class="cov0" title="0">{
         c.Error(err)
         c.Abort()
 }</span>
 
-func handleErrorIfNeeded(c *gin.Context) <span class="cov0" title="0">{
+func ErrorHandler(c *gin.Context) <span class="cov0" title="0">{
+        c.Next()
+
         err := c.Errors.Last()
         if err == nil </span><span class="cov0" title="0">{
                 return
@@ -8459,6 +8454,7 @@ func handleCustom(c *gin.Context, err *errs.Custom) <span class="cov0" title="0"
 		<pre class="file" id="file33" style="display: none">package server
 
 import (
+        "cmp"
         "context"
         "strconv"
 
@@ -8489,37 +8485,23 @@ func GinLoggerMiddleware() gin.HandlerFunc <span class="cov0" title="0">{
 }
 
 func GinLogCtx(c *gin.Context) context.Context <span class="cov0" title="0">{
-        value, exists := c.Get(ginLogFieldsKey)
-
-        if !exists </span><span class="cov0" title="0">{
-                return logx.CtxWithFields(c, logx.NewFields())
-        }</span>
-
-        <span class="cov0" title="0">return logx.CtxWithFields(c, value.(logx.Fields))</span>
-}
+        value := c.MustGet(ginLogFieldsKey).(logx.Fields)
+        return logx.CtxWithFields(c, value)
+}</span>
 
 func getCorrelationId(c *gin.Context) string <span class="cov0" title="0">{
-        value := c.GetHeader(logx.CORRELATION_ID)
-
-        if len(value) == 0 </span><span class="cov0" title="0">{
-                value = uuid.New().String()
-        }</span>
-
-        <span class="cov0" title="0">return value</span>
-}
+        return cmp.Or(c.GetHeader(logx.CORRELATION_ID), uuid.New().String())
+}</span>
 </pre>
 		
 		<pre class="file" id="file34" style="display: none">package db
 
 import (
         "context"
-        "errors"
 
-        "github.com/jackc/pgx/v5/pgconn"
         "github.com/jackc/pgx/v5/pgxpool"
         "github.com/nmarsollier/resourcesgo/internal/tools/env"
         "github.com/nmarsollier/resourcesgo/internal/tools/logx"
-        "github.com/nmarsollier/resourcesgo/internal/tools/strs"
 )
 
 var instance *pgxpool.Pool
@@ -8527,6 +8509,18 @@ var instance *pgxpool.Pool
 const ERR_EXIST = 23505
 const ERR_FOREIGN_KEY = 23503
 
+// getDBConn establishes a connection to the PostgreSQL database using pgxpool.
+// It returns a connection pool instance or an error if the connection fails.
+// If a connection pool instance already exists, it returns the existing instance.
+//
+// Parameters:
+//
+//        ctx - The context for managing the connection lifecycle.
+//
+// Returns:
+//
+//        *pgxpool.Pool - The connection pool instance.
+//        error - An error if the connection fails.
 func getDBConn(ctx context.Context) (*pgxpool.Pool, error) <span class="cov0" title="0">{
         if instance != nil </span><span class="cov0" title="0">{
                 return instance, nil
@@ -8548,28 +8542,6 @@ func getDBConn(ctx context.Context) (*pgxpool.Pool, error) <span class="cov0" ti
 
         return instance, nil</span>
 }
-
-func checkConnectionError(err error) <span class="cov0" title="0">{
-        var pgErr *pgconn.PgError
-        if errors.As(err, &amp;pgErr) </span><span class="cov0" title="0">{
-                switch pgErr.Code </span>{
-                case "08000", "08003", "08006", "08001", "08004", "08007", "08P01":<span class="cov0" title="0">
-                        instance = nil</span>
-                }
-        }
-
-        <span class="cov0" title="0">if errors.Is(err, context.DeadlineExceeded) || errors.Is(err, context.Canceled) </span><span class="cov0" title="0">{
-                instance = nil
-        }</span>
-}
-
-func ErrorCode(err error) int <span class="cov8" title="1">{
-        var pgErr *pgconn.PgError
-        if errors.As(err, &amp;pgErr) </span><span class="cov8" title="1">{
-                return strs.AtoiZero(pgErr.Code)
-        }</span>
-        <span class="cov8" title="1">return 0</span>
-}
 </pre>
 		
 		<pre class="file" id="file35" style="display: none">package db
@@ -8580,6 +8552,15 @@ import (
         "github.com/nmarsollier/resourcesgo/internal/tools/logx"
 )
 
+// Exec executes a mutation SQL.
+//
+// Parameters:
+//   - ctx: The context to use for the database operation.
+//   - query: The SQL query to execute.
+//   - args: The arguments for the SQL query.
+//
+// Returns:
+//   - err: An error if the operation fails, otherwise nil.
 func Exec(ctx context.Context, query string, args ...any) (err error) <span class="cov0" title="0">{
         conn, err := getDBConn(ctx)
 
@@ -8606,6 +8587,22 @@ import (
         "github.com/nmarsollier/resourcesgo/internal/tools/logx"
 )
 
+// Query executes a SQL query and returns the results.
+//
+// Type Parameters:
+//
+//        T: The type of the result objects.
+//
+// Parameters:
+//
+//        ctx: The context for the query execution.
+//        query: The SQL query string to be executed.
+//        args: The arguments for the SQL query.
+//
+// Returns:
+//
+//        results: A slice of pointers to the result objects of type T.
+//        err: An error if the query execution or scanning fails.
 func Query[T any](ctx context.Context, query string, args ...interface{}) (results []*T, err error) <span class="cov0" title="0">{
         conn, err := getDBConn(ctx)
         if err != nil </span><span class="cov0" title="0">{
@@ -8624,7 +8621,7 @@ func Query[T any](ctx context.Context, query string, args ...interface{}) (resul
         for rows.Next() </span><span class="cov0" title="0">{
                 result := new(T)
 
-                if err = rows.Scan(fieldAddrs(columns, result)...); err != nil </span><span class="cov0" title="0">{
+                if err = rows.Scan(structFieldPointers(columns, result)...); err != nil </span><span class="cov0" title="0">{
                         checkConnectionError(err)
                         logx.Error(ctx, err)
                         return
@@ -8651,6 +8648,25 @@ import (
         "github.com/nmarsollier/resourcesgo/internal/tools/logx"
 )
 
+// QueryRow executes a query for a single row result.
+//
+// Type Parameters:
+//
+//        T - The type of the struct to scan the result into.
+//
+// Parameters:
+//
+//        ctx - The context to use for the database operation.
+//        query - The SQL query to execute.
+//        args - The arguments for the SQL query.
+//
+// Returns:
+//
+//        *T - A pointer to the struct containing the result of the query.
+//        error - An error if the query fails or no rows are found.
+//
+// If no rows are found, it returns errs.NotFound.
+// If an error occurs during the query or scanning, it logs the error and returns it.
 func QueryRow[T any](ctx context.Context, query string, args ...interface{}) (*T, error) <span class="cov0" title="0">{
         conn, err := getDBConn(ctx)
         if err != nil </span><span class="cov0" title="0">{
@@ -8671,7 +8687,7 @@ func QueryRow[T any](ctx context.Context, query string, args ...interface{}) (*T
         }</span>
 
         <span class="cov0" title="0">result := new(T)
-        if err := rows.Scan(fieldAddrs(columnNames(rows), result)...); err != nil </span><span class="cov0" title="0">{
+        if err := rows.Scan(structFieldPointers(columnNames(rows), result)...); err != nil </span><span class="cov0" title="0">{
                 checkConnectionError(err)
                 logx.Error(ctx, err)
                 return nil, err
@@ -8685,12 +8701,22 @@ func QueryRow[T any](ctx context.Context, query string, args ...interface{}) (*T
 
 import (
         "cmp"
+        "context"
+        "errors"
         "reflect"
 
         "github.com/jackc/pgx/v5"
+        "github.com/jackc/pgx/v5/pgconn"
+        "github.com/nmarsollier/resourcesgo/internal/tools/strs"
 )
 
-func fieldAddrs[T any](names []string, result *T) (addrs []interface{}) <span class="cov0" title="0">{
+// structFieldPointers takes a slice of field names and a pointer to a struct of any type T,
+// and returns a slice of pointers to the corresponding fields in the struct in the given names order.
+//
+// Returns:
+//   - A slice of interface{} containing pointers to the specified fields in the struct, or
+//     a slice containing the result itself if it is not a struct.
+func structFieldPointers[T any](names []string, result *T) (addrs []interface{}) <span class="cov0" title="0">{
         if reflect.TypeOf(*result).Kind() == reflect.Struct </span><span class="cov0" title="0">{
                 destVal := reflect.ValueOf(result).Elem()
                 destType := destVal.Type()
@@ -8711,10 +8737,15 @@ func fieldAddrs[T any](names []string, result *T) (addrs []interface{}) <span cl
         }</span>
 }
 
+// fieldName returns the name of a struct field based on its "db" tag.
+// If the "db" tag is not present, it returns the field's name.
 func fieldName(field reflect.StructField) string <span class="cov0" title="0">{
         return cmp.Or(field.Tag.Get("db"), field.Name)
 }</span>
 
+// columnNames extracts and returns the column names from the given pgx.Rows.
+// It iterates over the field descriptions of the rows and converts each field name
+// to a string, returning a slice of these column names.
 func columnNames(row pgx.Rows) (descriptions []string) <span class="cov0" title="0">{
         fieldDescriptions := row.FieldDescriptions()
         columnNames := make([]string, len(fieldDescriptions))
@@ -8722,6 +8753,36 @@ func columnNames(row pgx.Rows) (descriptions []string) <span class="cov0" title=
                 columnNames[i] = string(fd.Name)
         }</span>
         <span class="cov0" title="0">return columnNames</span>
+}
+
+// checkConnectionError checks the provided error to determine if it is a
+// PostgreSQL connection error or a context deadline/cancellation error.
+// If error sets the instance to nil, to force reconnect.
+func checkConnectionError(err error) <span class="cov0" title="0">{
+        var pgErr *pgconn.PgError
+        if errors.As(err, &amp;pgErr) </span><span class="cov0" title="0">{
+                switch pgErr.Code </span>{
+                case "08000", "08003", "08006", "08001", "08004", "08007", "08P01":<span class="cov0" title="0">
+                        instance = nil</span>
+                }
+        }
+
+        <span class="cov0" title="0">if errors.Is(err, context.DeadlineExceeded) || errors.Is(err, context.Canceled) </span><span class="cov0" title="0">{
+                instance = nil
+        }</span>
+}
+
+// ErrorCode extracts and returns the error code from a PostgreSQL error.
+//
+// Returns:
+//
+//        int - the extracted error code, or 0 if the error is not a PostgreSQL error
+func ErrorCode(err error) int <span class="cov8" title="1">{
+        var pgErr *pgconn.PgError
+        if errors.As(err, &amp;pgErr) </span><span class="cov8" title="1">{
+                return strs.AtoiZero(pgErr.Code)
+        }</span>
+        <span class="cov8" title="1">return 0</span>
 }
 </pre>
 		
@@ -8744,7 +8805,9 @@ type Configuration struct {
 
 var config *Configuration
 
-// Get Obtiene las variables de entorno del sistema
+// Get returns the singleton instance of the Configuration.
+// If the Configuration is not already loaded, it loads the configuration
+// by calling the load function and stores it in the config variable.
 var Get = func() *Configuration <span class="cov8" title="1">{
         if config == nil </span><span class="cov8" title="1">{
                 config = load()
@@ -8753,7 +8816,6 @@ var Get = func() *Configuration <span class="cov8" title="1">{
         <span class="cov8" title="1">return config</span>
 }
 
-// Load file properties
 func load() *Configuration <span class="cov8" title="1">{
         return &amp;Configuration{
                 ServerName:  cmp.Or(os.Getenv("SERVER_NAME"), "resourcesgo"),
@@ -8770,6 +8832,9 @@ import (
         "github.com/nmarsollier/resourcesgo/internal/tools/strs"
 )
 
+// Custom represents a custom error with an HTTP status code and a message.
+// The status field holds the HTTP status code, and the Message field holds
+// the error message to be returned in JSON format.
 type Custom struct {
         status  int
         Message string `json:"error"`
@@ -8795,6 +8860,8 @@ func (e *Custom) Status() int <span class="cov8" title="1">{
 
 import "github.com/nmarsollier/resourcesgo/internal/tools/strs"
 
+// Validation represents a collection of validation error messages.
+// It contains a slice of Field structs, each representing a specific validation error message.
 type Validation struct {
         Messages []Field `json:"messages"`
 }
@@ -8841,9 +8908,54 @@ func (e *Validation) Size() int <span class="cov8" title="1">{
 		
 		<pre class="file" id="file42" style="display: none">package logx
 
-import (
-        "context"
+import "context"
 
+type contextKey string
+
+const fieldsKey = contextKey("fields")
+
+// CtxWithFields returns a new context with the provided fields added to it.
+// If the context already contains fields, it returns the original context.
+//
+// Parameters:
+//
+//        ctx - The original context.
+//        fields - The fields to add to the context.
+//
+// Returns:
+//
+//        A new context with the fields added, or the original context if it already contains fields.
+func CtxWithFields(ctx context.Context, fields Fields) context.Context <span class="cov8" title="1">{
+        _, ok := ctx.Value(fieldsKey).(Fields)
+        if ok </span><span class="cov8" title="1">{
+                return ctx
+        }</span>
+
+        <span class="cov8" title="1">return context.WithValue(ctx, fieldsKey, fields)</span>
+}
+
+// CtxFields retrieves the Fields from the given context.
+// If the context does not contain any Fields, it returns a new Fields instance.
+//
+// Parameters:
+//
+//        ctx - the context from which to retrieve the Fields
+//
+// Returns:
+//
+//        Fields - the Fields retrieved from the context, or a new Fields instance if none are found
+func CtxFields(ctx context.Context) Fields <span class="cov8" title="1">{
+        fields, ok := ctx.Value(fieldsKey).(Fields)
+        if !ok </span><span class="cov0" title="0">{
+                return NewFields()
+        }</span>
+        <span class="cov8" title="1">return fields</span>
+}
+</pre>
+		
+		<pre class="file" id="file43" style="display: none">package logx
+
+import (
         "github.com/google/uuid"
         "github.com/nmarsollier/resourcesgo/internal/tools/env"
 )
@@ -8857,40 +8969,30 @@ const HTTP_STATUS = "http_status"
 const SERVER = "server"
 const THREAD = "thread"
 
-const fieldsKey = "fields"
-
 type Fields map[string]string
 
+// NewFields creates a new Fields map with initial server and thread information.
 func NewFields() Fields <span class="cov8" title="1">{
         return make(Fields, 4).
                 Add(SERVER, env.Get().ServerName).
                 Add(THREAD, uuid.New().String())
 }</span>
 
+// Add inserts a key-value pair into the Fields map and returns the updated Fields.
+//
+// Parameters:
+//   - key: The key to be added to the Fields map.
+//   - value: The value associated with the key.
+//
+// Returns:
+//   - Fields: The pointer to work as a builder.
 func (f Fields) Add(key string, value string) Fields <span class="cov8" title="1">{
         f[key] = value
         return f
 }</span>
-
-func CtxWithFields(ctx context.Context, fields Fields) context.Context <span class="cov8" title="1">{
-        _, ok := ctx.Value(fieldsKey).(Fields)
-        if ok </span><span class="cov0" title="0">{
-                return ctx
-        }</span>
-
-        <span class="cov8" title="1">return context.WithValue(ctx, fieldsKey, fields)</span>
-}
-
-func CtxFields(ctx context.Context) Fields <span class="cov8" title="1">{
-        fields, ok := ctx.Value(fieldsKey).(Fields)
-        if !ok </span><span class="cov0" title="0">{
-                return NewFields()
-        }</span>
-        <span class="cov8" title="1">return fields</span>
-}
 </pre>
 		
-		<pre class="file" id="file43" style="display: none">package logx
+		<pre class="file" id="file44" style="display: none">package logx
 
 import (
         "context"
@@ -8930,20 +9032,32 @@ func logWithFields(level string, ctx context.Context, msg string) <span class="c
 }
 </pre>
 		
-		<pre class="file" id="file44" style="display: none">package strs
+		<pre class="file" id="file45" style="display: none">package strs
 
 import "encoding/json"
 
+// ToJson converts a given object to its JSON string representation.
+// Note: This function ignores any errors that occur during the marshaling process.
 func ToJson(obj interface{}) string <span class="cov8" title="1">{
         jsonData, _ := json.Marshal(obj)
         return string(jsonData)
 }</span>
 </pre>
 		
-		<pre class="file" id="file45" style="display: none">package strs
+		<pre class="file" id="file46" style="display: none">package strs
 
 import "strconv"
 
+// AtoiZero converts a string to an integer. If the conversion fails, it returns 0.
+// It uses strconv.Atoi for the conversion.
+//
+// Parameters:
+//
+//        s - the string to be converted to an integer
+//
+// Returns:
+//
+//        int - the converted integer, or 0 if the conversion fails
 func AtoiZero(s string) int <span class="cov8" title="1">{
         i, err := strconv.Atoi(s)
         if err != nil </span><span class="cov8" title="1">{
@@ -8952,6 +9066,13 @@ func AtoiZero(s string) int <span class="cov8" title="1">{
         <span class="cov8" title="1">return i</span>
 }
 
+// AtoiDefault converts a string to an integer. If the conversion fails, it returns the provided default value.
+// Parameters:
+//   - s: The string to be converted to an integer.
+//   - def: The default integer value to return if the conversion fails.
+//
+// Returns:
+//   - The integer value of the string if the conversion is successful, otherwise the default value.
 func AtoiDefault(s string, def int) int <span class="cov8" title="1">{
         i, err := strconv.Atoi(s)
         if err != nil </span><span class="cov8" title="1">{
@@ -8961,7 +9082,7 @@ func AtoiDefault(s string, def int) int <span class="cov8" title="1">{
 }
 </pre>
 		
-		<pre class="file" id="file46" style="display: none">package main
+		<pre class="file" id="file47" style="display: none">package main
 
 import (
         "github.com/nmarsollier/resourcesgo/internal/graph"

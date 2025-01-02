@@ -18,7 +18,7 @@ definitions:
           $ref: '#/definitions/errs.Field'
         type: array
     type: object
-  rest.CreateLanguageRequest:
+  rest.CreateLanguageBody:
     properties:
       id:
         type: string
@@ -28,7 +28,7 @@ definitions:
     - id
     - name
     type: object
-  rest.CreateProjectRequest:
+  rest.CreateProjectBody:
     properties:
       id:
         type: string
@@ -38,7 +38,7 @@ definitions:
     - id
     - name
     type: object
-  rest.CreateResourceRequest:
+  rest.CreateResourceBody:
     properties:
       languageId:
         type: string
@@ -104,7 +104,7 @@ paths:
         name: body
         required: true
         schema:
-          $ref: '#/definitions/rest.CreateLanguageRequest'
+          $ref: '#/definitions/rest.CreateLanguageBody'
       produces:
       - application/json
       responses:
@@ -171,7 +171,7 @@ paths:
         name: body
         required: true
         schema:
-          $ref: '#/definitions/rest.CreateProjectRequest'
+          $ref: '#/definitions/rest.CreateProjectBody'
       produces:
       - application/json
       responses:
@@ -238,7 +238,7 @@ paths:
         name: body
         required: true
         schema:
-          $ref: '#/definitions/rest.CreateResourceRequest'
+          $ref: '#/definitions/rest.CreateResourceBody'
       produces:
       - application/json
       responses:
@@ -265,7 +265,7 @@ paths:
     delete:
       consumes:
       - application/json
-      description: Delete a resource.
+      description: Delete a resource. The id is not deleted, cannot be reused.
       parameters:
       - description: Project ID
         in: path

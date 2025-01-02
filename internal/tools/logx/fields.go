@@ -1,6 +1,8 @@
 package logx
 
 import (
+	"context"
+
 	"github.com/google/uuid"
 	"github.com/nmarsollier/resourcesgo/internal/tools/env"
 )
@@ -14,6 +16,8 @@ const HTTP_STATUS = "http_status"
 const SERVER = "server"
 const THREAD = "thread"
 
+const fieldsKey = "fields"
+
 type Fields map[string]string
 
 func NewFields() Fields {
@@ -25,4 +29,16 @@ func NewFields() Fields {
 func (f Fields) Add(key string, value string) Fields {
 	f[key] = value
 	return f
+}
+
+func CtxWithFields(ctx context.Context, fields Fields) context.Context {
+	return context.WithValue(ctx, fieldsKey, fields)
+}
+
+func CtxFields(ctx context.Context) Fields {
+	fields, ok := ctx.Value(fieldsKey).(Fields)
+	if !ok {
+		return NewFields()
+	}
+	return fields
 }

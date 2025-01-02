@@ -37,7 +37,7 @@ func saveResource(c *gin.Context) {
 		body.Values,
 	)
 
-	id, err := resources.Create(server.GinLogFields(c), newRes)
+	id, err := resources.Create(server.GinLogCtx(c), newRes)
 	if err != nil {
 		server.AbortWithError(c, err)
 		return

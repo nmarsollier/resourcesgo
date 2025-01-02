@@ -139,7 +139,7 @@
 				
 				<option value="file41">github.com/nmarsollier/resourcesgo/internal/tools/errs/validation.go (100.0%)</option>
 				
-				<option value="file42">github.com/nmarsollier/resourcesgo/internal/tools/logx/fields.go (100.0%)</option>
+				<option value="file42">github.com/nmarsollier/resourcesgo/internal/tools/logx/fields.go (87.5%)</option>
 				
 				<option value="file43">github.com/nmarsollier/resourcesgo/internal/tools/logx/logger.go (100.0%)</option>
 				
@@ -7254,7 +7254,7 @@ import (
 
 // FindLanguageByID is the resolver for the findLanguageByID field.
 func (r *entityResolver) FindLanguageByID(ctx context.Context, id string) (*model.Language, error) <span class="cov0" title="0">{
-        prj, err := languages.FindByID(tools.LoggerFields(ctx), id)
+        prj, err := languages.FindByID(tools.LoggerCtx(ctx), id)
         if err != nil </span><span class="cov0" title="0">{
                 return nil, err
         }</span>
@@ -7267,7 +7267,7 @@ func (r *entityResolver) FindLanguageByID(ctx context.Context, id string) (*mode
 
 // FindProjectByID is the resolver for the findProjectByID field.
 func (r *entityResolver) FindProjectByID(ctx context.Context, id string) (*model.Project, error) <span class="cov0" title="0">{
-        prj, err := projects.FindByID(tools.LoggerFields(ctx), id)
+        prj, err := projects.FindByID(tools.LoggerCtx(ctx), id)
         if err != nil </span><span class="cov0" title="0">{
                 return nil, err
         }</span>
@@ -7280,7 +7280,7 @@ func (r *entityResolver) FindProjectByID(ctx context.Context, id string) (*model
 
 // FindResourceByID is the resolver for the findResourceByID field.
 func (r *entityResolver) FindResourceByID(ctx context.Context, id string) (*model.Resource, error) <span class="cov0" title="0">{
-        prj, err := resources.FindByID(tools.LoggerFields(ctx), id)
+        prj, err := resources.FindByID(tools.LoggerCtx(ctx), id)
         if err != nil </span><span class="cov0" title="0">{
                 return nil, err
         }</span>
@@ -7318,17 +7318,17 @@ import (
 
 // NewProject is the resolver for the newProject field.
 func (r *mutationResolver) NewProject(ctx context.Context, id string, name string) (string, error) <span class="cov0" title="0">{
-        return projects.Create(tools.LoggerFields(ctx), id, name)
+        return projects.Create(tools.LoggerCtx(ctx), id, name)
 }</span>
 
 // NewLanguage is the resolver for the newLanguage field.
 func (r *mutationResolver) NewLanguage(ctx context.Context, id string, name string) (string, error) <span class="cov0" title="0">{
-        return languages.Create(tools.LoggerFields(ctx), id, name)
+        return languages.Create(tools.LoggerCtx(ctx), id, name)
 }</span>
 
 // NewResource is the resolver for the newResource field.
 func (r *mutationResolver) NewResource(ctx context.Context, request model.NewResourceInput) (string, error) <span class="cov0" title="0">{
-        return resources.Create(tools.LoggerFields(ctx), resources.NewResource(
+        return resources.Create(tools.LoggerCtx(ctx), resources.NewResource(
                 request.ProjectID,
                 request.LanguageID,
                 request.Semver,
@@ -7338,13 +7338,13 @@ func (r *mutationResolver) NewResource(ctx context.Context, request model.NewRes
 
 // DeleteResource is the resolver for the deleteResource field.
 func (r *mutationResolver) DeleteResource(ctx context.Context, projectID string, languageID string, semver string) (string, error) <span class="cov0" title="0">{
-        resources.Delete(tools.LoggerFields(ctx), projectID, languageID, semver)
+        resources.Delete(tools.LoggerCtx(ctx), projectID, languageID, semver)
         return "OK", nil
 }</span>
 
 // GetProject is the resolver for the getProject field.
 func (r *queryResolver) GetProject(ctx context.Context, id string) (*model.Project, error) <span class="cov0" title="0">{
-        prj, err := projects.FindByID(tools.LoggerFields(ctx), id)
+        prj, err := projects.FindByID(tools.LoggerCtx(ctx), id)
         if err != nil </span><span class="cov0" title="0">{
                 return nil, err
         }</span>
@@ -7357,7 +7357,7 @@ func (r *queryResolver) GetProject(ctx context.Context, id string) (*model.Proje
 
 // GetLanguage is the resolver for the getLanguage field.
 func (r *queryResolver) GetLanguage(ctx context.Context, id string) (*model.Language, error) <span class="cov0" title="0">{
-        prj, err := languages.FindByID(tools.LoggerFields(ctx), id)
+        prj, err := languages.FindByID(tools.LoggerCtx(ctx), id)
         if err != nil </span><span class="cov0" title="0">{
                 return nil, err
         }</span>
@@ -7370,7 +7370,7 @@ func (r *queryResolver) GetLanguage(ctx context.Context, id string) (*model.Lang
 
 // GetResource is the resolver for the getResource field.
 func (r *queryResolver) GetResource(ctx context.Context, projectID string, languageID string, semver string) (*model.Resource, error) <span class="cov0" title="0">{
-        res, err := resources.GetLastResource(tools.LoggerFields(ctx), projectID, languageID, semver)
+        res, err := resources.GetLastResource(tools.LoggerCtx(ctx), projectID, languageID, semver)
         if err != nil </span><span class="cov0" title="0">{
                 return nil, err
         }</span>
@@ -7386,7 +7386,7 @@ func (r *queryResolver) GetResource(ctx context.Context, projectID string, langu
 
 // GetVersions is the resolver for the getVersions field.
 func (r *queryResolver) GetVersions(ctx context.Context, projectID string, languageID string) ([]string, error) <span class="cov0" title="0">{
-        return resources.FindVersions(tools.LoggerFields(ctx), projectID, languageID)
+        return resources.FindVersions(tools.LoggerCtx(ctx), projectID, languageID)
 }</span>
 
 // Mutation returns model.MutationResolver implementation.
@@ -7426,6 +7426,7 @@ func mapValues(values map[string]string) []*model.KeyValue <span class="cov0" ti
 		<pre class="file" id="file7" style="display: none">package graph
 
 import (
+        "context"
         "fmt"
         "net/http"
         "strconv"
@@ -7439,7 +7440,7 @@ import (
 )
 
 func Start() <span class="cov0" title="0">{
-        logfld := logx.NewFields()
+        ctx := logx.CtxWithFields(context.Background(), logx.NewFields())
 
         port := env.Get().GqlPort
         srv := handler.NewDefaultServer(model.NewExecutableSchema(model.Config{Resolvers: &amp;schema.Resolver{}}))
@@ -7447,8 +7448,8 @@ func Start() <span class="cov0" title="0">{
         http.Handle("/", playground.Handler("GraphQL playground", "/query"))
         http.Handle("/query", srv)
 
-        logx.Info(logfld, "GraphQL playground in port : "+strconv.Itoa(port))
-        logx.Error(logfld, http.ListenAndServe(fmt.Sprintf(":%d", env.Get().GqlPort), nil))
+        logx.Info(ctx, "GraphQL playground in port : "+strconv.Itoa(port))
+        logx.Error(ctx, http.ListenAndServe(fmt.Sprintf(":%d", env.Get().GqlPort), nil))
 }</span>
 </pre>
 		
@@ -7462,14 +7463,17 @@ import (
         "github.com/nmarsollier/resourcesgo/internal/tools/logx"
 )
 
-func LoggerFields(ctx context.Context) logx.Fields <span class="cov0" title="0">{
+func LoggerCtx(ctx context.Context) context.Context <span class="cov0" title="0">{
         operationContext := graphql.GetOperationContext(ctx)
 
-        return logx.NewFields().
-                Add(logx.CONTROLLER, "GraphQL").
-                Add(logx.HTTP_METHOD, operationContext.OperationName).
-                Add(logx.HTTP_PATH, operationContext.OperationName).
-                Add(logx.CORRELATION_ID, getCorrelationId(ctx))
+        return logx.CtxWithFields(
+                ctx,
+                logx.NewFields().
+                        Add(logx.CONTROLLER, "GraphQL").
+                        Add(logx.HTTP_METHOD, operationContext.OperationName).
+                        Add(logx.HTTP_PATH, operationContext.OperationName).
+                        Add(logx.CORRELATION_ID, getCorrelationId(ctx)),
+        )
 }</span>
 
 func getCorrelationId(ctx context.Context) string <span class="cov0" title="0">{
@@ -7487,14 +7491,15 @@ func getCorrelationId(ctx context.Context) string <span class="cov0" title="0">{
 		<pre class="file" id="file9" style="display: none">package languages
 
 import (
+        "context"
+
         "github.com/nmarsollier/resourcesgo/internal/tools/db"
         "github.com/nmarsollier/resourcesgo/internal/tools/errs"
-        "github.com/nmarsollier/resourcesgo/internal/tools/logx"
 )
 
 var dbExec = db.Exec
 
-func Create(fields logx.Fields, id string, name string) (string, error) <span class="cov8" title="1">{
+func Create(ctx context.Context, id string, name string) (string, error) <span class="cov8" title="1">{
         language := newLanguage(id, name)
 
         if err := language.ValidateSchema(); err != nil </span><span class="cov8" title="1">{
@@ -7502,7 +7507,7 @@ func Create(fields logx.Fields, id string, name string) (string, error) <span cl
         }</span>
 
         <span class="cov8" title="1">err := dbExec(
-                fields,
+                ctx,
                 "INSERT INTO languages (id, name, created, enabled) VALUES ($1, $2, $3, $4)",
                 language.ID,
                 language.Name,
@@ -7526,13 +7531,14 @@ func Create(fields logx.Fields, id string, name string) (string, error) <span cl
 		<pre class="file" id="file10" style="display: none">package languages
 
 import (
+        "context"
+
         "github.com/nmarsollier/resourcesgo/internal/tools/db"
-        "github.com/nmarsollier/resourcesgo/internal/tools/logx"
 )
 
-func FindByID(fields logx.Fields, id string) (*Language, error) <span class="cov0" title="0">{
+func FindByID(ctx context.Context, id string) (*Language, error) <span class="cov0" title="0">{
         return db.QueryRow[Language](
-                fields,
+                ctx,
                 `
       SELECT id, name, created, enabled
       FROM languages
@@ -7575,14 +7581,15 @@ func (e *Language) ValidateSchema() error <span class="cov8" title="1">{
 		<pre class="file" id="file12" style="display: none">package projects
 
 import (
+        "context"
+
         "github.com/nmarsollier/resourcesgo/internal/tools/db"
         "github.com/nmarsollier/resourcesgo/internal/tools/errs"
-        "github.com/nmarsollier/resourcesgo/internal/tools/logx"
 )
 
 var dbExec = db.Exec
 
-func Create(fields logx.Fields, id string, name string) (string, error) <span class="cov8" title="1">{
+func Create(ctx context.Context, id string, name string) (string, error) <span class="cov8" title="1">{
         project := newProject(id, name)
 
         if err := project.ValidateSchema(); err != nil </span><span class="cov8" title="1">{
@@ -7590,7 +7597,7 @@ func Create(fields logx.Fields, id string, name string) (string, error) <span cl
         }</span>
 
         <span class="cov8" title="1">err := dbExec(
-                fields,
+                ctx,
                 "INSERT INTO projects (id, name, created, enabled) VALUES ($1, $2, $3, $4)",
                 project.ID, project.Name, project.Created, project.Enabled)
 
@@ -7610,13 +7617,14 @@ func Create(fields logx.Fields, id string, name string) (string, error) <span cl
 		<pre class="file" id="file13" style="display: none">package projects
 
 import (
+        "context"
+
         "github.com/nmarsollier/resourcesgo/internal/tools/db"
-        "github.com/nmarsollier/resourcesgo/internal/tools/logx"
 )
 
-func FindByID(fields logx.Fields, id string) (*Project, error) <span class="cov0" title="0">{
+func FindByID(ctx context.Context, id string) (*Project, error) <span class="cov0" title="0">{
         return db.QueryRow[Project](
-                fields,
+                ctx,
                 `
       SELECT id, name, created, enabled
       FROM projects
@@ -7659,25 +7667,25 @@ func (e *Project) ValidateSchema() error <span class="cov8" title="1">{
 		<pre class="file" id="file15" style="display: none">package resources
 
 import (
+        "context"
         "strings"
 
         "github.com/go-playground/validator/v10"
         "github.com/nmarsollier/resourcesgo/internal/tools/db"
         "github.com/nmarsollier/resourcesgo/internal/tools/errs"
-        "github.com/nmarsollier/resourcesgo/internal/tools/logx"
 )
 
 var dbExec = db.Exec
 
 func Create(
-        fields logx.Fields,
+        ctx context.Context,
         resource *Resource,
 ) (string, error) <span class="cov8" title="1">{
         if err := validator.New().Struct(resource); err != nil </span><span class="cov0" title="0">{
                 return "", err
         }</span>
 
-        <span class="cov8" title="1">resource, err := insert(fields, resource)
+        <span class="cov8" title="1">resource, err := insert(ctx, resource)
 
         if err != nil </span><span class="cov8" title="1">{
                 switch db.ErrorCode(err) </span>{
@@ -7697,10 +7705,10 @@ func Create(
 }
 
 func insert(
-        fields logx.Fields,
+        ctx context.Context,
         resource *Resource,
 ) (*Resource, error) <span class="cov8" title="1">{
-        err := dbExec(fields,
+        err := dbExec(ctx,
                 `
                 INSERT INTO resources (id, project, language, sem_ver, values, created, enabled)
                 VALUES ($1, $2, $3, $4, $5, $6, $7);
@@ -7717,14 +7725,15 @@ func insert(
 		<pre class="file" id="file16" style="display: none">package resources
 
 import (
+        "context"
+
         "github.com/nmarsollier/resourcesgo/internal/tools/db"
-        "github.com/nmarsollier/resourcesgo/internal/tools/logx"
 )
 
-func Delete(fields logx.Fields, project string, language string, semver string) <span class="cov0" title="0">{
-        if resource, err := findBy(fields, project, language, semver); err == nil </span><span class="cov0" title="0">{
+func Delete(ctx context.Context, project string, language string, semver string) <span class="cov0" title="0">{
+        if resource, err := findBy(ctx, project, language, semver); err == nil </span><span class="cov0" title="0">{
                 db.Exec(
-                        fields,
+                        ctx,
                         "UPDATE resources SET enabled=false WHERE id=$1",
                         resource.ID,
                 )
@@ -7735,13 +7744,14 @@ func Delete(fields logx.Fields, project string, language string, semver string) 
 		<pre class="file" id="file17" style="display: none">package resources
 
 import (
+        "context"
+
         "github.com/nmarsollier/resourcesgo/internal/tools/db"
-        "github.com/nmarsollier/resourcesgo/internal/tools/logx"
 )
 
-func findBy(fields logx.Fields, project string, language string, semVer string) (*Resource, error) <span class="cov0" title="0">{
+func findBy(ctx context.Context, project string, language string, semVer string) (*Resource, error) <span class="cov0" title="0">{
         return db.QueryRow[Resource](
-                fields,
+                ctx,
                 `
                 SELECT id, project, language, sem_ver, values, created, enabled 
                 FROM resources 
@@ -7755,13 +7765,14 @@ func findBy(fields logx.Fields, project string, language string, semVer string) 
 		<pre class="file" id="file18" style="display: none">package resources
 
 import (
+        "context"
+
         "github.com/nmarsollier/resourcesgo/internal/tools/db"
-        "github.com/nmarsollier/resourcesgo/internal/tools/logx"
 )
 
-func FindByID(fields logx.Fields, id string) (*Resource, error) <span class="cov0" title="0">{
+func FindByID(ctx context.Context, id string) (*Resource, error) <span class="cov0" title="0">{
         return db.QueryRow[Resource](
-                fields,
+                ctx,
                 `
                 SELECT id, project, language, sem_ver, values, created, enabled 
                 FROM resources 
@@ -7775,13 +7786,14 @@ func FindByID(fields logx.Fields, id string) (*Resource, error) <span class="cov
 		<pre class="file" id="file19" style="display: none">package resources
 
 import (
+        "context"
+
         "github.com/nmarsollier/resourcesgo/internal/tools/db"
-        "github.com/nmarsollier/resourcesgo/internal/tools/logx"
 )
 
-func FindVersions(fields logx.Fields, project string, language string) ([]string, error) <span class="cov0" title="0">{
+func FindVersions(ctx context.Context, project string, language string) ([]string, error) <span class="cov0" title="0">{
         data, err := db.Query[string](
-                fields,
+                ctx,
                 "SELECT sem_ver FROM resources WHERE project = $1 AND language = $2 AND enabled = true",
                 project, language,
         )
@@ -7803,25 +7815,25 @@ func FindVersions(fields logx.Fields, project string, language string) ([]string
 		<pre class="file" id="file20" style="display: none">package resources
 
 import (
+        "context"
         "sort"
         "strconv"
         "strings"
 
         "github.com/nmarsollier/resourcesgo/internal/tools/errs"
-        "github.com/nmarsollier/resourcesgo/internal/tools/logx"
 )
 
-func GetLastResource(fields logx.Fields, project string, language string, semver string) (*Resource, error) <span class="cov0" title="0">{
-        version, err := getLastVersion(fields, project, language, semver)
+func GetLastResource(ctx context.Context, project string, language string, semver string) (*Resource, error) <span class="cov0" title="0">{
+        version, err := getLastVersion(ctx, project, language, semver)
         if err != nil </span><span class="cov0" title="0">{
                 return nil, err
         }</span>
 
-        <span class="cov0" title="0">return findBy(fields, project, language, version)</span>
+        <span class="cov0" title="0">return findBy(ctx, project, language, version)</span>
 }
 
-func getLastVersion(fields logx.Fields, project string, language string, semver string) (string, error) <span class="cov0" title="0">{
-        versions, err := FindVersions(fields, project, language)
+func getLastVersion(ctx context.Context, project string, language string, semver string) (string, error) <span class="cov0" title="0">{
+        versions, err := FindVersions(ctx, project, language)
         if err != nil </span><span class="cov0" title="0">{
                 return "", err
         }</span>
@@ -7972,7 +7984,7 @@ func deleteResource(c *gin.Context) <span class="cov0" title="0">{
         language := c.Param("languageId")
         semver := c.Param("semver")
 
-        resources.Delete(server.GinLogFields(c), project, language, semver)
+        resources.Delete(server.GinLogCtx(c), project, language, semver)
 }</span>
 </pre>
 		
@@ -8004,7 +8016,7 @@ func initGetLanguage(engine *gin.Engine) <span class="cov0" title="0">{
 func getLanguage(c *gin.Context) <span class="cov0" title="0">{
         project := c.Param("languageId")
 
-        proj, err := languages.FindByID(server.GinLogFields(c), project)
+        proj, err := languages.FindByID(server.GinLogCtx(c), project)
 
         if err != nil </span><span class="cov0" title="0">{
                 server.AbortWithError(c, err)
@@ -8051,7 +8063,7 @@ func initGetProject(engine *gin.Engine) <span class="cov0" title="0">{
 func getProject(c *gin.Context) <span class="cov0" title="0">{
         project := c.Param("projectId")
 
-        proj, err := projects.FindByID(server.GinLogFields(c), project)
+        proj, err := projects.FindByID(server.GinLogCtx(c), project)
 
         if err != nil </span><span class="cov0" title="0">{
                 server.AbortWithError(c, err)
@@ -8102,7 +8114,7 @@ func getResource(c *gin.Context) <span class="cov0" title="0">{
         language := c.Param("languageId")
         semver := c.Param("semver")
 
-        resource, err := resources.GetLastResource(server.GinLogFields(c), project, language, semver)
+        resource, err := resources.GetLastResource(server.GinLogCtx(c), project, language, semver)
 
         if err != nil </span><span class="cov0" title="0">{
                 server.AbortWithError(c, err)
@@ -8157,7 +8169,7 @@ func getVersions(c *gin.Context) <span class="cov0" title="0">{
         project := c.Param("projectId")
         language := c.Param("languageId")
 
-        resource, err := resources.FindVersions(server.GinLogFields(c), project, language)
+        resource, err := resources.FindVersions(server.GinLogCtx(c), project, language)
 
         if err != nil </span><span class="cov0" title="0">{
                 server.AbortWithError(c, err)
@@ -8201,7 +8213,7 @@ func saveLanguage(c *gin.Context) <span class="cov0" title="0">{
                 return
         }</span>
 
-        <span class="cov0" title="0">id, err := languages.Create(server.GinLogFields(c), body.ID, body.Name)
+        <span class="cov0" title="0">id, err := languages.Create(server.GinLogCtx(c), body.ID, body.Name)
         if err != nil </span><span class="cov0" title="0">{
                 server.AbortWithError(c, err)
                 return
@@ -8249,7 +8261,7 @@ func saveProject(c *gin.Context) <span class="cov0" title="0">{
                 return
         }</span>
 
-        <span class="cov0" title="0">id, err := projects.Create(server.GinLogFields(c), body.ID, body.Name)
+        <span class="cov0" title="0">id, err := projects.Create(server.GinLogCtx(c), body.ID, body.Name)
         if err != nil </span><span class="cov0" title="0">{
                 server.AbortWithError(c, err)
                 return
@@ -8303,7 +8315,7 @@ func saveResource(c *gin.Context) <span class="cov0" title="0">{
                 body.Values,
         )
 
-        id, err := resources.Create(server.GinLogFields(c), newRes)
+        id, err := resources.Create(server.GinLogCtx(c), newRes)
         if err != nil </span><span class="cov0" title="0">{
                 server.AbortWithError(c, err)
                 return
@@ -8447,12 +8459,15 @@ func handleCustom(c *gin.Context, err *errs.Custom) <span class="cov0" title="0"
 		<pre class="file" id="file33" style="display: none">package server
 
 import (
+        "context"
         "strconv"
 
         "github.com/gin-gonic/gin"
         "github.com/google/uuid"
         "github.com/nmarsollier/resourcesgo/internal/tools/logx"
 )
+
+const ginLogFieldsKey = "ginlogfields"
 
 func GinLoggerMiddleware() gin.HandlerFunc <span class="cov0" title="0">{
         return func(c *gin.Context) </span><span class="cov0" title="0">{
@@ -8462,25 +8477,25 @@ func GinLoggerMiddleware() gin.HandlerFunc <span class="cov0" title="0">{
                         Add(logx.HTTP_PATH, c.Request.URL.Path).
                         Add(logx.CORRELATION_ID, getCorrelationId(c))
 
-                c.Set("logfields", fields)
+                c.Set(ginLogFieldsKey, fields)
 
                 c.Next()
 
                 if c.Request.Method != "OPTIONS" </span><span class="cov0" title="0">{
                         fields.Add(logx.HTTP_STATUS, strconv.Itoa(c.Writer.Status()))
-                        logx.Info(fields, "Completed")
+                        logx.Info(GinLogCtx(c), "Completed")
                 }</span>
         }
 }
 
-func GinLogFields(c *gin.Context) logx.Fields <span class="cov0" title="0">{
-        value, exists := c.Get("logfields")
+func GinLogCtx(c *gin.Context) context.Context <span class="cov0" title="0">{
+        value, exists := c.Get(ginLogFieldsKey)
 
         if !exists </span><span class="cov0" title="0">{
-                return logx.NewFields()
+                return logx.CtxWithFields(c, logx.NewFields())
         }</span>
 
-        <span class="cov0" title="0">return value.(logx.Fields)</span>
+        <span class="cov0" title="0">return logx.CtxWithFields(c, value.(logx.Fields))</span>
 }
 
 func getCorrelationId(c *gin.Context) string <span class="cov0" title="0">{
@@ -8512,24 +8527,24 @@ var instance *pgxpool.Pool
 const ERR_EXIST = 23505
 const ERR_FOREIGN_KEY = 23503
 
-func getDBConn(fields logx.Fields) (*pgxpool.Pool, error) <span class="cov0" title="0">{
+func getDBConn(ctx context.Context) (*pgxpool.Pool, error) <span class="cov0" title="0">{
         if instance != nil </span><span class="cov0" title="0">{
                 return instance, nil
         }</span>
 
         <span class="cov0" title="0">config, err := pgxpool.ParseConfig(env.Get().PostgresURL)
         if err != nil </span><span class="cov0" title="0">{
-                logx.Error(fields, err)
+                logx.Error(ctx, err)
                 return nil, err
         }</span>
 
-        <span class="cov0" title="0">instance, err = pgxpool.NewWithConfig(context.Background(), config)
+        <span class="cov0" title="0">instance, err = pgxpool.NewWithConfig(ctx, config)
         if err != nil </span><span class="cov0" title="0">{
-                logx.Error(fields, err)
+                logx.Error(ctx, err)
                 return nil, err
         }</span>
 
-        <span class="cov0" title="0">logx.Info(fields, "Postgres Connected")
+        <span class="cov0" title="0">logx.Info(ctx, "Postgres Connected")
 
         return instance, nil</span>
 }
@@ -8565,18 +8580,18 @@ import (
         "github.com/nmarsollier/resourcesgo/internal/tools/logx"
 )
 
-func Exec(fields logx.Fields, query string, args ...any) (err error) <span class="cov0" title="0">{
-        conn, err := getDBConn(fields)
+func Exec(ctx context.Context, query string, args ...any) (err error) <span class="cov0" title="0">{
+        conn, err := getDBConn(ctx)
 
         if err != nil </span><span class="cov0" title="0">{
-                logx.Error(fields, err)
+                logx.Error(ctx, err)
                 return
         }</span>
 
         <span class="cov0" title="0">_, err = conn.Exec(context.Background(), query, args...)
         if err != nil </span><span class="cov0" title="0">{
                 checkConnectionError(err)
-                logx.Error(fields, err)
+                logx.Error(ctx, err)
         }</span>
 
         <span class="cov0" title="0">return</span>
@@ -8591,16 +8606,16 @@ import (
         "github.com/nmarsollier/resourcesgo/internal/tools/logx"
 )
 
-func Query[T any](fields logx.Fields, query string, args ...interface{}) (results []*T, err error) <span class="cov0" title="0">{
-        conn, err := getDBConn(fields)
+func Query[T any](ctx context.Context, query string, args ...interface{}) (results []*T, err error) <span class="cov0" title="0">{
+        conn, err := getDBConn(ctx)
         if err != nil </span><span class="cov0" title="0">{
-                logx.Error(fields, err)
+                logx.Error(ctx, err)
                 return
         }</span>
 
         <span class="cov0" title="0">rows, err := conn.Query(context.Background(), query, args...)
         if err != nil </span><span class="cov0" title="0">{
-                logx.Error(fields, err)
+                logx.Error(ctx, err)
                 return
         }</span>
         <span class="cov0" title="0">defer rows.Close()
@@ -8611,7 +8626,7 @@ func Query[T any](fields logx.Fields, query string, args ...interface{}) (result
 
                 if err = rows.Scan(fieldAddrs(columns, result)...); err != nil </span><span class="cov0" title="0">{
                         checkConnectionError(err)
-                        logx.Error(fields, err)
+                        logx.Error(ctx, err)
                         return
                 }</span>
 
@@ -8619,7 +8634,7 @@ func Query[T any](fields logx.Fields, query string, args ...interface{}) (result
         }
 
         <span class="cov0" title="0">if err = rows.Err(); err != nil </span><span class="cov0" title="0">{
-                logx.Error(fields, err)
+                logx.Error(ctx, err)
                 return
         }</span>
 
@@ -8636,17 +8651,17 @@ import (
         "github.com/nmarsollier/resourcesgo/internal/tools/logx"
 )
 
-func QueryRow[T any](fields logx.Fields, query string, args ...interface{}) (*T, error) <span class="cov0" title="0">{
-        conn, err := getDBConn(fields)
+func QueryRow[T any](ctx context.Context, query string, args ...interface{}) (*T, error) <span class="cov0" title="0">{
+        conn, err := getDBConn(ctx)
         if err != nil </span><span class="cov0" title="0">{
-                logx.Error(fields, err)
+                logx.Error(ctx, err)
                 return nil, err
         }</span>
 
         <span class="cov0" title="0">rows, err := conn.Query(context.Background(), query, args...)
         if err != nil </span><span class="cov0" title="0">{
                 checkConnectionError(err)
-                logx.Error(fields, err)
+                logx.Error(ctx, err)
                 return nil, err
         }</span>
         <span class="cov0" title="0">defer rows.Close()
@@ -8658,7 +8673,7 @@ func QueryRow[T any](fields logx.Fields, query string, args ...interface{}) (*T,
         <span class="cov0" title="0">result := new(T)
         if err := rows.Scan(fieldAddrs(columnNames(rows), result)...); err != nil </span><span class="cov0" title="0">{
                 checkConnectionError(err)
-                logx.Error(fields, err)
+                logx.Error(ctx, err)
                 return nil, err
         }</span>
 
@@ -8827,6 +8842,8 @@ func (e *Validation) Size() int <span class="cov8" title="1">{
 		<pre class="file" id="file42" style="display: none">package logx
 
 import (
+        "context"
+
         "github.com/google/uuid"
         "github.com/nmarsollier/resourcesgo/internal/tools/env"
 )
@@ -8840,6 +8857,8 @@ const HTTP_STATUS = "http_status"
 const SERVER = "server"
 const THREAD = "thread"
 
+const fieldsKey = "fields"
+
 type Fields map[string]string
 
 func NewFields() Fields <span class="cov8" title="1">{
@@ -8852,11 +8871,24 @@ func (f Fields) Add(key string, value string) Fields <span class="cov8" title="1
         f[key] = value
         return f
 }</span>
+
+func CtxWithFields(ctx context.Context, fields Fields) context.Context <span class="cov8" title="1">{
+        return context.WithValue(ctx, fieldsKey, fields)
+}</span>
+
+func CtxFields(ctx context.Context) Fields <span class="cov8" title="1">{
+        fields, ok := ctx.Value(fieldsKey).(Fields)
+        if !ok </span><span class="cov0" title="0">{
+                return NewFields()
+        }</span>
+        <span class="cov8" title="1">return fields</span>
+}
 </pre>
 		
 		<pre class="file" id="file43" style="display: none">package logx
 
 import (
+        "context"
         "fmt"
         "log"
         "os"
@@ -8867,26 +8899,26 @@ var newLogger = func() *log.Logger <span class="cov8" title="1">{
         return log.New(os.Stdout, "", log.Ldate|log.Ltime|log.Lshortfile)
 }</span>
 
-func ErrorStr(fields Fields, err string) <span class="cov8" title="1">{
-        logWithFields("ERROR", fields, err)
+func ErrorStr(ctx context.Context, err string) <span class="cov8" title="1">{
+        logWithFields("ERROR", ctx, err)
 }</span>
 
-func Error(fields Fields, err error) <span class="cov8" title="1">{
-        logWithFields("ERROR", fields, err.Error())
+func Error(ctx context.Context, err error) <span class="cov8" title="1">{
+        logWithFields("ERROR", ctx, err.Error())
 }</span>
 
-func Info(fields Fields, msg string) <span class="cov8" title="1">{
-        logWithFields("INFO", fields, msg)
+func Info(ctx context.Context, msg string) <span class="cov8" title="1">{
+        logWithFields("INFO", ctx, msg)
 }</span>
 
-func Warn(fields Fields, msg string) <span class="cov8" title="1">{
-        logWithFields("WARN", fields, msg)
+func Warn(ctx context.Context, msg string) <span class="cov8" title="1">{
+        logWithFields("WARN", ctx, msg)
 }</span>
 
-func logWithFields(level string, fields Fields, msg string) <span class="cov8" title="1">{
+func logWithFields(level string, ctx context.Context, msg string) <span class="cov8" title="1">{
         logger := newLogger()
         data := ""
-        for k, v := range fields </span><span class="cov8" title="1">{
+        for k, v := range CtxFields(ctx) </span><span class="cov8" title="1">{
                 data += fmt.Sprintf("%s=%v;", k, v)
         }</span>
         <span class="cov8" title="1">logger.Println(level, data, msg)</span>

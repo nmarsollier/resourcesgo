@@ -1,6 +1,7 @@
 package logx
 
 import (
+	"context"
 	"fmt"
 	"log"
 	"os"
@@ -11,26 +12,26 @@ var newLogger = func() *log.Logger {
 	return log.New(os.Stdout, "", log.Ldate|log.Ltime|log.Lshortfile)
 }
 
-func ErrorStr(fields Fields, err string) {
-	logWithFields("ERROR", fields, err)
+func ErrorStr(ctx context.Context, err string) {
+	logWithFields("ERROR", ctx, err)
 }
 
-func Error(fields Fields, err error) {
-	logWithFields("ERROR", fields, err.Error())
+func Error(ctx context.Context, err error) {
+	logWithFields("ERROR", ctx, err.Error())
 }
 
-func Info(fields Fields, msg string) {
-	logWithFields("INFO", fields, msg)
+func Info(ctx context.Context, msg string) {
+	logWithFields("INFO", ctx, msg)
 }
 
-func Warn(fields Fields, msg string) {
-	logWithFields("WARN", fields, msg)
+func Warn(ctx context.Context, msg string) {
+	logWithFields("WARN", ctx, msg)
 }
 
-func logWithFields(level string, fields Fields, msg string) {
+func logWithFields(level string, ctx context.Context, msg string) {
 	logger := newLogger()
 	data := ""
-	for k, v := range fields {
+	for k, v := range CtxFields(ctx) {
 		data += fmt.Sprintf("%s=%v;", k, v)
 	}
 	logger.Println(level, data, msg)

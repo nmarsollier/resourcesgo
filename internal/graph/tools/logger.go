@@ -8,14 +8,17 @@ import (
 	"github.com/nmarsollier/resourcesgo/internal/tools/logx"
 )
 
-func LoggerFields(ctx context.Context) logx.Fields {
+func LoggerCtx(ctx context.Context) context.Context {
 	operationContext := graphql.GetOperationContext(ctx)
 
-	return logx.NewFields().
-		Add(logx.CONTROLLER, "GraphQL").
-		Add(logx.HTTP_METHOD, operationContext.OperationName).
-		Add(logx.HTTP_PATH, operationContext.OperationName).
-		Add(logx.CORRELATION_ID, getCorrelationId(ctx))
+	return logx.CtxWithFields(
+		ctx,
+		logx.NewFields().
+			Add(logx.CONTROLLER, "GraphQL").
+			Add(logx.HTTP_METHOD, operationContext.OperationName).
+			Add(logx.HTTP_PATH, operationContext.OperationName).
+			Add(logx.CORRELATION_ID, getCorrelationId(ctx)),
+	)
 }
 
 func getCorrelationId(ctx context.Context) string {

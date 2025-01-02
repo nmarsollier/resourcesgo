@@ -1,14 +1,15 @@
 package resources
 
 import (
+	"context"
+
 	"github.com/nmarsollier/resourcesgo/internal/tools/db"
-	"github.com/nmarsollier/resourcesgo/internal/tools/logx"
 )
 
-func Delete(fields logx.Fields, project string, language string, semver string) {
-	if resource, err := findBy(fields, project, language, semver); err == nil {
+func Delete(ctx context.Context, project string, language string, semver string) {
+	if resource, err := findBy(ctx, project, language, semver); err == nil {
 		db.Exec(
-			fields,
+			ctx,
 			"UPDATE resources SET enabled=false WHERE id=$1",
 			resource.ID,
 		)

@@ -2,6 +2,7 @@ package logx
 
 import (
 	"bytes"
+	"context"
 	"fmt"
 	"log"
 	"strings"
@@ -32,8 +33,9 @@ func captureOutput(f func()) string {
 func TestErrorStr(t *testing.T) {
 
 	fields := Fields{"key": "value"}
+	ctx := CtxWithFields(context.Background(), fields)
 	output := captureOutput(func() {
-		ErrorStr(fields, "test error")
+		ErrorStr(ctx, "test error")
 	})
 
 	if !contains(output, "ERROR key=value; test error") {
@@ -44,8 +46,10 @@ func TestErrorStr(t *testing.T) {
 func TestError(t *testing.T) {
 	fields := Fields{"key": "value"}
 	err := fmt.Errorf("test error")
+	ctx := CtxWithFields(context.Background(), fields)
+
 	output := captureOutput(func() {
-		Error(fields, err)
+		Error(ctx, err)
 	})
 	if !contains(output, "ERROR key=value; test error") {
 		t.Errorf("Expected log output to contain 'ERROR key=value; test error', got %s", output)
@@ -54,8 +58,10 @@ func TestError(t *testing.T) {
 
 func TestInfo(t *testing.T) {
 	fields := Fields{"key": "value"}
+	ctx := CtxWithFields(context.Background(), fields)
+
 	output := captureOutput(func() {
-		Info(fields, "test info")
+		Info(ctx, "test info")
 	})
 	if !contains(output, "INFO key=value; test info") {
 		t.Errorf("Expected log output to contain 'INFO key=value; test info', got %s", output)
@@ -64,8 +70,10 @@ func TestInfo(t *testing.T) {
 
 func TestWarn(t *testing.T) {
 	fields := Fields{"key": "value"}
+	ctx := CtxWithFields(context.Background(), fields)
+
 	output := captureOutput(func() {
-		Warn(fields, "test warn")
+		Warn(ctx, "test warn")
 	})
 	if !contains(output, "WARN key=value; test warn") {
 		t.Errorf("Expected log output to contain 'WARN key=value; test warn', got %s", output)

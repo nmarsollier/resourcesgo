@@ -33,5 +33,5 @@ func deleteResource(c *gin.Context) {
 	language := c.Param("languageId")
 	semver := c.Param("semver")
 
-	resources.Delete(server.GinLogFields(c), project, language, semver)
+	resources.Delete(server.GinLogCtx(c), project, language, semver)
 }

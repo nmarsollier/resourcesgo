@@ -26,7 +26,7 @@ func initGetLanguage(engine *gin.Engine) {
 func getLanguage(c *gin.Context) {
 	project := c.Param("languageId")
 
-	proj, err := languages.FindByID(server.GinLogFields(c), project)
+	proj, err := languages.FindByID(server.GinLogCtx(c), project)
 
 	if err != nil {
 		server.AbortWithError(c, err)

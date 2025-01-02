@@ -31,7 +31,7 @@ func saveLanguage(c *gin.Context) {
 		return
 	}
 
-	id, err := languages.Create(server.GinLogFields(c), body.ID, body.Name)
+	id, err := languages.Create(server.GinLogCtx(c), body.ID, body.Name)
 	if err != nil {
 		server.AbortWithError(c, err)
 		return

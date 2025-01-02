@@ -1,6 +1,7 @@
 package resources
 
 import (
+	"context"
 	"testing"
 
 	"github.com/nmarsollier/resourcesgo/internal/tools/errs"
@@ -9,13 +10,15 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+var tContext = logx.CtxWithFields(context.Background(), logx.NewFields())
+
 func TestCreate(t *testing.T) {
 	mockfunc := dbExec
 	defer func() { dbExec = mockfunc }()
 
 	var res = newTestResource()
 
-	dbExec = func(fields logx.Fields, query string, args ...interface{}) error {
+	dbExec = func(ctx context.Context, query string, args ...interface{}) error {
 		assert.Equal(t, res.ID, args[0])
 		assert.Equal(t, res.ProjectID, args[1])
 		assert.Equal(t, res.LanguageID, args[2])
@@ -27,7 +30,7 @@ func TestCreate(t *testing.T) {
 		return nil
 	}
 
-	result, err := Create(logx.Fields{}, res)
+	result, err := Create(tContext, res)
 
 	assert.NoError(t, err)
 	assert.Equal(t, res.ID, result)
@@ -39,11 +42,11 @@ func TestCreateError(t *testing.T) {
 
 	var res = newTestResource()
 
-	dbExec = func(f logx.Fields, query string, args ...interface{}) error {
+	dbExec = func(f context.Context, query string, args ...interface{}) error {
 		return terr.PgErrorExist
 	}
 
-	result, err := Create(logx.Fields{}, res)
+	result, err := Create(tContext, res)
 
 	assert.ErrorIs(t, err, errs.AlreadyExist)
 	assert.Empty(t, result)
@@ -54,11 +57,11 @@ func TestProjectNotExistError(t *testing.T) {
 	defer func() { dbExec = mockfunc }()
 	var res = newTestResource()
 
-	dbExec = func(f logx.Fields, query string, args ...interface{}) error {
+	dbExec = func(f context.Context, query string, args ...interface{}) error {
 		return terr.PgErrorProjectForeign
 	}
 
-	result, err := Create(logx.Fields{}, res)
+	result, err := Create(tContext, res)
 
 	assert.ErrorIs(t, err, errs.ErrProjectNotExist)
 	assert.Empty(t, result)
@@ -69,11 +72,11 @@ func TestLanguageNotExistError(t *testing.T) {
 	defer func() { dbExec = mockfunc }()
 	var res = newTestResource()
 
-	dbExec = func(f logx.Fields, query string, args ...interface{}) error {
+	dbExec = func(f context.Context, query string, args ...interface{}) error {
 		return terr.PgErrorLanguageForeign
 	}
 
-	result, err := Create(logx.Fields{}, res)
+	result, err := Create(tContext, res)
 
 	assert.ErrorIs(t, err, errs.ErrLanguageNotExist)
 	assert.Empty(t, result)
@@ -84,11 +87,11 @@ func TestOtherError(t *testing.T) {
 	defer func() { dbExec = mockfunc }()
 	var res = newTestResource()
 
-	dbExec = func(f logx.Fields, query string, args ...interface{}) error {
+	dbExec = func(f context.Context, query string, args ...interface{}) error {
 		return errs.Internal
 	}
 
-	result, err := Create(logx.Fields{}, res)
+	result, err := Create(tContext, res)
 
 	assert.ErrorIs(t, err, errs.Internal)
 	assert.Empty(t, result)

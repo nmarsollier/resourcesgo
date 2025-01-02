@@ -1,13 +1,14 @@
 package languages
 
 import (
+	"context"
+
 	"github.com/nmarsollier/resourcesgo/internal/tools/db"
-	"github.com/nmarsollier/resourcesgo/internal/tools/logx"
 )
 
-func FindByID(fields logx.Fields, id string) (*Language, error) {
+func FindByID(ctx context.Context, id string) (*Language, error) {
 	return db.QueryRow[Language](
-		fields,
+		ctx,
 		`
       SELECT id, name, created, enabled
       FROM languages

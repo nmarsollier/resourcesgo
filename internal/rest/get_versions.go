@@ -28,7 +28,7 @@ func getVersions(c *gin.Context) {
 	project := c.Param("projectId")
 	language := c.Param("languageId")
 
-	resource, err := resources.FindVersions(server.GinLogFields(c), project, language)
+	resource, err := resources.FindVersions(server.GinLogCtx(c), project, language)
 
 	if err != nil {
 		server.AbortWithError(c, err)

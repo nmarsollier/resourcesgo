@@ -1,14 +1,15 @@
 package projects
 
 import (
+	"context"
+
 	"github.com/nmarsollier/resourcesgo/internal/tools/db"
 	"github.com/nmarsollier/resourcesgo/internal/tools/errs"
-	"github.com/nmarsollier/resourcesgo/internal/tools/logx"
 )
 
 var dbExec = db.Exec
 
-func Create(fields logx.Fields, id string, name string) (string, error) {
+func Create(ctx context.Context, id string, name string) (string, error) {
 	project := newProject(id, name)
 
 	if err := project.ValidateSchema(); err != nil {
@@ -16,7 +17,7 @@ func Create(fields logx.Fields, id string, name string) (string, error) {
 	}
 
 	err := dbExec(
-		fields,
+		ctx,
 		"INSERT INTO projects (id, name, created, enabled) VALUES ($1, $2, $3, $4)",
 		project.ID, project.Name, project.Created, project.Enabled)
 

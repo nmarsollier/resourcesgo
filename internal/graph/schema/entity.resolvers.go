@@ -16,7 +16,7 @@ import (
 
 // FindLanguageByID is the resolver for the findLanguageByID field.
 func (r *entityResolver) FindLanguageByID(ctx context.Context, id string) (*model.Language, error) {
-	prj, err := languages.FindByID(tools.LoggerFields(ctx), id)
+	prj, err := languages.FindByID(tools.LoggerCtx(ctx), id)
 	if err != nil {
 		return nil, err
 	}
@@ -29,7 +29,7 @@ func (r *entityResolver) FindLanguageByID(ctx context.Context, id string) (*mode
 
 // FindProjectByID is the resolver for the findProjectByID field.
 func (r *entityResolver) FindProjectByID(ctx context.Context, id string) (*model.Project, error) {
-	prj, err := projects.FindByID(tools.LoggerFields(ctx), id)
+	prj, err := projects.FindByID(tools.LoggerCtx(ctx), id)
 	if err != nil {
 		return nil, err
 	}
@@ -42,7 +42,7 @@ func (r *entityResolver) FindProjectByID(ctx context.Context, id string) (*model
 
 // FindResourceByID is the resolver for the findResourceByID field.
 func (r *entityResolver) FindResourceByID(ctx context.Context, id string) (*model.Resource, error) {
-	prj, err := resources.FindByID(tools.LoggerFields(ctx), id)
+	prj, err := resources.FindByID(tools.LoggerCtx(ctx), id)
 	if err != nil {
 		return nil, err
 	}

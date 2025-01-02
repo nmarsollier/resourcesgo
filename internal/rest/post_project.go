@@ -31,7 +31,7 @@ func saveProject(c *gin.Context) {
 		return
 	}
 
-	id, err := projects.Create(server.GinLogFields(c), body.ID, body.Name)
+	id, err := projects.Create(server.GinLogCtx(c), body.ID, body.Name)
 	if err != nil {
 		server.AbortWithError(c, err)
 		return

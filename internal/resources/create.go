@@ -1,25 +1,25 @@
 package resources
 
 import (
+	"context"
 	"strings"
 
 	"github.com/go-playground/validator/v10"
 	"github.com/nmarsollier/resourcesgo/internal/tools/db"
 	"github.com/nmarsollier/resourcesgo/internal/tools/errs"
-	"github.com/nmarsollier/resourcesgo/internal/tools/logx"
 )
 
 var dbExec = db.Exec
 
 func Create(
-	fields logx.Fields,
+	ctx context.Context,
 	resource *Resource,
 ) (string, error) {
 	if err := validator.New().Struct(resource); err != nil {
 		return "", err
 	}
 
-	resource, err := insert(fields, resource)
+	resource, err := insert(ctx, resource)
 
 	if err != nil {
 		switch db.ErrorCode(err) {
@@ -39,10 +39,10 @@ func Create(
 }
 
 func insert(
-	fields logx.Fields,
+	ctx context.Context,
 	resource *Resource,
 ) (*Resource, error) {
-	err := dbExec(fields,
+	err := dbExec(ctx,
 		`
 		INSERT INTO resources (id, project, language, sem_ver, values, created, enabled)
 		VALUES ($1, $2, $3, $4, $5, $6, $7);

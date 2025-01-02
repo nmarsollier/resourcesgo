@@ -1,13 +1,14 @@
 package resources
 
 import (
+	"context"
+
 	"github.com/nmarsollier/resourcesgo/internal/tools/db"
-	"github.com/nmarsollier/resourcesgo/internal/tools/logx"
 )
 
-func findBy(fields logx.Fields, project string, language string, semVer string) (*Resource, error) {
+func findBy(ctx context.Context, project string, language string, semVer string) (*Resource, error) {
 	return db.QueryRow[Resource](
-		fields,
+		ctx,
 		`
 		SELECT id, project, language, sem_ver, values, created, enabled 
 		FROM resources 

@@ -16,17 +16,17 @@ import (
 
 // NewProject is the resolver for the newProject field.
 func (r *mutationResolver) NewProject(ctx context.Context, id string, name string) (string, error) {
-	return projects.Create(tools.LoggerFields(ctx), id, name)
+	return projects.Create(tools.LoggerCtx(ctx), id, name)
 }
 
 // NewLanguage is the resolver for the newLanguage field.
 func (r *mutationResolver) NewLanguage(ctx context.Context, id string, name string) (string, error) {
-	return languages.Create(tools.LoggerFields(ctx), id, name)
+	return languages.Create(tools.LoggerCtx(ctx), id, name)
 }
 
 // NewResource is the resolver for the newResource field.
 func (r *mutationResolver) NewResource(ctx context.Context, request model.NewResourceInput) (string, error) {
-	return resources.Create(tools.LoggerFields(ctx), resources.NewResource(
+	return resources.Create(tools.LoggerCtx(ctx), resources.NewResource(
 		request.ProjectID,
 		request.LanguageID,
 		request.Semver,
@@ -36,13 +36,13 @@ func (r *mutationResolver) NewResource(ctx context.Context, request model.NewRes
 
 // DeleteResource is the resolver for the deleteResource field.
 func (r *mutationResolver) DeleteResource(ctx context.Context, projectID string, languageID string, semver string) (string, error) {
-	resources.Delete(tools.LoggerFields(ctx), projectID, languageID, semver)
+	resources.Delete(tools.LoggerCtx(ctx), projectID, languageID, semver)
 	return "OK", nil
 }
 
 // GetProject is the resolver for the getProject field.
 func (r *queryResolver) GetProject(ctx context.Context, id string) (*model.Project, error) {
-	prj, err := projects.FindByID(tools.LoggerFields(ctx), id)
+	prj, err := projects.FindByID(tools.LoggerCtx(ctx), id)
 	if err != nil {
 		return nil, err
 	}
@@ -55,7 +55,7 @@ func (r *queryResolver) GetProject(ctx context.Context, id string) (*model.Proje
 
 // GetLanguage is the resolver for the getLanguage field.
 func (r *queryResolver) GetLanguage(ctx context.Context, id string) (*model.Language, error) {
-	prj, err := languages.FindByID(tools.LoggerFields(ctx), id)
+	prj, err := languages.FindByID(tools.LoggerCtx(ctx), id)
 	if err != nil {
 		return nil, err
 	}
@@ -68,7 +68,7 @@ func (r *queryResolver) GetLanguage(ctx context.Context, id string) (*model.Lang
 
 // GetResource is the resolver for the getResource field.
 func (r *queryResolver) GetResource(ctx context.Context, projectID string, languageID string, semver string) (*model.Resource, error) {
-	res, err := resources.GetLastResource(tools.LoggerFields(ctx), projectID, languageID, semver)
+	res, err := resources.GetLastResource(tools.LoggerCtx(ctx), projectID, languageID, semver)
 	if err != nil {
 		return nil, err
 	}
@@ -84,7 +84,7 @@ func (r *queryResolver) GetResource(ctx context.Context, projectID string, langu
 
 // GetVersions is the resolver for the getVersions field.
 func (r *queryResolver) GetVersions(ctx context.Context, projectID string, languageID string) ([]string, error) {
-	return resources.FindVersions(tools.LoggerFields(ctx), projectID, languageID)
+	return resources.FindVersions(tools.LoggerCtx(ctx), projectID, languageID)
 }
 
 // Mutation returns model.MutationResolver implementation.

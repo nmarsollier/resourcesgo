@@ -1,25 +1,25 @@
 package resources
 
 import (
+	"context"
 	"sort"
 	"strconv"
 	"strings"
 
 	"github.com/nmarsollier/resourcesgo/internal/tools/errs"
-	"github.com/nmarsollier/resourcesgo/internal/tools/logx"
 )
 
-func GetLastResource(fields logx.Fields, project string, language string, semver string) (*Resource, error) {
-	version, err := getLastVersion(fields, project, language, semver)
+func GetLastResource(ctx context.Context, project string, language string, semver string) (*Resource, error) {
+	version, err := getLastVersion(ctx, project, language, semver)
 	if err != nil {
 		return nil, err
 	}
 
-	return findBy(fields, project, language, version)
+	return findBy(ctx, project, language, version)
 }
 
-func getLastVersion(fields logx.Fields, project string, language string, semver string) (string, error) {
-	versions, err := FindVersions(fields, project, language)
+func getLastVersion(ctx context.Context, project string, language string, semver string) (string, error) {
+	versions, err := FindVersions(ctx, project, language)
 	if err != nil {
 		return "", err
 	}

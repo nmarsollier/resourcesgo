@@ -30,7 +30,7 @@ func getResource(c *gin.Context) {
 	language := c.Param("languageId")
 	semver := c.Param("semver")
 
-	resource, err := resources.GetLastResource(server.GinLogFields(c), project, language, semver)
+	resource, err := resources.GetLastResource(server.GinLogCtx(c), project, language, semver)
 
 	if err != nil {
 		server.AbortWithError(c, err)

@@ -1,6 +1,7 @@
 package graph
 
 import (
+	"context"
 	"fmt"
 	"net/http"
 	"strconv"
@@ -14,7 +15,7 @@ import (
 )
 
 func Start() {
-	logfld := logx.NewFields()
+	ctx := logx.CtxWithFields(context.Background(), logx.NewFields())
 
 	port := env.Get().GqlPort
 	srv := handler.NewDefaultServer(model.NewExecutableSchema(model.Config{Resolvers: &schema.Resolver{}}))
@@ -22,6 +23,6 @@ func Start() {
 	http.Handle("/", playground.Handler("GraphQL playground", "/query"))
 	http.Handle("/query", srv)
 
-	logx.Info(logfld, "GraphQL playground in port : "+strconv.Itoa(port))
-	logx.Error(logfld, http.ListenAndServe(fmt.Sprintf(":%d", env.Get().GqlPort), nil))
+	logx.Info(ctx, "GraphQL playground in port : "+strconv.Itoa(port))
+	logx.Error(ctx, http.ListenAndServe(fmt.Sprintf(":%d", env.Get().GqlPort), nil))
 }

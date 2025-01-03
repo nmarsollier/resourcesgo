@@ -14,6 +14,8 @@ cat coverage/coverage.out.tmp \
  | grep -v "/resourcesgo/internal/tools/db/" \
  > coverage/coverage.out
 
+rm ./coverage/coverage.out.tmp
+
 go tool cover -func=./coverage/coverage.out | grep "total:" |  tr -d '[:space:]' | sed 's/(statements)//g' | sed 's/%*$//'
 
 # Generate an HTML report

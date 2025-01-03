@@ -7,6 +7,7 @@ import (
 	"github.com/nmarsollier/resourcesgo/internal/tools/errs"
 	"github.com/nmarsollier/resourcesgo/internal/tools/logx"
 	"github.com/nmarsollier/resourcesgo/tests/terr"
+	"github.com/nmarsollier/resourcesgo/tests/tlog"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -107,4 +108,21 @@ func newTestResource() *Resource {
 		"0.0.1",
 		values,
 	)
+}
+
+func TestInvalidSemverError(t *testing.T) {
+	mockfunc := dbExec
+	defer func() { dbExec = mockfunc }()
+
+	var res = newTestResource()
+	res.SemVer = ""
+
+	dbExec = func(ctx context.Context, query string, args ...interface{}) error {
+		return nil
+	}
+
+	result, err := Create(tlog.TestContext, res)
+
+	assert.ErrorContains(t, err, "Field validation for 'SemVer' failed on the 'required'")
+	assert.Empty(t, result)
 }

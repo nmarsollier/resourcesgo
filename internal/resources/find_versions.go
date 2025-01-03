@@ -6,8 +6,10 @@ import (
 	"github.com/nmarsollier/resourcesgo/internal/tools/db"
 )
 
+var dbQueryFindVersions = db.Query[string]
+
 func FindVersions(ctx context.Context, project string, language string) ([]string, error) {
-	data, err := db.Query[string](
+	data, err := dbQueryFindVersions(
 		ctx,
 		"SELECT sem_ver FROM resources WHERE project = $1 AND language = $2 AND enabled = true",
 		project, language,

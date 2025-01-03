@@ -5,12 +5,10 @@ import (
 	"testing"
 
 	"github.com/nmarsollier/resourcesgo/internal/tools/errs"
-	"github.com/nmarsollier/resourcesgo/internal/tools/logx"
 	"github.com/nmarsollier/resourcesgo/tests/terr"
+	"github.com/nmarsollier/resourcesgo/tests/tlog"
 	"github.com/stretchr/testify/assert"
 )
-
-var tContext = logx.CtxWithFields(context.Background(), logx.NewFields())
 
 func TestCreate(t *testing.T) {
 	mockfunc := dbExec
@@ -22,7 +20,7 @@ func TestCreate(t *testing.T) {
 		return nil
 	}
 
-	result, err := Create(tContext, "es", "Spanish")
+	result, err := Create(tlog.TestContext, "es", "Spanish")
 
 	assert.NoError(t, err)
 	assert.Equal(t, "es", result)
@@ -36,7 +34,7 @@ func TestInvalidIdError(t *testing.T) {
 		return nil
 	}
 
-	result, err := Create(tContext, "", "Spanish")
+	result, err := Create(tlog.TestContext, "", "Spanish")
 
 	assert.ErrorContains(t, err, "Field validation for 'ID' failed on the 'required'")
 	assert.Empty(t, result)
@@ -50,7 +48,7 @@ func TestInvalidNameError(t *testing.T) {
 		return nil
 	}
 
-	result, err := Create(tContext, "es", "")
+	result, err := Create(tlog.TestContext, "es", "")
 
 	assert.ErrorContains(t, err, "Field validation for 'Name' failed on the 'required'")
 	assert.Empty(t, result)
@@ -64,7 +62,7 @@ func TestCreateError(t *testing.T) {
 		return terr.PgErrorExist
 	}
 
-	result, err := Create(tContext, "es", "Spanish")
+	result, err := Create(tlog.TestContext, "es", "Spanish")
 
 	assert.ErrorIs(t, err, errs.AlreadyExist)
 	assert.Empty(t, result)
@@ -78,7 +76,7 @@ func TestOtherError(t *testing.T) {
 		return errs.Internal
 	}
 
-	result, err := Create(tContext, "es", "Spanish")
+	result, err := Create(tlog.TestContext, "es", "Spanish")
 
 	assert.ErrorIs(t, err, errs.Internal)
 	assert.Empty(t, result)

@@ -6,8 +6,10 @@ import (
 	"github.com/nmarsollier/resourcesgo/internal/tools/db"
 )
 
+var dbQueryRow = db.QueryRow[Language]
+
 func FindByID(ctx context.Context, id string) (*Language, error) {
-	return db.QueryRow[Language](
+	return dbQueryRow(
 		ctx,
 		`
       SELECT id, name, created, enabled
